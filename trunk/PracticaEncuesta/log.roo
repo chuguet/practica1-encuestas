@@ -1,0 +1,25 @@
+// Spring Roo 1.2.2.RELEASE [rev 7d75659] log opened at 2012-11-14 20:25:22
+quit
+// Spring Roo 1.2.2.RELEASE [rev 7d75659] log closed at 2012-11-14 20:25:23
+// Spring Roo 1.2.2.RELEASE [rev 7d75659] log opened at 2012-11-14 20:26:25
+hint
+project --topLevelPackage com.upsam.roo.quizzUsers
+hint
+jpa setup --provider HIBERNATE --database HYPERSONIC_IN_MEMORY
+hint
+entity jpa --class ~.domain.usuario --testAutomatically
+hint
+field number --fieldName id --type java.lang.Integer
+field string --fieldName usuario --notNull --sizeMin 5  --sizeMax 20
+field string --fieldName pwd --notNull --sizeMin 5  --sizeMax 30
+field string --fieldName nombre --sizeMin 5  --sizeMax 100
+field string --fieldName apellidos --sizeMin 5  --sizeMax 200
+field string --fieldName email --sizeMin 5  --sizeMax 200
+field number --fieldName admin --type java.lang.Integer
+perform test
+  perform tests
+hint
+perform tests
+perform eclipse
+hint
+help
