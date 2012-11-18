@@ -21,7 +21,7 @@
 	
 	<modules>
 		<module>quizz.model</module>
-		<!-- <module>quizz.view</module> -->
+		<module>quizz.view</module>
 		<module>quizz.controller</module>
   </modules>
 	
