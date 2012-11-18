@@ -95,8 +95,4 @@ public class Usuario {
 		this.admin = admin;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		return true;
-	}
 }
