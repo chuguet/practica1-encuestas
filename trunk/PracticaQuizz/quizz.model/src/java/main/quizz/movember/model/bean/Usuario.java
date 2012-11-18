@@ -1,10 +1,12 @@
 package quizz.movember.model.bean;
 
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import org.hibernate.annotations.Entity;
 import org.hibernate.annotations.Table;
 
-@Table(appliesTo="usuario")
+@Table(appliesTo = "usuario")
 @Entity
 public class Usuario {
 	@Id
