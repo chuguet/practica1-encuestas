@@ -6,7 +6,7 @@ import org.hibernate.classic.Session;
 import org.springframework.stereotype.Component;
 import quizz.movember.model.bean.Usuario;
 
-@Component
+@Component(value = "usuarioDAO")
 public class UsuarioDAO {
 
 	public void insert(Usuario empleado) {

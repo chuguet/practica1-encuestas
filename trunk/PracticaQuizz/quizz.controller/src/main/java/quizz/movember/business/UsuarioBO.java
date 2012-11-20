@@ -1,17 +1,17 @@
 package quizz.movember.business;
 
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
 import org.springframework.stereotype.Component;
 import quizz.movember.model.bean.Usuario;
 import quizz.movember.model.dao.UsuarioDAO;
 
-@Component
+@Component(value = "usuarioBO")
 public class UsuarioBO {
 
+	@Inject
 	private UsuarioDAO usuarioDAO;
 
-	@Autowired
 	public void setUsuarioDAO(UsuarioDAO usuarioDAO) {
 		this.usuarioDAO = usuarioDAO;
 	}
