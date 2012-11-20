@@ -1,6 +1,7 @@
 package quizz.movember.controller.business;
 
 import java.util.List;
+import javax.inject.Inject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import quizz.movember.model.bean.Usuario;
