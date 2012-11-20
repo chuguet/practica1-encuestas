@@ -1,17 +1,24 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   
-  <modelVersion>4.0.0</modelVersion>
-  <artifactId>quizz.movember.controller</artifactId>
-  <packaging>jar</packaging>
-  <name>${project.groupId}.${project.artifactId}</name>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>quizz.movember</groupId>
+	<artifactId>controller</artifactId>
+	<packaging>jar</packaging>
+	<name>${project.groupId}.${project.artifactId}</name>
+	<version>0.0.1-SNAPSHOT</version>
   
-  <parent>
+  	<parent>
   		<artifactId>quizz</artifactId>
 		<groupId>quizz.movember</groupId>
   		<version>0.0.1-SNAPSHOT</version>
-  </parent>
+  	</parent>
 	
-  <dependencies>
+  	<dependencies>
+  		<dependency>
+		    <groupId>quizz.movember.</groupId>
+			<artifactId>model</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 		<dependency>
 		    <groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
