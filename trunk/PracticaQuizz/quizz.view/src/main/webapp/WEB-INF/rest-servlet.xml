@@ -9,7 +9,8 @@
  http://www.springframework.org/schema/context
  http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-	<context:component-scan base-package="com.spring3.rest.controller" />
+	<context:component-scan base-package="quizz.movember.controller" />
+	<context:component-scan base-package="quizz.movember.model" />
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 	
 	<!-- To enable @RequestMapping process on type level and method level -->
@@ -34,7 +35,7 @@
 		    </list>
 		</property>
 	</bean>
-	
+	<!-- 
 	<bean id="empleadoController" class="com.spring3.rest.controller.EmpleadoController">
 		<property name="empleadoBO" ref="empleadoBO" />
 		<property name="jaxb2Mashaller" ref="jaxbMarshaller" />
@@ -52,4 +53,5 @@
 	<bean id="empleados" class="org.springframework.web.servlet.view.xml.MarshallingView">
 		<constructor-arg ref="jaxbMarshaller" />
 	</bean>
+	 -->
 </beans>
