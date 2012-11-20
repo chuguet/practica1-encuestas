@@ -3,8 +3,10 @@ package quizz.movember.model.dao;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.classic.Session;
+import org.springframework.stereotype.Component;
 import quizz.movember.model.bean.Usuario;
 
+@Component
 public class UsuarioDAO {
 
 	public void insert(Usuario empleado) {
