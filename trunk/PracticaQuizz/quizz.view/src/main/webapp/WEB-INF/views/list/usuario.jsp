@@ -6,15 +6,15 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Empleados</title>
-		<link rel="stylesheet" href="resources/css/jquery.mobile-1.0a4.1.min.css" />
-		<link rel="stylesheet" href="resources/css/bootstrap.min.css" />
-		<link rel="stylesheet" href="resources/css/bootstrap-responsive.min.css" />
-		<link rel="stylesheet" href="resources/css/no-more-tables.css" />
-		<link rel="stylesheet" href="resources/css/generic.css" />
-		<script type="text/javascript" src="resources/js/jquery-1.5.2.min.js"></script>
-		<script type="text/javascript" src="resources/js/jquery.mobile-1.0a4.1.min.js"></script>
-		<script type="text/javascript" src="resources/js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="resources/js/pretiffy.js"></script>
+		<link rel="stylesheet" href="css/jquery.mobile-1.0a4.1.min.css" />
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" href="css/bootstrap-responsive.min.css" />
+		<link rel="stylesheet" href="css/no-more-tables.css" />
+		<link rel="stylesheet" href="css/generic.css" />
+		<script type="text/javascript" src="js/jquery-1.5.2.min.js"></script>
+		<script type="text/javascript" src="js/jquery.mobile-1.0a4.1.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/pretiffy.js"></script>
 	</head>
 	<body id="mine"> 
 		<div data-role="page" id="ppal_page">
@@ -23,22 +23,29 @@
 			</div>
 			
 			<div data-role="content" id="no-more-tables">
+				<div class="botonera">
+					<input type="button" value="Alta" onclick="window.location.href='html/new/usuario.html';" />
+				</div>
 				<table class="table-bordered table-striped table-condensed cf">
 					<thead>
 						<tr>
 							<th>ID</th>
 							<th>Nombre</th>
+							<th>Apellidos</th>
 							<th>Email</th>
-							<th>Expediente</th>
+							<th>Usuario</th>
+							<th>Es admin</th>
 						</tr>
 					</thead>
 					<tbody>
-					<c:forEach var="empleado" items="${empleados.empleados}">
-						<tr onclick="window.location.href='empleado/${empleado.id}';">
-							<td data-title="ID">${empleado.id}</td>
-							<td data-title="Nombre">${empleado.nombre}</td>
-							<td data-title="Email">${empleado.email}</td>
-							<td data-title="Expediente">${empleado.expediente}</td>
+					<c:forEach var="usuario" items="${usuarios}">
+						<tr onclick="window.location.href='empleado/${usuario.id}';">
+							<td data-title="ID">${usuario.id}</td>
+							<td data-title="Nombre">${usuario.nombre}</td>
+							<td data-title="Apellidos">${usuario.apellidos}</td>
+							<td data-title="Email">${usuario.email}</td>
+							<td data-title="Usuario">${usuario.usuario}</td>
+							<td data-title="Es admin">${usuario.admin}</td>
 						</tr>
 					</c:forEach>
 					</tbody>
