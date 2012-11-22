@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import com.movember.quizz.model.bean.Usuario;
 
 @Repository
-class RepositoryDAO implements IRepositoryDAO<Usuario> {
+class RepositoryDAO implements IUsuarioRepository {
 
 	@Inject
 	private HibernateTemplate hibernateTemplate;
