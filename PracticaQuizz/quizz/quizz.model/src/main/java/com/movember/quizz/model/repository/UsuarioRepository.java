@@ -28,7 +28,6 @@ class RepositoryDAO implements IRepositoryDAO<Usuario> {
 		return (Usuario) hibernateTemplate.load(Usuario.class, pId);
 	}
 
-	@SuppressWarnings("unchecked")
 	public List<Usuario> findAll() {
 		return hibernateTemplate.loadAll(Usuario.class);
 	}
