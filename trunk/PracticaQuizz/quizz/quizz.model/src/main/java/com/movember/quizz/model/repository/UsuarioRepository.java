@@ -25,7 +25,7 @@ class RepositoryDAO implements IUsuarioRepository {
 	}
 
 	public Usuario findOne(Long pId) {
-		return (Usuario) hibernateTemplate.load(Usuario.class, pId);
+		return hibernateTemplate.get(Usuario.class, pId);
 	}
 
 	public List<Usuario> findAll() {
