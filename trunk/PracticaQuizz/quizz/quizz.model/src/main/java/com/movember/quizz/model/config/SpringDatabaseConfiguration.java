@@ -1,7 +1,6 @@
 package com.movember.quizz.model.config;
 
 import java.util.Properties;
-import javax.inject.Inject;
 import javax.sql.DataSource;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
@@ -56,7 +55,6 @@ public class SpringDatabaseConfiguration extends SpringModelConfiguration {
 	}
 
 	@Bean
-	@Inject
 	public HibernateTemplate getHibernateTemplate(SessionFactory sessionFactory) {
 		HibernateTemplate hibernateTemplate = new HibernateTemplate(sessionFactory);
 		return hibernateTemplate;
@@ -87,7 +85,6 @@ public class SpringDatabaseConfiguration extends SpringModelConfiguration {
 	// <property name="sessionFactory" ref="sessionFactory" />
 	// </bean>
 	@Bean
-	@Inject
 	public HibernateTransactionManager getFinalSessionFactory(SessionFactory sessionFactory) {
 		HibernateTransactionManager transactionManager = new HibernateTransactionManager();
 		transactionManager.setSessionFactory(sessionFactory);
