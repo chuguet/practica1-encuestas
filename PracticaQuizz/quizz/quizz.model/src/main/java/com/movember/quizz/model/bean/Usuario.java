@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 @Table(name = "usuario")
 @Entity
-public class Usuario {
+public class Usuario implements IModelTable {
 	@Id
 	@GeneratedValue
 	private Long id;
