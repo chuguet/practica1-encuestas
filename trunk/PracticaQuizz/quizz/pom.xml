@@ -10,9 +10,10 @@
 	
   	<properties>
   	    <spring.jdbc.version>3.1.2.RELEASE</spring.jdbc.version>
+  	    <slf4j.version>1.5.8</slf4j.version>
 		<mysql.driver.version>5.1.20</mysql.driver.version>
 		<hibernate.annotations.version>3.5.6-Final</hibernate.annotations.version>
-		<hibernate.commons.annotations.version>3.3.0.ga</hibernate.commons.annotations.version>
+		<hibernate.commons.annotations.version>3.2.0.Final</hibernate.commons.annotations.version>
 		<javax.servlet.version>1.2</javax.servlet.version>
 		<spring.oxm.version>1.5.9</spring.oxm.version>
 		<javassit.version>3.12.1.GA</javassit.version>	
@@ -27,6 +28,7 @@
 		<commons.collections.version>3.2.1</commons.collections.version>
 		<antlr.version>2.7.7</antlr.version>
 		<spring.orm.version>3.1.2.RELEASE</spring.orm.version>
+		<javassist.version>3.12.1.GA</javassist.version>
 	</properties>
 	
 	<modules>
@@ -56,24 +58,5 @@
 			</roles>
 		</developer>
 	</developers>
-	
-	<profiles>
-	   <profile>
-	        <activation>
-	        <activeByDefault>true</activeByDefault>
-	        </activation>
-	        
-	        <repositories>
-	
-	                <repository>
-	                        <snapshots>
-	                                <enabled>false</enabled>
-	                        </snapshots>
-	                        <id>ejb3unit</id>
-	                        <name>ejb3unit repository</name>
-	                        <url>http://ejb3unit.sourceforge.net/maven2</url>
-	                </repository>
-	        </repositories>
-	   </profile>
-	</profiles>
+
 </project>
