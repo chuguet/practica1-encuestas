@@ -4,32 +4,32 @@ import java.util.List;
 import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import com.movember.quizz.model.bean.Pregunta;
-import com.movember.quizz.model.repository.IRepositoryDAO;
+import com.movember.quizz.model.repository.IPreguntaRepository;
 
 @Service
 class PreguntaService implements IPreguntaService {
 
 	@Inject
-	private IRepositoryDAO<Pregunta> repositoryDAO;
+	private IPreguntaRepository preguntaRepository;
 
 	public void save(Pregunta pregunta) {
-		repositoryDAO.save(pregunta);
+		preguntaRepository.save(pregunta);
 	}
 
 	public void update(Pregunta pregunta) {
-		repositoryDAO.update(pregunta);
+		preguntaRepository.update(pregunta);
 	}
 
 	public void delete(Pregunta pregunta) {
-		repositoryDAO.delete(pregunta);
+		preguntaRepository.delete(pregunta);
 	}
 
 	public Pregunta findOne(Long pId) {
-		return repositoryDAO.findOne(pId);
+		return preguntaRepository.findOne(pId);
 	}
 
 	public List<Pregunta> findAll() {
-		return repositoryDAO.findAll();
+		return preguntaRepository.findAll();
 	}
 
 }
