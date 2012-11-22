@@ -4,32 +4,32 @@ import java.util.List;
 import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import com.movember.quizz.model.bean.Usuario;
-import com.movember.quizz.model.repository.IUsuarioRepository;
+import com.movember.quizz.model.repository.IRepositoryDAO;
 
 @Service
-class UsuarioService implements IUsuarioService {
+class UsuarioService implements IModelService<Usuario> {
 
 	@Inject
-	private IUsuarioRepository usuarioRepository;
+	private IRepositoryDAO<Usuario> repositoryDAO;
 
 	public void save(Usuario usuario) {
-		usuarioRepository.save(usuario);
+		repositoryDAO.save(usuario);
 	}
 
 	public void update(Usuario usuario) {
-		usuarioRepository.save(usuario);
+		repositoryDAO.save(usuario);
 	}
 
 	public void delete(Usuario usuario) {
-		usuarioRepository.save(usuario);
+		repositoryDAO.save(usuario);
 	}
 
 	public Usuario findOne(Long pId) {
-		return usuarioRepository.findOne(pId);
+		return repositoryDAO.findOne(pId);
 	}
 
 	public List<Usuario> findAll() {
-		return usuarioRepository.findAll();
+		return repositoryDAO.findAll();
 	}
 
 }

@@ -1,32 +1,36 @@
 package com.movember.quizz.model.repository;
 
 import java.util.List;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import javax.inject.Inject;
+import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import com.movember.quizz.model.bean.Usuario;
 
 @Repository
-class UsuarioRepository extends HibernateDaoSupport implements IUsuarioRepository {
+class RepositoryDAO implements IRepositoryDAO<Usuario> {
+
+	@Inject
+	private HibernateTemplate hibernateTemplate;
 
 	public void save(Usuario usuario) {
-		getHibernateTemplate().save(usuario);
+		hibernateTemplate.save(usuario);
 	}
 
 	public void update(Usuario usuario) {
-		getHibernateTemplate().delete(usuario);
+		hibernateTemplate.update(usuario);
 	}
 
 	public void delete(Usuario usuario) {
-		getHibernateTemplate().delete(usuario);
+		hibernateTemplate.delete(usuario);
 	}
 
 	public Usuario findOne(Long pId) {
-		return (Usuario) getHibernateTemplate().find("from usuario where id=?", pId).get(0);
+		return (Usuario) hibernateTemplate.load(Usuario.class, pId);
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<Usuario> findAll() {
-		return (List<Usuario>) getHibernateTemplate().find("from usuario");
+		return hibernateTemplate.loadAll(Usuario.class);
 	}
 
 }
