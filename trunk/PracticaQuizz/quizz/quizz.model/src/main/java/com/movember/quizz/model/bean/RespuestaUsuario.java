@@ -1,6 +1,16 @@
 package com.movember.quizz.model.bean;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "respuesta_usuario")
 public class RespuestaUsuario implements IModelTable {
+	@Id
+	@GeneratedValue
+	private Long id;
 	private Long id_respuesta;
 	private Long id_usuario;
 
@@ -18,5 +28,13 @@ public class RespuestaUsuario implements IModelTable {
 
 	public void setId_usuario(Long id_usuario) {
 		this.id_usuario = id_usuario;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 }
