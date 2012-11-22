@@ -26,7 +26,7 @@
 		<commons.logging.version>1.1.1</commons.logging.version>
 		<commons.collections.version>3.2.1</commons.collections.version>
 		<antlr.version>2.7.7</antlr.version>
-		<spring.orm.version>2.5.1</spring.orm.version>
+		<spring.orm.version>3.1.2.RELEASE</spring.orm.version>
 	</properties>
 	
 	<modules>
