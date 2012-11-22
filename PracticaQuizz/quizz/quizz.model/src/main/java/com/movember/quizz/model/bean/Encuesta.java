@@ -2,7 +2,7 @@ package com.movember.quizz.model.bean;
 
 import java.util.Date;
 
-public class Encuesta {
+public class Encuesta implements IModelTable {
 
 	private Long id;
 

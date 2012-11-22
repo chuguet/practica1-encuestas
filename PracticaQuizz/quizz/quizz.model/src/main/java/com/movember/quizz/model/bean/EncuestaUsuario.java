@@ -1,6 +1,6 @@
 package com.movember.quizz.model.bean;
 
-public class EncuestaUsuario {
+public class EncuestaUsuario implements IModelTable {
 	private Long id_encuesta;
 	private Long id_usuario;
 	private String ip_dispositivo;
