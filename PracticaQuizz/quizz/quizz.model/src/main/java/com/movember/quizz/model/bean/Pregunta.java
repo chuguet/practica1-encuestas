@@ -1,6 +1,15 @@
 package com.movember.quizz.model.bean;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "pregunta")
 public class Pregunta implements IModelTable {
+	@Id
+	@GeneratedValue
 	private Long id;
 	private String pregunta;
 	private Long id_encuesta;
