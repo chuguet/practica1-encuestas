@@ -7,7 +7,7 @@ import com.movember.quizz.model.bean.Usuario;
 import com.movember.quizz.model.repository.IRepositoryDAO;
 
 @Service
-class UsuarioService implements IModelService<Usuario> {
+class UsuarioService implements IUsuarioService {
 
 	@Inject
 	private IRepositoryDAO<Usuario> repositoryDAO;
@@ -17,11 +17,11 @@ class UsuarioService implements IModelService<Usuario> {
 	}
 
 	public void update(Usuario usuario) {
-		repositoryDAO.save(usuario);
+		repositoryDAO.update(usuario);
 	}
 
 	public void delete(Usuario usuario) {
-		repositoryDAO.save(usuario);
+		repositoryDAO.delete(usuario);
 	}
 
 	public Usuario findOne(Long pId) {
