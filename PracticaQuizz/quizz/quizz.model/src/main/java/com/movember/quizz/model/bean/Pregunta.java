@@ -14,11 +14,10 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "pregunta")
+@Table(name = "PREGUNTA")
 public class Pregunta implements IModelTable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@JoinColumn(name = "ID")
 	private Long id;
 	@Column(length = 100, name = "PREGUNTA")
 	private String pregunta;

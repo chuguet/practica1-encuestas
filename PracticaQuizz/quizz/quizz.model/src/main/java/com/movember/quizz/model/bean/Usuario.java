@@ -17,7 +17,6 @@ import javax.persistence.Table;
 public class Usuario implements IModelTable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@JoinColumn(name = "ID")
 	private Long id;
 	@Column(name = "NOMBRE")
 	private String nombre;
