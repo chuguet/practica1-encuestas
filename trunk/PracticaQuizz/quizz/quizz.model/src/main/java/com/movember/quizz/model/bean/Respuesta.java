@@ -25,7 +25,7 @@ public class Respuesta implements IModelTable {
 
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "USUARIOS_RESPUESTA")
-	private Collection<Encuesta> usuariosRespuesta;
+	private Collection<Usuario> usuariosRespuesta;
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "USUARIOS_ANONIMOS_RESPUESTA")
 	private Collection<UsuarioAnonimo> usuariosAnonimosRespuesta;
@@ -65,11 +65,11 @@ public class Respuesta implements IModelTable {
 		this.usuariosAnonimosRespuesta = usuariosAnonimosRespuesta;
 	}
 
-	public Collection<Encuesta> getUsuariosRespuesta() {
+	public Collection<Usuario> getUsuariosRespuesta() {
 		return usuariosRespuesta;
 	}
 
-	public void setUsuariosRespuesta(Collection<Encuesta> usuariosRespuesta) {
+	public void setUsuariosRespuesta(Collection<Usuario> usuariosRespuesta) {
 		this.usuariosRespuesta = usuariosRespuesta;
 	}
 

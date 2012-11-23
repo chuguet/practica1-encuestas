@@ -24,8 +24,8 @@ public class Pregunta implements IModelTable {
 	private String pregunta;
 
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "PREGUNTA_ENCUESTA")
-	private Encuesta preguntaEncuesta;
+	@JoinColumn(name = "ENCUESTA_PREGUNTA")
+	private Encuesta encuestaPregunta;
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "RESPUESTAS_PREGUNTA")
 	private Collection<Respuesta> respuestasPregunta;
@@ -46,20 +46,20 @@ public class Pregunta implements IModelTable {
 		this.pregunta = pregunta;
 	}
 
-	public Encuesta getPreguntaEncuesta() {
-		return preguntaEncuesta;
-	}
-
-	public void setPreguntaEncuesta(Encuesta preguntaEncuesta) {
-		this.preguntaEncuesta = preguntaEncuesta;
-	}
-
 	public Collection<Respuesta> getRespuestasPregunta() {
 		return respuestasPregunta;
 	}
 
 	public void setRespuestasPregunta(Collection<Respuesta> respuestasPregunta) {
 		this.respuestasPregunta = respuestasPregunta;
+	}
+
+	public Encuesta getEncuestaPregunta() {
+		return encuestaPregunta;
+	}
+
+	public void setEncuestaPregunta(Encuesta encuestaPregunta) {
+		this.encuestaPregunta = encuestaPregunta;
 	}
 
 }
