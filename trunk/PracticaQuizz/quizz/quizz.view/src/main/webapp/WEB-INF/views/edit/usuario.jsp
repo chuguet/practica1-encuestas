@@ -5,18 +5,20 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Empleado - ${empleado.nombre}</title>
-		<link rel="stylesheet" href="../resources/css/jquery.mobile-1.0a4.1.min.css" />
-		<link rel="stylesheet" href="../resources/css/bootstrap.min.css" />
-		<link rel="stylesheet" href="../resources/css/bootstrap-responsive.min.css" />
-		<link rel="stylesheet" href="../resources/css/no-more-tables.css" />
-		<link rel="stylesheet" href="../resources/css/generic.css" />
-		<link rel="stylesheet" href="../resources/css/jquery.gzoom.css" />
-		<script type="text/javascript" src="../resources/js/jquery-1.5.2.min.js"></script>
-		<script type="text/javascript" src="../resources/js/jquery.mobile-1.0a4.1.min.js"></script>
-		<script type="text/javascript" src="../resources/js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="../resources/js/pretiffy.js"></script>
-		<script type="text/javascript" src="../resources/js/jquery.gzoom.js"></script>
+		<title>Alta de usuarios</title>
+		<!-- 
+		<link rel="stylesheet" href="../../css/jquery.mobile-1.0a4.1.min.css" />
+		<link rel="stylesheet" href="../../css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../../css/bootstrap-responsive.min.css" />
+		<link rel="stylesheet" href="../../css/no-more-tables.css" />
+		<link rel="stylesheet" href="../../css/generic.css" />
+		<link rel="stylesheet" href="../../css/jquery.gzoom.css" />
+		
+		<script type="text/javascript" src="../../js/jquery.mobile-1.0a4.1.min.js"></script>
+		<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="../../js/pretiffy.js"></script>
+		 -->
+		 <script type="text/javascript" src="../resources/js/jquery-1.5.2.min.js"></script>
 		<style>
 			#mine span {font-weight:bold;}
 			#mine .foto{width:130px; height:130px; padding-top:10px;}
@@ -25,20 +27,27 @@
 	<body id="mine"> 
 		<div data-role="page" id="ppal_page">
 			<div data-role="header">
-				<h1>Directorio de Empleados</h1>
+				<h1>
+					<c:choose>
+						<c:when test="${usuario.id==null}">Alta</c:when>
+						<c:otherwise>Edici&oacute;n</c:otherwise>
+					</c:choose>
+				    &nbsp;de usuario</h1>
 			</div>
 			
 			<div data-role="content">
-				<ul>
-					<li><span>ID:</span> ${empleado.id}</li>
-					<li><span>Nombre:</span> ${empleado.nombre}</li>
-					<li><span>Email:</span> ${empleado.email}</li>
-					<li><span>Tel&eacute;fono:</span> ${empleado.telefono}</li>
-					<li><span>M&oacute;vil:</span> ${empleado.movil}</li>
-					<li><span>Direcci&oacute;n:</span> ${empleado.direccion}</li>
-				</ul>
-				<div id="zoom04">
-				<img src="../resources/imgs/${empleado.image}" title="Imagen de ${empleado.nombre}"/>
+				<div><b>Nombre: </b><input type="text" id="nombre"<c:if test="${usuario.nombre!=null}"> value="${usuario.nombre}"</c:if>/></div>
+				<div><b>Apellidos: </b><input type="text" id="apellidos"<c:if test="${usuario.apellidos!=null}"> value="${usuario.apellidos}"</c:if>/></div>
+				<div><b>Email: </b><input type="text" id="email"<c:if test="${usuario.email!=null}"> value="${usuario.email}"</c:if>/></div>
+				<div><b>Usuario: </b><input type="text" id="usuario"<c:if test="${usuario.usuario!=null}"> value="${usuario.usuario}"</c:if>/></div>
+				<div><b>Contrase&ntilde;a: </b><input type="text" id="pwd"<c:if test="${usuario.pwd!=null}"> value="${usuario.pwd}"</c:if>/></div>
+				<div><b>Es administrador: </b><input type="checkbox" id="admin" value="1" /></div>
+				<div class="botonera">
+					<c:choose>
+						<c:when test="${usuario.id==null}"><input type="button" value="Guardar" /></c:when>
+						<c:otherwise><input type="button" value="Modificar" />&nbsp;<input type="button" value="Eliminar" /></c:otherwise>
+					</c:choose>
+					&nbsp;<input type="button" value="Cancelar" onclick="$(location).attr('href','../usuario');"/>
 				</div>
 			</div>
 	
@@ -46,9 +55,5 @@
 				<h1>MOVEMBER [Yamaradax & Huguet] S.L. &#174;</h1>
 			</div>
 		</div>
-	</body>	
-	<script type="text/javascript">
-		$("#zoom04").gzoom({sW: 200, sH: 200, lW: 1024, lH: 768, lightbox: true});
-	</script>
-	
+	</body>
 </html>
