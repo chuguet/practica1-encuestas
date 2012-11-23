@@ -1,18 +1,34 @@
 package com.movember.quizz.model.bean;
 
+import java.util.Collection;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "pregunta")
 public class Pregunta implements IModelTable {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JoinColumn(name = "ID")
 	private Long id;
+	@Column(length = 100, name = "PREGUNTA")
 	private String pregunta;
-	private Long id_encuesta;
+
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "PREGUNTA_ENCUESTA")
+	private Encuesta preguntaEncuesta;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "RESPUESTAS_PREGUNTA")
+	private Collection<Respuesta> respuestasPregunta;
 
 	public Long getId() {
 		return id;
@@ -30,11 +46,20 @@ public class Pregunta implements IModelTable {
 		this.pregunta = pregunta;
 	}
 
-	public Long getId_encuesta() {
-		return id_encuesta;
+	public Encuesta getPreguntaEncuesta() {
+		return preguntaEncuesta;
 	}
 
-	public void setId_encuesta(Long id_encuesta) {
-		this.id_encuesta = id_encuesta;
+	public void setPreguntaEncuesta(Encuesta preguntaEncuesta) {
+		this.preguntaEncuesta = preguntaEncuesta;
 	}
+
+	public Collection<Respuesta> getRespuestasPregunta() {
+		return respuestasPregunta;
+	}
+
+	public void setRespuestasPregunta(Collection<Respuesta> respuestasPregunta) {
+		this.respuestasPregunta = respuestasPregunta;
+	}
+
 }

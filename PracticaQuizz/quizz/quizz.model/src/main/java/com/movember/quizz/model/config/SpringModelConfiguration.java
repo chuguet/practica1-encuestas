@@ -29,24 +29,22 @@ public class SpringModelConfiguration {
 	// HIBERNATE CONFIGURATION
 	@Value("${hibernate.dialect}")
 	private String dialect;
-	// JDBC CONFIGURATION
-	@Value("${jdbc.driverClassName}")
-	private String driverClassName;
-	@Value("${hibernate.hbm2ddl.auto}")
-	private String hbm2DDL;
-	// Bean Mapeados
-	@Value("${hibernate.mapping.packages}")
-	private String packageBeans;
-	@Value("${jdbc.password}")
-	private String password;
 	@Value("${hibernate.show_sql}")
 	private String showSql;
-	@Value("${hibernate.generate_statistics}")
-	private String statitics;
+	@Value("${hibernate.hbm2ddl.auto}")
+	private String hbm2DDL;
+	// JDBC CONFIGURATION DATASOURCE
+	@Value("${jdbc.driverClassName}")
+	private String driverClassName;
 	@Value("${jdbc.url}")
 	private String url;
 	@Value("${jdbc.username}")
 	private String username;
+	@Value("${jdbc.password}")
+	private String password;
+	// MAPPING BEANS
+	@Value("${hibernate.mapping.packages}")
+	private String packageBeans;
 
 	// <bean id="dataSource"
 	// class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -94,7 +92,6 @@ public class SpringModelConfiguration {
 		properties.put("hibernate.dialect", dialect);
 		properties.put("hibernate.show_sql", showSql);
 		properties.put("hibernate.hbm2ddl.auto", hbm2DDL);
-		properties.put("hibernate.generate_statistics", statitics);
 		return properties;
 	}
 

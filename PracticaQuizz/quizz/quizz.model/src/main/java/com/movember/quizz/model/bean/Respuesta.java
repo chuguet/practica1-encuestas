@@ -1,18 +1,37 @@
 package com.movember.quizz.model.bean;
 
+import java.util.Collection;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "respuesta")
 public class Respuesta implements IModelTable {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JoinColumn(name = "ID")
 	private Long id;
+	@Column(length = 100, name = "RESPUESTA")
 	private String respuesta;
-	private Long id_respuesta;
+
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "USUARIOS_RESPUESTA")
+	private Encuesta usuariosRespuesta;
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "USUARIOS_ANONIMOS_RESPUESTA")
+	private Collection<UsuarioAnonimo> usuariosAnonimosRespuesta;
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "PREGUNTA_RESPUESTA")
+	private Pregunta preguntaRespuesta;
 
 	public Long getId() {
 		return id;
@@ -30,12 +49,28 @@ public class Respuesta implements IModelTable {
 		this.respuesta = respuesta;
 	}
 
-	public Long getId_respuesta() {
-		return id_respuesta;
+	public Pregunta getPreguntaRespuesta() {
+		return preguntaRespuesta;
 	}
 
-	public void setId_respuesta(Long id_respuesta) {
-		this.id_respuesta = id_respuesta;
+	public void setPreguntaRespuesta(Pregunta preguntaRespuesta) {
+		this.preguntaRespuesta = preguntaRespuesta;
+	}
+
+	public Encuesta getUsuariosRespuesta() {
+		return usuariosRespuesta;
+	}
+
+	public void setUsuariosRespuesta(Encuesta usuariosRespuesta) {
+		this.usuariosRespuesta = usuariosRespuesta;
+	}
+
+	public Collection<UsuarioAnonimo> getUsuariosAnonimosRespuesta() {
+		return usuariosAnonimosRespuesta;
+	}
+
+	public void setUsuariosAnonimosRespuesta(Collection<UsuarioAnonimo> usuariosAnonimosRespuesta) {
+		this.usuariosAnonimosRespuesta = usuariosAnonimosRespuesta;
 	}
 
 }

@@ -1,29 +1,43 @@
 package com.movember.quizz.model.bean;
 
+import java.util.Collection;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "usuario")
+@Table(name = "USUARIO")
 public class Usuario implements IModelTable {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JoinColumn(name = "ID")
 	private Long id;
-	@Column(name = "nombre")
+	@Column(name = "NOMBRE")
 	private String nombre;
-	@Column(name = "apellidos")
+	@Column(name = "APELLIDOS")
 	private String apellidos;
-	@Column(name = "email")
+	@Column(name = "EMAIL")
 	private String email;
-	@Column(name = "usuario")
+	@Column(name = "USUARIO")
 	private String usuario;
-	@Column(name = "pwd")
+	@Column(name = "PWD")
 	private String pwd;
-	@Column(name = "admin")
+	@Column(name = "ADMIN")
 	private Integer admin;
+
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "ENCUESTAS_USUARIO")
+	private Collection<Encuesta> encuestasUsuario;
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "RESPUESTAS_USUARIO")
+	private Collection<Respuesta> respuestasUsuario;
 
 	public Long getId() {
 		return id;
@@ -91,6 +105,22 @@ public class Usuario implements IModelTable {
 		this.usuario = usuario;
 		this.pwd = pwd;
 		this.admin = admin;
+	}
+
+	public Collection<Encuesta> getEncuestasUsuario() {
+		return encuestasUsuario;
+	}
+
+	public void setEncuestasUsuario(Collection<Encuesta> encuestasUsuario) {
+		this.encuestasUsuario = encuestasUsuario;
+	}
+
+	public Collection<Respuesta> getRespuestasUsuario() {
+		return respuestasUsuario;
+	}
+
+	public void setRespuestasUsuario(Collection<Respuesta> respuestasUsuario) {
+		this.respuestasUsuario = respuestasUsuario;
 	}
 
 }
