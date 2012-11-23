@@ -13,11 +13,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "encuesta_usuario")
+@Table(name = "USUARIO_ANONIMO")
 public class UsuarioAnonimo implements IModelTable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@JoinColumn(name = "ID")
 	private Long id;
 	@Column(name = "IP_DISPOSITIVO", length = 20)
 	private String ip_dispositivo;

@@ -17,11 +17,10 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "encuesta")
+@Table(name = "ENCUESTA")
 public class Encuesta implements IModelTable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@JoinColumn(name = "ID")
 	private Long id;
 	@Column(name = "NOMBRE", length = 100)
 	private String nombre;
