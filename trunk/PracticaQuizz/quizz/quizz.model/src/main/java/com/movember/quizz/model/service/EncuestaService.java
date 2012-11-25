@@ -17,11 +17,11 @@ class EncuestaService implements IEncuestaService {
 	}
 
 	public void update(Encuesta encuesta) {
-		encuestaRepository.save(encuesta);
+		encuestaRepository.update(encuesta);
 	}
 
 	public void delete(Encuesta encuesta) {
-		encuestaRepository.save(encuesta);
+		encuestaRepository.delete(encuesta);
 	}
 
 	public Encuesta findOne(Long pId) {
@@ -31,5 +31,4 @@ class EncuestaService implements IEncuestaService {
 	public List<Encuesta> findAll() {
 		return encuestaRepository.findAll();
 	}
-
 }
