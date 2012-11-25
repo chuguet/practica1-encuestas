@@ -33,6 +33,12 @@ public class SpringModelConfiguration {
 	private String showSql;
 	@Value("${hibernate.hbm2ddl.auto}")
 	private String hbm2DDL;
+	@Value("${hibernate.connection.CharSet}")
+	private String charset;
+	@Value("${hibernate.connection.characterEncoding}")
+	private String characterEncoding;
+	@Value("${hibernate.connection.useUnicode}")
+	private String useUnicode;
 	// JDBC CONFIGURATION DATASOURCE
 	@Value("${jdbc.driverClassName}")
 	private String driverClassName;
@@ -92,6 +98,9 @@ public class SpringModelConfiguration {
 		properties.put("hibernate.dialect", dialect);
 		properties.put("hibernate.show_sql", showSql);
 		properties.put("hibernate.hbm2ddl.auto", hbm2DDL);
+		properties.put("hibernate.connection.CharSet", charset);
+		properties.put("hibernate.connection.characterEncoding", characterEncoding);
+		properties.put("hibernate.connection.useUnicode", useUnicode);
 		return properties;
 	}
 

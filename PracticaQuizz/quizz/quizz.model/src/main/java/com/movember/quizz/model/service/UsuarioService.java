@@ -7,7 +7,7 @@ import com.movember.quizz.model.bean.Usuario;
 import com.movember.quizz.model.repository.IUsuarioRepository;
 
 @Service
-class UsuarioService implements IUsuarioService {
+public class UsuarioService implements IUsuarioService {
 
 	@Inject
 	private IUsuarioRepository usuarioRepository;
@@ -31,5 +31,4 @@ class UsuarioService implements IUsuarioService {
 	public List<Usuario> findAll() {
 		return usuarioRepository.findAll();
 	}
-
 }
