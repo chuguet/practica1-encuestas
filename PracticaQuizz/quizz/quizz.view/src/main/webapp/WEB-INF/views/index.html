@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Quizz Movember</title>
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" />
+    <script src="http://code.jquery.com/jquery-1.8.2.js"></script>
+    <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="resources/css/generic.css" />
+	<script type="text/javascript" src="resources/js/generic.js"></script>
+	<script type="text/javascript">
+		function recoverParams(){
+			var data = "nombre=" + $("#usuario").val() + "&";
+			data += "apellidos=" + $("#apellidos").val() + "&";
+			data += "email=" + $("#email").val() + "&";
+			data += "usuario=" + $("#usuario").val() + "&";
+			data += "pwd=" + $("#pwd").val() + "&";
+			data += ($("#admin1").is(':checked')) ? "admin=1" : "admin=0";
+			return data;
+		}
+	</script>
+</head>
+<body id="quizz">
+	<div id="ppal_page">
+		<div id="header">
+			<h1>Gestor de encuestas</h1>
+		</div>
+		
+		<div id="menu">
+			<a href="javascript:void" onclick="javascript:generic.get('usuario');" title="Ver usuarios">Usuarios</a>
+			<a href="javascript:void" onclick="javascript:generic.get('encuesta');" title="Ver encuestas">Encuestas</a>
+		</div>
+		
+		<div id="content">
+			
+		</div>
+		
+		<div id="footer">
+			<h1>Movember S.L [Yamaradax & Huguet Association] &#174;</h1>
+		</div>
+	</div>
+</body>
+</html>
