@@ -9,69 +9,69 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import com.movember.quizz.model.bean.Usuario;
-import com.movember.quizz.model.service.IUsuarioService;
+import com.movember.quizz.model.bean.Encuesta;
+import com.movember.quizz.model.service.IEncuestaService;
 
 @Controller
-@RequestMapping("/usuario/**")
-public class UsuarioController {
+@RequestMapping("/encuesta/**")
+public class EncuestaController {
 
-	private IUsuarioService usuarioService;
+	private IEncuestaService encuestaService;
 
-	private static final String recurso = "usuario";
+	private static final String recurso = "encuesta";
 
 	@Autowired
-	public void setUsuarioService(IUsuarioService usuarioService) {
-		this.usuarioService = usuarioService;
+	public void setEncuestaService(IEncuestaService encuestaService) {
+		this.encuestaService = encuestaService;
 	}
 
-	public IUsuarioService getUsuarioService() {
-		return this.usuarioService;
+	public IEncuestaService getEncuestaService() {
+		return this.encuestaService;
 	}
 
 	@RequestMapping(value = "/" + recurso + "/{id}", method = RequestMethod.GET, produces = "text/html")
 	public String retrieve(@PathVariable("id") Long id, final Model uiModel) {
-		uiModel.addAttribute("usuario", this.usuarioService.findOne(id));
+		uiModel.addAttribute("encuesta", this.encuestaService.findOne(id));
 		uiModel.addAttribute("itemId", id);
 		return recurso + "/edit";
 	}
 
 	@RequestMapping(value = "/" + recurso, method = RequestMethod.GET, produces = "text/html")
 	public String listAll(final Model uiModel) {
-		List<Usuario> usuarios = this.usuarioService.findAll();
-		uiModel.addAttribute("usuarios", usuarios);
+		List<Encuesta> encuestas = this.encuestaService.findAll();
+		uiModel.addAttribute("encuestas", encuestas);
 		return recurso + "/list";
 	}
 
 	@RequestMapping(value = "/" + recurso + "/form", method = RequestMethod.GET, produces = "text/html")
 	public String createForm(final Model uiModel) {
-		uiModel.addAttribute(recurso, new Usuario());
+		uiModel.addAttribute(recurso, new Encuesta());
 		return recurso + "/new";
 	}
 
 	@RequestMapping(value = "/" + recurso, method = RequestMethod.POST)
-	public String insert(@ModelAttribute("usuario") Usuario usuario, BindingResult result) {
-		if (usuario == null) {
-			throw new IllegalArgumentException("Un usuario es requerido");
+	public String insert(@ModelAttribute("encuesta") Encuesta encuesta, BindingResult result) {
+		if (encuesta == null) {
+			throw new IllegalArgumentException("Una encuesta es requerida");
 		}
-		usuarioService.save(usuario);
+		encuestaService.save(encuesta);
 		return "redirect:/rest/" + recurso;
 	}
 
 	@RequestMapping(value = "/" + recurso + "/{id}", method = RequestMethod.POST)
-	public String update(@ModelAttribute("usuario") Usuario usuario, BindingResult result, Model uiModel) {
-		if (usuario == null) {
-			throw new IllegalArgumentException("Un usuario es requerido");
+	public String update(@ModelAttribute("encuesta") Encuesta encuesta, BindingResult result, Model uiModel) {
+		if (encuesta == null) {
+			throw new IllegalArgumentException("Un encuesta es requerida");
 		}
-		usuarioService.update(usuario);
+		encuestaService.update(encuesta);
 		return this.listAll(uiModel);
 	}
 
-	@RequestMapping(value = "/usuario/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/encuesta/{id}", method = RequestMethod.DELETE)
 	public String remove(@PathVariable String id, Model uiModel) {
-		Usuario usuario = new Usuario();
-		usuario.setId(new Long(id));
-		this.usuarioService.delete(usuario);
+		Encuesta encuesta = new Encuesta();
+		encuesta.setId(new Long(id));
+		this.encuestaService.delete(encuesta);
 		return this.listAll(uiModel);
 	}
 }
