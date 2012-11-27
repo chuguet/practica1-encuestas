@@ -5,11 +5,9 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -31,14 +29,11 @@ public class Encuesta implements IModelTable {
 	@Column(name = "FECHA_FIN")
 	private Date fecha_fin;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "PREGUNTAS_ENCUESTA")
+	@OneToMany(cascade = CascadeType.ALL)
 	private Collection<Pregunta> preguntas;
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "USUARIOS_ENCUESTA")
+	@ManyToMany(cascade = CascadeType.ALL)
 	private Collection<Usuario> usuariosEncuesta;
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "USUARIOS_ANONIMOS_ENCUESTA")
+	@ManyToMany(cascade = CascadeType.ALL)
 	private Collection<UsuarioAnonimo> usuariosAnonimosEncuesta;
 
 	public Long getId() {
