@@ -22,8 +22,6 @@ public class Respuesta implements IModelTable {
 
 	@ManyToMany(cascade = CascadeType.ALL)
 	private Collection<Usuario> usuariosRespuesta;
-	@ManyToMany(cascade = CascadeType.ALL)
-	private Collection<UsuarioAnonimo> usuariosAnonimosRespuesta;
 	@OneToOne(cascade = CascadeType.ALL)
 	private Pregunta preguntaRespuesta;
 
@@ -49,14 +47,6 @@ public class Respuesta implements IModelTable {
 
 	public void setPreguntaRespuesta(Pregunta preguntaRespuesta) {
 		this.preguntaRespuesta = preguntaRespuesta;
-	}
-
-	public Collection<UsuarioAnonimo> getUsuariosAnonimosRespuesta() {
-		return usuariosAnonimosRespuesta;
-	}
-
-	public void setUsuariosAnonimosRespuesta(Collection<UsuarioAnonimo> usuariosAnonimosRespuesta) {
-		this.usuariosAnonimosRespuesta = usuariosAnonimosRespuesta;
 	}
 
 	public Collection<Usuario> getUsuariosRespuesta() {
