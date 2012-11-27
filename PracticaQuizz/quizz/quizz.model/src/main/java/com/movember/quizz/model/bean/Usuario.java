@@ -4,11 +4,9 @@ import java.util.Collection;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -31,11 +29,9 @@ public class Usuario implements IModelTable {
 	@Column(name = "ADMIN")
 	private Integer admin;
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "ENCUESTAS_USUARIO")
+	@ManyToMany(cascade = CascadeType.ALL)
 	private Collection<Encuesta> encuestasUsuario;
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "RESPUESTAS_USUARIO")
+	@ManyToMany(cascade = CascadeType.ALL)
 	private Collection<Respuesta> respuestasUsuario;
 
 	public Long getId() {

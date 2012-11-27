@@ -4,11 +4,9 @@ import java.util.Collection;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -22,14 +20,11 @@ public class Respuesta implements IModelTable {
 	@Column(length = 100, name = "RESPUESTA")
 	private String respuesta;
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "USUARIOS_RESPUESTA")
+	@ManyToMany(cascade = CascadeType.ALL)
 	private Collection<Usuario> usuariosRespuesta;
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "USUARIOS_ANONIMOS_RESPUESTA")
+	@ManyToMany(cascade = CascadeType.ALL)
 	private Collection<UsuarioAnonimo> usuariosAnonimosRespuesta;
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "PREGUNTA_RESPUESTA")
+	@OneToOne(cascade = CascadeType.ALL)
 	private Pregunta preguntaRespuesta;
 
 	public Long getId() {
