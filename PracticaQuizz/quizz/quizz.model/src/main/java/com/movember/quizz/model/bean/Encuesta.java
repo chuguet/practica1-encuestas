@@ -33,8 +33,6 @@ public class Encuesta implements IModelTable {
 	private Collection<Pregunta> preguntas;
 	@ManyToMany(cascade = CascadeType.ALL)
 	private Collection<Usuario> usuariosEncuesta;
-	@ManyToMany(cascade = CascadeType.ALL)
-	private Collection<UsuarioAnonimo> usuariosAnonimosEncuesta;
 
 	public Long getId() {
 		return id;
@@ -82,13 +80,5 @@ public class Encuesta implements IModelTable {
 
 	public void setUsuariosEncuesta(Collection<Usuario> usuariosEncuesta) {
 		this.usuariosEncuesta = usuariosEncuesta;
-	}
-
-	public Collection<UsuarioAnonimo> getUsuariosAnonimosEncuesta() {
-		return usuariosAnonimosEncuesta;
-	}
-
-	public void setUsuariosAnonimosEncuesta(Collection<UsuarioAnonimo> usuariosAnonimosEncuesta) {
-		this.usuariosAnonimosEncuesta = usuariosAnonimosEncuesta;
 	}
 }
