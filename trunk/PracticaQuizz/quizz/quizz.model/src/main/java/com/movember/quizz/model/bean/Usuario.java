@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -29,10 +29,10 @@ public class Usuario implements IModelTable {
 	@Column(name = "ADMIN")
 	private Integer admin;
 
-	@ManyToMany(cascade = CascadeType.ALL)
-	private Collection<Encuesta> encuestasUsuario;
-	@ManyToMany(cascade = CascadeType.ALL)
-	private Collection<Respuesta> respuestasUsuario;
+	@OneToMany(cascade = CascadeType.ALL)
+	private Collection<Encuesta> encuestas;
+	@OneToMany(cascade = CascadeType.ALL)
+	private Collection<Respuesta> respuestas;
 
 	public Long getId() {
 		return id;
@@ -102,20 +102,19 @@ public class Usuario implements IModelTable {
 		this.admin = admin;
 	}
 
-	public Collection<Encuesta> getEncuestasUsuario() {
-		return encuestasUsuario;
+	public Collection<Encuesta> getEncuestas() {
+		return encuestas;
 	}
 
-	public void setEncuestasUsuario(Collection<Encuesta> encuestasUsuario) {
-		this.encuestasUsuario = encuestasUsuario;
+	public void setEncuestas(Collection<Encuesta> encuestas) {
+		this.encuestas = encuestas;
 	}
 
-	public Collection<Respuesta> getRespuestasUsuario() {
-		return respuestasUsuario;
+	public Collection<Respuesta> getRespuestas() {
+		return respuestas;
 	}
 
-	public void setRespuestasUsuario(Collection<Respuesta> respuestasUsuario) {
-		this.respuestasUsuario = respuestasUsuario;
+	public void setRespuestas(Collection<Respuesta> respuestas) {
+		this.respuestas = respuestas;
 	}
-
 }
