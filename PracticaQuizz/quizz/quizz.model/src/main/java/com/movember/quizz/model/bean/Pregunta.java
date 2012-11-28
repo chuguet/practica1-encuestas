@@ -21,9 +21,9 @@ public class Pregunta implements IModelTable {
 	private String pregunta;
 
 	@OneToOne(cascade = CascadeType.ALL)
-	private Encuesta encuestaPregunta;
+	private Encuesta encuesta;
 	@OneToMany(cascade = CascadeType.ALL)
-	private Collection<Respuesta> respuestasPregunta;
+	private Collection<Respuesta> respuestas;
 
 	public Long getId() {
 		return id;
@@ -41,20 +41,20 @@ public class Pregunta implements IModelTable {
 		this.pregunta = pregunta;
 	}
 
-	public Collection<Respuesta> getRespuestasPregunta() {
-		return respuestasPregunta;
+	public Collection<Respuesta> getRespuestas() {
+		return respuestas;
 	}
 
-	public void setRespuestasPregunta(Collection<Respuesta> respuestasPregunta) {
-		this.respuestasPregunta = respuestasPregunta;
+	public void setRespuestas(Collection<Respuesta> respuestas) {
+		this.respuestas = respuestas;
 	}
 
-	public Encuesta getEncuestaPregunta() {
-		return encuestaPregunta;
+	public Encuesta getEncuesta() {
+		return encuesta;
 	}
 
-	public void setEncuestaPregunta(Encuesta encuestaPregunta) {
-		this.encuestaPregunta = encuestaPregunta;
+	public void setEncuesta(Encuesta encuesta) {
+		this.encuesta = encuesta;
 	}
 
 }

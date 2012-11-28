@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -20,10 +20,10 @@ public class Respuesta implements IModelTable {
 	@Column(length = 100, name = "RESPUESTA")
 	private String respuesta;
 
-	@ManyToMany(cascade = CascadeType.ALL)
-	private Collection<Usuario> usuariosRespuesta;
+	@OneToMany(cascade = CascadeType.ALL)
+	private Collection<Usuario> usuarios;
 	@OneToOne(cascade = CascadeType.ALL)
-	private Pregunta preguntaRespuesta;
+	private Pregunta pregunta;
 
 	public Long getId() {
 		return id;
@@ -41,20 +41,19 @@ public class Respuesta implements IModelTable {
 		this.respuesta = respuesta;
 	}
 
-	public Pregunta getPreguntaRespuesta() {
-		return preguntaRespuesta;
+	public Pregunta getPregunta() {
+		return pregunta;
 	}
 
-	public void setPreguntaRespuesta(Pregunta preguntaRespuesta) {
-		this.preguntaRespuesta = preguntaRespuesta;
+	public void setPregunta(Pregunta pregunta) {
+		this.pregunta = pregunta;
 	}
 
-	public Collection<Usuario> getUsuariosRespuesta() {
-		return usuariosRespuesta;
+	public Collection<Usuario> getUsuarios() {
+		return usuarios;
 	}
 
-	public void setUsuariosRespuesta(Collection<Usuario> usuariosRespuesta) {
-		this.usuariosRespuesta = usuariosRespuesta;
+	public void setUsuarios(Collection<Usuario> usuarios) {
+		this.usuarios = usuarios;
 	}
-
 }

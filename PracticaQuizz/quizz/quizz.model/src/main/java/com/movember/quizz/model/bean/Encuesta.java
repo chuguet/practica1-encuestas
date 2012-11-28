@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -31,8 +30,8 @@ public class Encuesta implements IModelTable {
 
 	@OneToMany(cascade = CascadeType.ALL)
 	private Collection<Pregunta> preguntas;
-	@ManyToMany(cascade = CascadeType.ALL)
-	private Collection<Usuario> usuariosEncuesta;
+	@OneToMany(cascade = CascadeType.ALL)
+	private Collection<Usuario> usuarios;
 
 	public Long getId() {
 		return id;
@@ -74,11 +73,11 @@ public class Encuesta implements IModelTable {
 		this.preguntas = preguntas;
 	}
 
-	public Collection<Usuario> getUsuariosEncuesta() {
-		return usuariosEncuesta;
+	public Collection<Usuario> getUsuarios() {
+		return usuarios;
 	}
 
-	public void setUsuariosEncuesta(Collection<Usuario> usuariosEncuesta) {
-		this.usuariosEncuesta = usuariosEncuesta;
+	public void setUsuarios(Collection<Usuario> usuarios) {
+		this.usuarios = usuarios;
 	}
 }
