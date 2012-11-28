@@ -29,6 +29,8 @@
 		<antlr.version>2.7.7</antlr.version>
 		<spring.orm.version>3.1.2.RELEASE</spring.orm.version>
 		<javassist.version>3.12.1.GA</javassist.version>
+		<javax.servlet.jstl.version>1.2</javax.servlet.jstl.version>
+		<javax.servlet.api.version>2.5</javax.servlet.api.version>
 	</properties>
 	
 	<modules>
