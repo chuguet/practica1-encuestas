@@ -1,9 +1,7 @@
 package com.movember.quizz.model.config;
 
 import java.util.Properties;
-import javax.inject.Inject;
 import javax.sql.DataSource;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -14,10 +12,12 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.orm.hibernate3.HibernateTransactionManager;
 import org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @ComponentScan({ "com.movember.quizz.model" })
 @PropertySource({ "classpath:/application.properties" })
+@EnableTransactionManagement
 public class SpringModelConfiguration {
 
 	// Bean para importar el properties
@@ -75,10 +75,9 @@ public class SpringModelConfiguration {
 	// <property name="sessionFactory" ref="sessionFactory" />
 	// </bean>
 	@Bean
-	@Inject
-	public HibernateTransactionManager getFinalSessionFactory(SessionFactory sessionFactory) {
+	public HibernateTransactionManager transactionManager() {
 		HibernateTransactionManager transactionManager = new HibernateTransactionManager();
-		transactionManager.setSessionFactory(sessionFactory);
+		transactionManager.setSessionFactory(getSessionFactory().getObject());
 		return transactionManager;
 	}
 
@@ -105,9 +104,8 @@ public class SpringModelConfiguration {
 	}
 
 	@Bean
-	@Inject
-	public HibernateTemplate getHibernateTemplate(SessionFactory sessionFactory) {
-		HibernateTemplate hibernateTemplate = new HibernateTemplate(sessionFactory);
+	public HibernateTemplate getHibernateTemplate() {
+		HibernateTemplate hibernateTemplate = new HibernateTemplate(getSessionFactory().getObject());
 		return hibernateTemplate;
 	}
 

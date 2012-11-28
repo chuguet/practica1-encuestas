@@ -4,9 +4,12 @@ import java.util.List;
 import javax.inject.Inject;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import com.movember.quizz.model.bean.Pregunta;
 
 @Repository
+@Transactional(propagation = Propagation.MANDATORY)
 class PreguntaRepository implements IPreguntaRepository {
 
 	@Inject
