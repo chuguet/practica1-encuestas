@@ -33,19 +33,19 @@ public class ServiceUsuarioTest extends AbstractTest {
 		List<Encuesta> encuestas = new ArrayList<Encuesta>();
 		Encuesta encuesta = new Encuesta();
 		encuesta.setNombre("Encuesta de Ralph Wiggum");
-		encuesta.setUsuariosEncuesta(usuarios);
+		encuesta.setUsuarios(usuarios);
 		encuestas.add(encuesta);
-		usuario.setEncuestasUsuario(encuestas);
+		usuario.setEncuestas(encuestas);
 
 		Pregunta pregunta = new Pregunta();
-		pregunta.setEncuestaPregunta(encuesta);
+		pregunta.setEncuesta(encuesta);
 		pregunta.setPregunta("For president?");
 		List<Pregunta> preguntas = new ArrayList<Pregunta>();
 		preguntas.add(pregunta);
 		encuesta.setPreguntas(preguntas);
 
 		usuarioService.save(usuario);
-		Long idEncuesta = usuarioService.findOne(new Long(1)).getEncuestasUsuario().iterator().next().getId();
+		Long idEncuesta = usuarioService.findOne(new Long(1)).getEncuestas().iterator().next().getId();
 		Long idPregunta = encuestaService.findOne(idEncuesta).getPreguntas().iterator().next().getId();
 		assertEquals(idEncuesta, idPregunta);
 	}
