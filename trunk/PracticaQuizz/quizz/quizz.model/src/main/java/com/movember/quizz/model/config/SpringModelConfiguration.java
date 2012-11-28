@@ -72,7 +72,9 @@ public class SpringModelConfiguration {
 
 	// <bean id="transactionManager"
 	// class="org.springframework.orm.hibernate3.HibernateTransactionManager">
-	// <property name="sessionFactory" ref="sessionFactory" />
+	// <property name="sessionFactory" ref="sessionFactory" /> REF significa que
+	// coge un bean definido en este mismo contexto por lo tanto hago un
+	// getBean().getObject()
 	// </bean>
 	@Bean
 	public HibernateTransactionManager transactionManager() {
