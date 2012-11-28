@@ -1,70 +1,95 @@
 package com.movember.quizz.controller.control;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import com.movember.quizz.controller.dto.EncuestaDTO;
+import com.movember.quizz.controller.dto.MensajeDTO;
 import com.movember.quizz.model.bean.Encuesta;
+import com.movember.quizz.model.bean.Pregunta;
 import com.movember.quizz.model.service.IEncuestaService;
 
 @Controller
-@RequestMapping("/encuesta/**")
+@Transactional(propagation = Propagation.REQUIRED)
 public class EncuestaController {
-
+	@Inject
 	private IEncuestaService encuestaService;
 
 	private static final String recurso = "encuesta";
 
-	@Autowired
-	public void setEncuestaService(IEncuestaService encuestaService) {
-		this.encuestaService = encuestaService;
+	@RequestMapping(value = "/" + recurso + "/{id}", method = RequestMethod.GET)
+	public @ResponseBody
+	Encuesta retrieve(@PathVariable("id") Long id) {
+		Encuesta encuesta = this.encuestaService.findOne(id);
+		Collection<Pregunta> preguntas = new ArrayList(encuesta.getPreguntas());
+		return encuesta;
 	}
 
-	public IEncuestaService getEncuestaService() {
-		return this.encuestaService;
-	}
-
-	@RequestMapping(value = "/" + recurso + "/{id}", method = RequestMethod.GET, produces = "text/html")
-	public String retrieve(@PathVariable("id") Long id, final Model uiModel) {
-		uiModel.addAttribute("encuesta", this.encuestaService.findOne(id));
-		uiModel.addAttribute("itemId", id);
-		return recurso + "/edit";
-	}
-
-	@RequestMapping(value = "/" + recurso, method = RequestMethod.GET, produces = "text/html")
-	public String listAll(final Model uiModel) {
+	@RequestMapping(value = "/" + recurso, method = RequestMethod.GET)
+	public @ResponseBody
+	List<EncuestaDTO> listAll() {
 		List<Encuesta> encuestas = this.encuestaService.findAll();
-		uiModel.addAttribute("encuestas", encuestas);
-		return recurso + "/list";
+		List<EncuestaDTO> encuestasDTO = new ArrayList<EncuestaDTO>();
+		for (Encuesta encuesta : encuestas) {
+			EncuestaDTO e = new EncuestaDTO();
+			e.toRest(encuesta);
+			encuestasDTO.add(e);
+		}
+		return encuestasDTO;
 	}
 
-	@RequestMapping(value = "/" + recurso + "/form", method = RequestMethod.GET, produces = "text/html")
-	public String createForm(final Model uiModel) {
-		uiModel.addAttribute(recurso, new Encuesta());
-		return recurso + "/new";
+	@RequestMapping(value = "/" + recurso + "/form/{operacion}", method = RequestMethod.GET, produces = "text/html")
+	public String createForm(@PathVariable("operacion") String operacion, final Model uiModel) {
+		uiModel.addAttribute("operacion", operacion);
+		if (!operacion.equals("list")) {
+			operacion = "new";
+		}
+		return recurso + "/" + operacion;
 	}
 
 	@RequestMapping(value = "/" + recurso, method = RequestMethod.POST)
-	public String insert(@ModelAttribute("encuesta") Encuesta encuesta, BindingResult result) {
-		if (encuesta == null) {
-			throw new IllegalArgumentException("Una encuesta es requerida");
+	public @ResponseBody
+	MensajeDTO insert(@RequestBody EncuestaDTO encuestaDTO) {
+		MensajeDTO mensaje = new MensajeDTO();
+		if (encuestaDTO == null) {
+			mensaje.setMensaje("Una encuesta es requerida");
+			mensaje.setCorrecto(false);
+			return mensaje;
 		}
+
+		Encuesta encuesta = new Encuesta();
+		encuestaDTO.toBusiness(encuesta);
+
 		encuestaService.save(encuesta);
-		return "redirect:/rest/" + recurso;
+		mensaje.setMensaje("Encuesta creada correctamente");
+		return mensaje;
 	}
 
 	@RequestMapping(value = "/" + recurso + "/{id}", method = RequestMethod.POST)
-	public String update(@ModelAttribute("encuesta") Encuesta encuesta, BindingResult result, Model uiModel) {
-		if (encuesta == null) {
-			throw new IllegalArgumentException("Un encuesta es requerida");
+	public @ResponseBody
+	MensajeDTO update(@RequestBody EncuestaDTO encuestaDTO) {
+		MensajeDTO mensaje = new MensajeDTO();
+		if (encuestaDTO == null) {
+			mensaje.setMensaje("Una encuesta es requerida");
+			mensaje.setCorrecto(false);
+			return mensaje;
 		}
+		Encuesta encuesta = new Encuesta();
+		encuestaDTO.toBusiness(encuesta);
 		encuestaService.update(encuesta);
-		return this.listAll(uiModel);
+
+		mensaje.setMensaje("Encuesta modificada correctamente");
+		return mensaje;
 	}
 
 	@RequestMapping(value = "/encuesta/{id}", method = RequestMethod.DELETE)
@@ -72,6 +97,6 @@ public class EncuestaController {
 		Encuesta encuesta = new Encuesta();
 		encuesta.setId(new Long(id));
 		this.encuestaService.delete(encuesta);
-		return this.listAll(uiModel);
+		return "";
 	}
 }
