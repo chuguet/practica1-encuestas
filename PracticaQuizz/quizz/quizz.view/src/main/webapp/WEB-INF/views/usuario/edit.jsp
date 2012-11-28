@@ -5,6 +5,7 @@
 
 <form:form id="edicion" modelAttribute="usuario" action="javascript:generic.post('usuario/${usuario.id}', generic.getParamsUsuario());">
 	<fieldset>
+		<form:hidden path="id" />
 		<legend>Edici&oacute;n de Usuario</legend>
 		<p>
 			<form:label path="nombre">Nombre:</form:label>
