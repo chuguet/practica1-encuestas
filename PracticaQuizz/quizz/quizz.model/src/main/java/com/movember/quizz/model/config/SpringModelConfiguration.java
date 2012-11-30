@@ -12,12 +12,11 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.orm.hibernate3.HibernateTransactionManager;
 import org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @ComponentScan({ "com.movember.quizz.model" })
 @PropertySource({ "classpath:/application.properties" })
-@EnableTransactionManagement
+// @EnableTransactionManagement
 public class SpringModelConfiguration {
 
 	// Bean para importar el properties
