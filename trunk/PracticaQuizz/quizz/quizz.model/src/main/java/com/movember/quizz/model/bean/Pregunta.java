@@ -7,8 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -20,7 +20,7 @@ public class Pregunta implements IModelTable {
 	@Column(length = 100, name = "PREGUNTA")
 	private String pregunta;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Encuesta encuesta;
 	@OneToMany(cascade = CascadeType.ALL)
 	private Collection<Respuesta> respuestas;

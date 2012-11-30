@@ -1,30 +1,22 @@
 package com.movember.quizz.model.test;
 
-import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import org.junit.Test;
-import org.springframework.test.context.transaction.TransactionConfiguration;
-import org.springframework.transaction.annotation.Transactional;
 import com.movember.quizz.model.bean.Encuesta;
 import com.movember.quizz.model.bean.Pregunta;
 import com.movember.quizz.model.bean.Usuario;
-import com.movember.quizz.model.service.IEncuestaService;
 import com.movember.quizz.model.service.IUsuarioService;
 
-@TransactionConfiguration(defaultRollback = true)
-@Transactional
+// @Transactional
+// @TransactionConfiguration(defaultRollback = false)
 public class ServiceUsuarioTest extends AbstractTest {
 
 	@Inject
 	private IUsuarioService usuarioService;
 
-	@Inject
-	private IEncuestaService encuestaService;
-
 	@Test
-	@Transactional
 	public void testSave() {
 		Usuario usuario = new Usuario("Carlos", "Huguet", "huguet10@gmail.com", "1234", "1234", 1);
 		List<Usuario> usuarios = new ArrayList<Usuario>();
@@ -45,9 +37,6 @@ public class ServiceUsuarioTest extends AbstractTest {
 		encuesta.setPreguntas(preguntas);
 
 		usuarioService.save(usuario);
-		Long idEncuesta = usuarioService.findOne(new Long(1)).getEncuestas().iterator().next().getId();
-		Long idPregunta = encuestaService.findOne(idEncuesta).getPreguntas().iterator().next().getId();
-		assertEquals(idEncuesta, idPregunta);
 	}
 
 }

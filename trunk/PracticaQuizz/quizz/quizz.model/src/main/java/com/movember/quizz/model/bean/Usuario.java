@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -29,9 +29,9 @@ public class Usuario implements IModelTable {
 	@Column(name = "ADMIN")
 	private Integer admin;
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL, mappedBy = "usuarios")
 	private Collection<Encuesta> encuestas;
-	@OneToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL, mappedBy = "usuarios")
 	private Collection<Respuesta> respuestas;
 
 	public Long getId() {
