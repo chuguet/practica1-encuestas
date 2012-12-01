@@ -4,7 +4,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <script type="text/javascript">
-	encuesta.formatView();
+	encuesta.formatForm();
 	<c:if test="${operacion == 'edit'}">
 		function showInformationIntoView(encuesta){
 			$('#id').val(encuesta.id);
