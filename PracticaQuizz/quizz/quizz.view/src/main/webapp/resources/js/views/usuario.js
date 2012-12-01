@@ -1,4 +1,4 @@
-var encuesta = {
+var usuario = {
 	'rowID' : null,
 	'formatList' : function() {
 		$(function() {
