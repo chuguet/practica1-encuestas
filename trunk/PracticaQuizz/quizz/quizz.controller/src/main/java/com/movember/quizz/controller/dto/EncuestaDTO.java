@@ -6,23 +6,15 @@ import java.util.Date;
 import java.util.List;
 import com.movember.quizz.model.bean.Encuesta;
 import com.movember.quizz.model.bean.Pregunta;
-import com.movember.quizz.model.bean.Usuario;
 
 public class EncuestaDTO extends AbstractDTO {
-	private Long id;
 	private String nombre;
 	private String fecha_inicio;
 	private String fecha_fin;
+	private List<PreguntaDTO> preguntasDTO;
 
-	private List<Pregunta> preguntas = new ArrayList<Pregunta>();
-	private List<Usuario> usuariosEncuesta = new ArrayList<Usuario>();
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
+	public EncuestaDTO() {
+		preguntasDTO = new ArrayList<PreguntaDTO>();
 	}
 
 	public String getNombre() {
@@ -49,38 +41,47 @@ public class EncuestaDTO extends AbstractDTO {
 		this.fecha_fin = fecha_fin;
 	}
 
-	public List<Pregunta> getPreguntas() {
-		return preguntas;
+	public List<PreguntaDTO> getPreguntasDTO() {
+		return preguntasDTO;
 	}
 
-	public void setPreguntas(List<Pregunta> preguntas) {
-		this.preguntas = preguntas;
-	}
-
-	public List<Usuario> getUsuariosEncuesta() {
-		return usuariosEncuesta;
-	}
-
-	public void setUsuariosEncuesta(List<Usuario> usuariosEncuesta) {
-		this.usuariosEncuesta = usuariosEncuesta;
+	public void setPreguntasDTO(List<PreguntaDTO> preguntasDTO) {
+		this.preguntasDTO = preguntasDTO;
 	}
 
 	@Override
 	public void toRest(Object object) {
 		Encuesta encuesta = (Encuesta) object;
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		this.id = encuesta.getId();
+		this.setId(encuesta.getId());
 		this.nombre = encuesta.getNombre();
 		this.fecha_inicio = sdf.format(encuesta.getFecha_inicio());
 		this.fecha_fin = sdf.format(encuesta.getFecha_fin());
+
+		if (encuesta.getPreguntas() != null && encuesta.getPreguntas().size() > 0) {
+			for (Pregunta pregunta : encuesta.getPreguntas()) {
+				PreguntaDTO preguntaDTO = new PreguntaDTO();
+				preguntaDTO.toRest(pregunta);
+				this.preguntasDTO.add(preguntaDTO);
+			}
+		}
 	}
 
 	@Override
 	public void toBusiness(Object object) {
 		Encuesta encuesta = (Encuesta) object;
-		encuesta.setId(this.id);
+		encuesta.setId(this.getId());
 		encuesta.setNombre(this.nombre);
 		encuesta.setFecha_fin(new Date());
 		encuesta.setFecha_inicio(new Date());
+
+		if (this.preguntasDTO != null && this.preguntasDTO.size() > 0) {
+			for (PreguntaDTO preguntaDTO : this.preguntasDTO) {
+				Pregunta pregunta = new Pregunta();
+				pregunta.setId_encuesta(this.getId());
+				preguntaDTO.toBusiness(pregunta);
+				encuesta.getPreguntas().add(pregunta);
+			}
+		}
 	}
 }

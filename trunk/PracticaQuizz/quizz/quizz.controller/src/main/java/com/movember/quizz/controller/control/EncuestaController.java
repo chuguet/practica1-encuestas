@@ -1,12 +1,9 @@
 package com.movember.quizz.controller.control;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import javax.inject.Inject;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,11 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.movember.quizz.controller.dto.EncuestaDTO;
 import com.movember.quizz.controller.dto.MensajeDTO;
 import com.movember.quizz.model.bean.Encuesta;
-import com.movember.quizz.model.bean.Pregunta;
 import com.movember.quizz.model.service.IEncuestaService;
 
 @Controller
-@Transactional(propagation = Propagation.REQUIRED)
 public class EncuestaController {
 	@Inject
 	private IEncuestaService encuestaService;
@@ -29,16 +24,19 @@ public class EncuestaController {
 
 	@RequestMapping(value = "/" + recurso + "/{id}", method = RequestMethod.GET)
 	public @ResponseBody
-	Encuesta retrieve(@PathVariable("id") Long id) {
-		Encuesta encuesta = this.encuestaService.findOne(id);
-		Collection<Pregunta> preguntas = new ArrayList(encuesta.getPreguntas());
-		return encuesta;
+	EncuestaDTO retrieve(@PathVariable("id") Integer id) {
+		Encuesta encuesta = this.encuestaService.retrieve(id);
+		// Comversion a DTO
+		EncuestaDTO encuestaDTO = new EncuestaDTO();
+		encuestaDTO.toRest(encuesta);
+		return encuestaDTO;
 	}
 
 	@RequestMapping(value = "/" + recurso, method = RequestMethod.GET)
 	public @ResponseBody
 	List<EncuestaDTO> listAll() {
-		List<Encuesta> encuestas = this.encuestaService.findAll();
+		List<Encuesta> encuestas = this.encuestaService.selectAll();
+		// Conversion a DTO
 		List<EncuestaDTO> encuestasDTO = new ArrayList<EncuestaDTO>();
 		for (Encuesta encuesta : encuestas) {
 			EncuestaDTO e = new EncuestaDTO();
@@ -52,7 +50,7 @@ public class EncuestaController {
 	public String createForm(@PathVariable("operacion") String operacion, final Model uiModel) {
 		uiModel.addAttribute("operacion", operacion);
 		if (!operacion.equals("list")) {
-			operacion = "new";
+			operacion = "form";
 		}
 		return recurso + "/" + operacion;
 	}
@@ -70,7 +68,7 @@ public class EncuestaController {
 		Encuesta encuesta = new Encuesta();
 		encuestaDTO.toBusiness(encuesta);
 
-		encuestaService.save(encuesta);
+		encuestaService.insert(encuesta);
 		mensaje.setMensaje("Encuesta creada correctamente");
 		return mensaje;
 	}
@@ -93,10 +91,12 @@ public class EncuestaController {
 	}
 
 	@RequestMapping(value = "/encuesta/{id}", method = RequestMethod.DELETE)
-	public String remove(@PathVariable String id, Model uiModel) {
+	public MensajeDTO remove(@PathVariable Integer id, Model uiModel) {
 		Encuesta encuesta = new Encuesta();
-		encuesta.setId(new Long(id));
+		encuesta.setId(id);
 		this.encuestaService.delete(encuesta);
-		return "";
+		MensajeDTO mensaje = new MensajeDTO();
+		mensaje.setMensaje("Encuesta eliminada correctamente");
+		return mensaje;
 	}
 }

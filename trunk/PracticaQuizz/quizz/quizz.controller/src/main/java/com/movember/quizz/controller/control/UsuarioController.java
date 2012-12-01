@@ -21,15 +21,15 @@ public class UsuarioController {
 	private static final String recurso = "usuario";
 
 	@RequestMapping(value = "/" + recurso + "/{id}", method = RequestMethod.GET, produces = "text/html")
-	public String retrieve(@PathVariable("id") Long id, final Model uiModel) {
-		uiModel.addAttribute("usuario", this.usuarioService.findOne(id));
+	public String retrieve(@PathVariable("id") Integer id, final Model uiModel) {
+		uiModel.addAttribute("usuario", this.usuarioService.retrieve(id));
 		uiModel.addAttribute("itemId", id);
 		return recurso + "/edit";
 	}
 
 	@RequestMapping(value = "/" + recurso, method = RequestMethod.GET, produces = "text/html")
 	public String listAll(final Model uiModel) {
-		List<Usuario> usuarios = this.usuarioService.findAll();
+		List<Usuario> usuarios = this.usuarioService.selectAll();
 		uiModel.addAttribute("usuarios", usuarios);
 		return recurso + "/list";
 	}
@@ -46,7 +46,7 @@ public class UsuarioController {
 		if (usuario == null) {
 			throw new IllegalArgumentException("Un usuario es requerido");
 		}
-		usuarioService.save(usuario);
+		usuarioService.insert(usuario);
 		MensajeDTO mensaje = new MensajeDTO();
 		mensaje.setMensaje("Usuario creado correctamente");
 		return mensaje;
