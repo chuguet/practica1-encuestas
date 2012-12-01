@@ -10,7 +10,7 @@ var generic = {
 		if (item) {
 			var action = entity + '/form/edit';
 			this.executeHtml('GET', action, function() {
-				generic.get(entity, item);
+				generic.get(entity, item, generic.showInformation);
 			});
 		}
 		else {
@@ -57,20 +57,23 @@ var generic = {
 			success : function(response) {
 				if ($method == 'GET') {
 					if (callback) {
-						callback.apply(this, response);
+						var param = new Array();
+						param.push(response);
+						callback.apply(this, param);
 					}
 				}
 				else {
 					jAlert(response.mensaje, 'Operación correcta');
 					if (response.correcto) {
 						if (callback) {
-							callback.apply(this, response);
+							var param = new Array();
+							param.push(response);
+							callback.apply(this, param);
 						}
 					}
 				}
 			},
 			error : function(e) {
-				alert(e);
 				jAlert('Se ha producido un error al procesar la acción', 'Error de operación');
 			}
 		});
@@ -118,11 +121,11 @@ var generic = {
 		var dFin = $("#fecha_fin").datepicker('getDate');
 		var fecha_fin = dFin.getFullYear() + '-' + (dFin.getMonth() + 1) + '-' + dFin.getDate();
 		var data = {
-			'id' : id,
-			'nombre' : $("#nombre").val(),
-			'fecha_inicio' : fecha_inicio,
-			'fecha_fin' : fecha_fin,
-			'preguntas' : generic.getQuestions()
+			id : id,
+			nombre : $("#nombre").val(),
+			fecha_inicio : fecha_inicio,
+			fecha_fin : fecha_fin,
+			preguntasDTO : generic.getQuestions()
 		};
 		var entity = (id != null) ? 'encuesta/' + id : 'encuesta';
 		generic.post(entity, data, function() {
@@ -131,55 +134,28 @@ var generic = {
 	},
 	'generateQuestionsTree' : function(selector) {
 		$(selector).dynatree({
-			initAjax : {
-			/* url: "sample-data3.json" */
-			},
-			onLazyRead : function(node) {
-				// Mockup a slow reqeuest ...
-				node.appendAjax({
-					/* url: "sample-data2.json", */
-					debugLazyDelay : 750
-				// don't do thi in production code
-				});
-			},
-			dnd : {
-				preventVoidMoves : true, // Prevent dropping nodes 'before
-				// self', etc.
-				onDragStart : function(node) {
-					/**
-					 * This function MUST be defined to enable dragging for the
-					 * tree. Return false to cancel dragging of node.
-					 */
-					return true;
-				},
-				onDragEnter : function(node, sourceNode) {
-					/**
-					 * sourceNode may be null for non-dynatree droppables.
-					 * Return false to disallow dropping on node. In this case
-					 * onDragOver and onDragLeave are not called. Return 'over',
-					 * 'before, or 'after' to force a hitMode. Return ['before',
-					 * 'after'] to restrict available hitModes. Any other return
-					 * value will calc the hitMode from the cursor position.
-					 */
-					// Prevent dropping a parent below another parent (only sort
-					// nodes under the same parent)
-					if (node.parent !== sourceNode.parent) {
-						return false;
-					}
-					// Don't allow dropping *over* a node (would create a child)
-					return [
-							"before", "after"
-					];
-				},
-				onDrop : function(node, sourceNode, hitMode, ui, draggable) {
-					/**
-					 * This function MUST be defined to enable dropping of items
-					 * on the tree.
-					 */
-					sourceNode.move(node, hitMode);
-				}
+			selectMode : 1,
+			onActivate : function(question) {
+				$("#btnModifyQuestion").button("enable");
+				$("#btnDeleteQuestion").button("enable");
 			}
 		});
+	},
+	'xx' : function() {
+		var xz = $("#tree").dynatree("getRoot");
+		var tree = $("#tree").dynatree("getTree");
+		var selectedQuestion = tree.getActiveNode();
+		$("#nombrePregunta").val(selectedQuestion.data.title);
+		$("#nombrePregunta").attr('key', selectedQuestion.data.key);
+		$('#respuestas').find('option').remove();
+		$('#btnDeleteResponse').button("disable");
+		var responses = selectedQuestion.childList;
+		for( var i = 0; i < responses.length; i++) {
+			$('#respuestas').append('<option value="' + responses[i].data.title + '" key="' + responses[i].data.key + '">' + responses[i].data.title + '</option>');
+		}
+		$('#dialog-form').dialog('option', 'title', 'Modificar Pregunta');
+		$(".ui-dialog-buttonpane button:contains('Crear') span").text('Modificar');
+		$("#dialog-form").dialog("open");
 	},
 	'getQuestions' : function() {
 		if ($("#tree").dynatree("getTree").toDict().children) {
@@ -191,32 +167,43 @@ var generic = {
 				var respArray = p.children;
 				for( var j = 0; j < respArray.length; j++) {
 					var respuesta = {
-						'texto' : respArray[j].title
+						'id' : null,
+						'title' : respArray[j].title,
+						'key' : respArray[j].key,
+						'isFolder' : false
 					};
 					respuestas.push(respuesta);
 				}
 
 				var pregunta = {
-					'texto' : p.title,
-					'respuestasPregunta' : respuestas
+					'id' : null,
+					'title' : p.title,
+					'key' : p.key,
+					'isFolder' : true,
+					'children' : respuestas
 				};
 				preguntas.push(pregunta);
 			}
 			return preguntas;
 		}
-		// else {
-		// return [
-		// {
-		// 'texto' : "Pregunta1"
-		// }
-		// ];
-		// }
+		else {
+			var preguntas = new Array();
+			preguntas.push({
+				id : null,
+				title : "Pregunta1",
+				key : "1",
+				isFolder : true,
+				children : null
+			});
+			return preguntas;
+		}
 
 	},
 	'showInformation' : function() {
-		var information = arguments;
-		$("#lista").setGridParam({
-			data : information
-		}).trigger("reloadGrid");
+		var information = arguments[0];
+		// for( var i = 0; i < arguments.length; i++) {
+		// information.push(arguments[i]);
+		// }
+		showInformationIntoView(information);
 	}
 };
