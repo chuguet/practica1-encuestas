@@ -1,35 +1,65 @@
 package com.movember.quizz.model.service;
 
+import java.sql.SQLException;
 import java.util.List;
 import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import com.movember.quizz.model.bean.Usuario;
-import com.movember.quizz.model.repository.IUsuarioRepository;
+import com.movember.quizz.model.dao.IUsuarioDAO;
 
 @Service
-// @Transactional(propagation = Propagation.MANDATORY)
-public class UsuarioService implements IUsuarioService {
+class UsuarioService implements IUsuarioService {
 
 	@Inject
-	private IUsuarioRepository usuarioRepository;
+	private IUsuarioDAO usuarioDAO;
 
-	public void save(Usuario usuario) {
-		usuarioRepository.save(usuario);
+	public void insert(Usuario usuario) {
+		try {
+			usuarioDAO.insert(usuario);
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void update(Usuario usuario) {
-		usuarioRepository.update(usuario);
+		try {
+			usuarioDAO.update(usuario);
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void delete(Usuario usuario) {
-		usuarioRepository.delete(usuario);
+		try {
+			usuarioDAO.delete(usuario.getId());
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
-	public Usuario findOne(Long pId) {
-		return usuarioRepository.findOne(pId);
+	public Usuario retrieve(Integer id) {
+		Usuario usuario = null;
+		try {
+			usuario = usuarioDAO.retrieve(id);
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return usuario;
 	}
 
-	public List<Usuario> findAll() {
-		return usuarioRepository.findAll();
+	public List<Usuario> selectAll() {
+		List<Usuario> usuarios = null;
+		try {
+			usuarios = usuarioDAO.selectAll();
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return usuarios;
 	}
+
 }
