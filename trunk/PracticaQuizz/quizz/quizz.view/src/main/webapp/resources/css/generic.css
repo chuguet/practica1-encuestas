@@ -3,5 +3,5 @@ body#quizz div.ui-datepicker {font-size: 0.7em;}
 
 /*Formulario de preguntas*/
 #frmPreguntas input#nombrePregunta {width:100%;}
-#frmPreguntas input#respuesta {width:62%;}
+#frmPreguntas input#respuesta {width:61%;}
 #frmPreguntas select#respuestas {width:100%;}
