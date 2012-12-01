@@ -75,4 +75,10 @@ $(function() {
 		$('#lista').setGridWidth($('#parent').width()-30, true);
 	}).trigger('resize');
 });
+
+function showInformationIntoView(information){
+	$("#lista").setGridParam({
+		data : information
+	}).trigger("reloadGrid");
+};
 </script>
