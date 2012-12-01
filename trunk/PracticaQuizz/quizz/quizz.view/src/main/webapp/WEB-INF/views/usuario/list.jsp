@@ -1,37 +1,22 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<fieldset>
-	<legend>Listado de Usuarios</legend>
+<fieldset id="parent">
+	<legend>Listado de Encuestas</legend>
 	<div class="botonera">
-		<input type="button" value="Alta" onclick="javascript:generic.get('usuario/form');" />
+		<input type="button" id="btnAlta" value="Alta" onclick="javascript:generic.getForm('encuesta');" />
+		<input type="button" id="btnEditar" value="Editar" onclick="javascript:generic.getForm('encuesta', $('#lista').jqGrid('getRowData', encuesta.rowID).id);" disabled="true" />
+		<input type="button" id="btnEliminar" value="Eliminar" onclick="javascript:generic.delete('encuesta', $('#lista').jqGrid('getRowData', encuesta.rowID).id);" disabled="true" />
 	</div>
-	<table class="table-bordered table-striped table-condensed cf">
-		<thead>
-			<tr>
-				<th>Nombre</th>
-				<th>Apellidos</th>
-				<th>Email</th>
-				<th>Usuario</th>
-				<th>Es admin</th>
-				<th>Acciones</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach var="usuario" items="${usuarios}">
-				<tr>
-					<td>${usuario.nombre}</td>
-					<td>${usuario.apellidos}</td>
-					<td>${usuario.email}</td>
-					<td>${usuario.usuario}</td>
-					<td>${usuario.admin}</td>
-					<td>
-						<input type="button" value="Modificar" onclick="javascript:generic.get('usuario/${usuario.id}');" /> 
-						<input type="button" value="Eliminar" onclick="javascript:generic.delete('usuario/${usuario.id}');" />
-					</td>
-				</tr>
-			</c:forEach>
-		</tbody>
-	</table>
+	<table id="lista" ></table>
+	<div id=paginadorLista></div>
 </fieldset>
+
+<script type="text/javascript">
+usuario.formatList();
+function showInformationIntoView(information){
+	$("#lista").setGridParam({
+		data : information
+	}).trigger("reloadGrid");
+};
+</script>

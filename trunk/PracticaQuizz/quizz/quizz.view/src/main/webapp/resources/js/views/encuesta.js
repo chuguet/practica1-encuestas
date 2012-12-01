@@ -1,5 +1,67 @@
 var encuesta = {
-	'formatView' : function() {
+	'rowID' : null,
+	'formatList' : function() {
+		$(function() {
+			$("#lista").jqGrid({
+				datatype : 'local',
+				data : [],
+				colNames : [
+						"Id", "Encuesta", "Fecha Inicio", "Fecha Fin"
+				],
+				colModel : [
+						{
+							name : 'id',
+							index : 'idRest',
+							width : 0,
+							hidden : true
+						}, {
+							name : 'nombre',
+							index : 'nombre',
+							width : 60,
+							sorttype : 'string',
+							sortable : true,
+							align : 'left'
+						}, {
+							name : 'fecha_inicio',
+							index : 'fecha_inicio',
+							width : 15,
+							sorttype : 'string',
+							sortable : true,
+							align : 'left'
+						}, {
+							name : 'fecha_fin',
+							index : 'fecha_fin',
+							width : 15,
+							sorttype : 'string',
+							sortable : true,
+							align : 'left'
+						}
+				],
+				autowidth : true,
+				shrinkToFit : true,
+				rowNum : 20,
+				rowList : [
+						10, 20, 30
+				],
+				pager : '#paginadorLista',
+				sortname : 'nombre',
+				sortorder : 'asc',
+				viewrecords : true,
+				rownumbers : false,
+				scroll : false,
+				onSelectRow : function(rowid, status) {
+					$("#btnEditar").attr('disabled', false);
+					$("#btnEliminar").attr('disabled', false);
+					encuesta.rowID = rowid;
+				}
+			});
+			$(window).bind('resizeEnd', function() {
+				$('#lista').setGridWidth($('#parent').width() - 30, true);
+			}).trigger('resize');
+		});
+	},
+
+	'formatForm' : function() {
 		var datePickerParams = {
 			"dateFormat" : 'dd/mm/yy',
 			"dayNamesMin" : [
@@ -12,7 +74,7 @@ var encuesta = {
 		};
 		$("#fecha_inicio").datepicker(datePickerParams);
 		$("#fecha_fin").datepicker(datePickerParams);
-		generic.generateQuestionsTree("#tree");
+		encuesta.generateQuestionsTree("#tree");
 
 		$("#btnAddQuestion").button().click(function() {
 			var tree = $("#tree").dynatree("getTree");
@@ -30,7 +92,19 @@ var encuesta = {
 		});
 
 		$("#btnModifyQuestion").button().click(function() {
-			generic.xx();
+			var tree = $("#tree").dynatree("getTree");
+			var selectedQuestion = tree.getActiveNode();
+			$("#nombrePregunta").val(selectedQuestion.data.title);
+			$("#nombrePregunta").attr('key', selectedQuestion.data.key);
+			$('#respuestas').find('option').remove();
+			$('#btnDeleteResponse').button("disable");
+			var responses = selectedQuestion.childList;
+			for( var i = 0; i < responses.length; i++) {
+				$('#respuestas').append('<option value="' + responses[i].data.title + '" key="' + responses[i].data.key + '">' + responses[i].data.title + '</option>');
+			}
+			$('#dialog-form').dialog('option', 'title', 'Modificar Pregunta');
+			$(".ui-dialog-buttonpane button:contains('Crear') span").text('Modificar');
+			$("#dialog-form").dialog("open");
 		});
 
 		$("#btnDeleteQuestion").button().click(function() {
@@ -59,7 +133,7 @@ var encuesta = {
 		});
 
 		$("#btnSaveQuizz").button().click(function() {
-			generic.getParamsEncuesta();
+			encuesta.getParams();
 		});
 
 		$('#respuestas').change(function() {
@@ -142,5 +216,73 @@ var encuesta = {
 				allFields.val("");
 			}
 		});
-	}
+	},
+	'getParams' : function() {
+		var id = ($("#id").val()) ? $("#id").val() : null;
+		var dInicio = $("#fecha_inicio").datepicker('getDate');
+		var fecha_inicio = dInicio.getFullYear() + '-' + (dInicio.getMonth() + 1) + '-' + dInicio.getDate();
+		var dFin = $("#fecha_fin").datepicker('getDate');
+		var fecha_fin = dFin.getFullYear() + '-' + (dFin.getMonth() + 1) + '-' + dFin.getDate();
+		var data = {
+			id : id,
+			nombre : $("#nombre").val(),
+			fecha_inicio : fecha_inicio,
+			fecha_fin : fecha_fin,
+			preguntasDTO : encuesta.getQuestions()
+		};
+		var entity = (id != null) ? 'encuesta/' + id : 'encuesta';
+		generic.post(entity, data, function() {
+			generic.getList('encuesta');
+		});
+	},
+	'generateQuestionsTree' : function(selector) {
+		$(selector).dynatree({
+			selectMode : 1,
+			onActivate : function(question) {
+				$("#btnModifyQuestion").button("enable");
+				$("#btnDeleteQuestion").button("enable");
+			}
+		});
+	},
+	'getQuestions' : function() {
+		if ($("#tree").dynatree("getTree").toDict().children) {
+			var preguntas = [];
+			var pregArray = $("#tree").dynatree("getTree").toDict().children;
+			for( var i = 0; i < pregArray.length; i++) {
+				var p = pregArray[i];
+				var respuestas = [];
+				var respArray = p.children;
+				for( var j = 0; j < respArray.length; j++) {
+					var respuesta = {
+						'id' : null,
+						'title' : respArray[j].title,
+						'key' : respArray[j].key,
+						'isFolder' : false
+					};
+					respuestas.push(respuesta);
+				}
+
+				var pregunta = {
+					'id' : null,
+					'title' : p.title,
+					'key' : p.key,
+					'isFolder' : true,
+					'children' : respuestas
+				};
+				preguntas.push(pregunta);
+			}
+			return preguntas;
+		}
+		else {
+			var preguntas = new Array();
+			preguntas.push({
+				id : null,
+				title : "Pregunta1",
+				key : "1",
+				isFolder : true,
+				children : null
+			});
+			return preguntas;
+		}
+	},
 };
