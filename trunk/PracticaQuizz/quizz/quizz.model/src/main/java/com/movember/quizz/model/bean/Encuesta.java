@@ -1,45 +1,19 @@
 package com.movember.quizz.model.bean;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.Date;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import java.util.List;
+import org.hibernate.annotations.Entity;
 
 @Entity
-@Table(name = "ENCUESTA")
-public class Encuesta implements IModelTable {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	@Column(name = "NOMBRE", length = 100)
+public class Encuesta extends AbstractBean {
 	private String nombre;
-	@Temporal(TemporalType.DATE)
-	@Column(name = "FECHA_INICIO")
 	private Date fecha_inicio;
-	@Temporal(TemporalType.DATE)
-	@Column(name = "FECHA_FIN")
 	private Date fecha_fin;
+	private List<Pregunta> preguntas;
 
-	@OneToMany(cascade = CascadeType.ALL)
-	private Collection<Pregunta> preguntas;
-	@ManyToMany(cascade = CascadeType.ALL)
-	private Collection<Usuario> usuarios;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
+	public Encuesta() {
+		this.preguntas = new ArrayList<Pregunta>();
 	}
 
 	public String getNombre() {
@@ -66,19 +40,11 @@ public class Encuesta implements IModelTable {
 		this.fecha_fin = fecha_fin;
 	}
 
-	public Collection<Pregunta> getPreguntas() {
+	public List<Pregunta> getPreguntas() {
 		return preguntas;
 	}
 
-	public void setPreguntas(Collection<Pregunta> preguntas) {
+	public void setPreguntas(List<Pregunta> preguntas) {
 		this.preguntas = preguntas;
-	}
-
-	public Collection<Usuario> getUsuarios() {
-		return usuarios;
-	}
-
-	public void setUsuarios(Collection<Usuario> usuarios) {
-		this.usuarios = usuarios;
 	}
 }

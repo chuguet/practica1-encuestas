@@ -1,37 +1,12 @@
 package com.movember.quizz.model.bean;
 
-import java.util.Collection;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "RESPUESTA")
-public class Respuesta implements IModelTable {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	@Column(length = 100, name = "RESPUESTA")
+public class Respuesta extends AbstractBean {
 	private String respuesta;
 
-	@ManyToMany(cascade = CascadeType.ALL)
-	private Collection<Usuario> usuarios;
-	@ManyToOne(cascade = CascadeType.ALL)
-	private Pregunta pregunta;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
+	private Integer id_pregunta;
 
 	public String getRespuesta() {
 		return respuesta;
@@ -41,19 +16,17 @@ public class Respuesta implements IModelTable {
 		this.respuesta = respuesta;
 	}
 
-	public Pregunta getPregunta() {
-		return pregunta;
+	public void setId_pregunta(Integer id_pregunta) {
+		this.id_pregunta = id_pregunta;
 	}
 
-	public void setPregunta(Pregunta pregunta) {
-		this.pregunta = pregunta;
+	public Integer getId_pregunta() {
+		return id_pregunta;
 	}
 
-	public Collection<Usuario> getUsuarios() {
-		return usuarios;
-	}
-
-	public void setUsuarios(Collection<Usuario> usuarios) {
-		this.usuarios = usuarios;
+	@Override
+	public boolean equals(Object otra) {
+		Respuesta respuesta = (Respuesta) otra;
+		return this.getId().equals(respuesta.getId());
 	}
 }
