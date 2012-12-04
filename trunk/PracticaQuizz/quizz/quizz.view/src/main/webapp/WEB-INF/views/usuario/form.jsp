@@ -3,36 +3,64 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<form:form id="alta" modelAttribute="usuario" action="javascript:generic.post('usuario', generic.getParamsUsuario());">
+<script type="text/javascript">
+	usuario.formatForm();
+	<c:if test="${operacion == 'edit'}">
+		function showInformationIntoView(usuario){
+			$('input[id=id]').val(usuario.id);
+			$('input[id=nombre]').val(usuario.nombre);
+			$('input[id=apellidos]').val(usuario.apellidos);
+			$('input[id=email]').val(usuario.email);
+			$('input[id=usuario]').val(usuario.usuario);
+			$('input[id=pwd]').val(usuario.pwd);
+			if (usuario.admin == 1)
+			$('input[id=admin]').attr('checked', true);
+		};
+	</c:if>
+</script>
+<form id="alta">
 	<fieldset>
-		<legend>Alta de Usuario</legend>
+		<legend>
+		<c:choose>
+			<c:when test="${operacion == 'new'}">Alta de Usuario</c:when>
+			<c:otherwise>Edici&oacute;n de Usuario</c:otherwise>
+		</c:choose>
+		</legend>
+		<input type="hidden" id="id" />
 		<p>
-			<form:label path="nombre">Nombre:</form:label>
-			<form:input path="nombre" maxlength="200" />
+			<label for="nombre">Nombre:</label>
+			<input id="nombre" type="textbox" maxlength="200" class="text ui-widget-content ui-corner-all" />
 		</p>
 		<p>
-			<form:label path="apellidos">Apellidos:</form:label>
-			<form:input path="apellidos" />
+			<label for="apellidos">Apellidos:</label>
+			<input id="apellidos" type="textbox" maxlength="200" class="text ui-widget-content ui-corner-all" />
 		</p>
 		<p>
-			<form:label path="email">Email:</form:label>
-			<form:input path="email" />
+			<label for="email">Email:</label>
+			<input id="email" type="textbox" maxlength="200" class="text ui-widget-content ui-corner-all" />
 		</p>
 		<p>
-			<form:label path="usuario">Usuario: </form:label>
-			<form:input path="usuario" />
+			<label for="usuario">Usuario:</label>
+			<input id="usuario" type="textbox" maxlength="200" class="text ui-widget-content ui-corner-all" />
 		</p>
 		<p>
-			<form:label path="pwd">Contrase&ntilde;a: </form:label>
-			<form:input path="pwd" />
+			<label for="pwd">Contrase&ntilde;a:</label>
+			<input id="pwd" type="password" maxlength="200" class="text ui-widget-content ui-corner-all" />
 		</p>
 		<p>
-			<form:label path="admin">Es administrador: </form:label>
-			<form:checkbox path="admin" value="1"></form:checkbox>
+			<label for="admin">Es administrador:</label>
+			<input id="admin" type="checkbox"  class="text ui-widget-content ui-corner-all" />
 		</p>
 		<div class="botonera">
-			<input type="submit" value="Guardar" />&nbsp; <input type="button"
-				value="Cancelar" onclick="javascript:generic.get('usuario');" />
+			<c:choose>
+				<c:when test="${operacion == 'new'}">
+					<input type="button" id="btnSaveQuizz" value="Guardar" />
+				</c:when>
+				<c:otherwise>
+					<input type="button" id="btnSaveQuizz" value="Modificar" />
+				</c:otherwise>
+			</c:choose>
+			<input type="button" id="btnCancel" value="Cancelar" />
 		</div>
 	</fieldset>
-</form:form>
+</form>

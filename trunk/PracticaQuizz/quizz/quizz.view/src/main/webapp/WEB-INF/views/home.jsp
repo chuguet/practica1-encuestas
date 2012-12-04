@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -5,16 +7,16 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Quizz Movember</title>
 	
-	<link href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+	<link href="resources/css/jquery-ui.css" rel="stylesheet" type="text/css" />
 	<link href="resources/css/generic.css" rel="stylesheet" type="text/css" />
 	<link href="resources/css/ui.dynatree.css" rel="stylesheet" type="text/css">
 	<link href="resources/css/prettify.css" rel="stylesheet" type="text/css">
 	<link href="resources/css/jquery.alerts.css" rel="stylesheet" type="text/css">
 	<link href="resources/css/ui.jqgrid.css" rel="stylesheet" type="text/css">
 	
-  	<script src="http://code.jquery.com/jquery-1.8.2.js"></script>
-    <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
-	<script type="text/javascript" src="resources/js/generic.js"></script>
+  	<script src="resources/js/jquery-1.8.2.min.js" type="text/javascript"></script>
+    <script src="resources/js/jquery-ui-1.9.1.min.js" type="text/javascript"></script>
+	<script src="resources/js/generic.js" type="text/javascript"></script>
   	<script src="resources/js/jquery.dynatree.js" type="text/javascript"></script>
 	<script src="resources/js/prettify.js" type="text/javascript"></script>
 	<script src="resources/js/jquery.alerts.js" type="text/javascript"></script>
@@ -33,6 +35,10 @@
 		<div id="menu">
 			<a href="javascript:void" onclick="javascript:generic.getList('usuario');" title="Ver usuarios">Usuarios</a>
 			<a href="javascript:void" onclick="javascript:generic.getList('encuesta');" title="Ver encuestas">Encuestas</a>
+		</div>
+		<div id="usuario">
+			<h3>Usuario : ${username}</h3>	
+			<a href="<c:url value="/j_spring_security_logout" />" > Salir</a>
 		</div>
 		
 		<div id="content">

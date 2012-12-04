@@ -16,7 +16,12 @@
 	<!-- <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
 	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" /> -->
 
-	<beans:bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/"/>
+		<beans:property name="suffix" value=".jsp"/>
+	</beans:bean>
+
+	<!-- <beans:bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
 		<beans:property name="mediaTypes">
 		    <beans:map>
 		        <beans:entry key="xml" value="application/xml"/>
@@ -33,24 +38,13 @@
 				</beans:bean>
 		    </beans:list>
 		</beans:property>
-	</beans:bean>
-	<!-- 
-	<bean id="empleadoController" class="com.spring3.rest.controller.EmpleadoController">
-		<property name="empleadoBO" ref="empleadoBO" />
-		<property name="jaxb2Mashaller" ref="jaxbMarshaller" />
-	</bean>
-	
-	<bean id="jaxbMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
-		<property name="classesToBeBound">
-			<list>
-				<value>com.spring3.rest.bean.Empleado</value>
-				<value>com.spring3.rest.bean.EmpleadoLista</value>
-			</list>
-		</property>
-	</bean>
+	</beans:bean> -->
 
-	<bean id="empleados" class="org.springframework.web.servlet.view.xml.MarshallingView">
-		<constructor-arg ref="jaxbMarshaller" />
-	</bean>
-	 -->
+	<beans:bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<beans:property name="basenames">
+			<beans:list>
+				<beans:value>mymessages</beans:value>
+			</beans:list>
+		</beans:property>
+	</beans:bean>
 </beans:beans>
