@@ -14,7 +14,6 @@
 			for (var i= 0; i < encuesta.preguntasDTO.length; i++){
 				$("#tree").dynatree("getRoot").addChild(encuesta.preguntasDTO[i]);
 			}
-			
 		};
 	</c:if>
 </script>

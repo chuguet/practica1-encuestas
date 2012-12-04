@@ -1,5 +1,5 @@
 var generic = {
-	"uri" : "http://localhost:8080/com.movember.quizz.view/rest/",
+	"uri" : "http://localhost:8080/com.movember.quizz.view/",
 	"getList" : function(entity) {
 		var action = entity + '/form/list';
 		this.executeHtml('GET', action, function() {
@@ -100,19 +100,6 @@ var generic = {
 				jAlert('Se ha producido un error al acceder a la p&aacute;gina');
 			}
 		});
-	},
-	'getParamsUsuario' : function() {
-		var id = ($("#id").val()) ? $("#id").val() : null;
-		var data = {
-			'id' : id,
-			'nombre' : $("#nombre").val(),
-			'apellidos' : $("#apellidos").val(),
-			'email' : $("#email").val(),
-			'usuario' : $("#usuario").val(),
-			'pwd' : $("#pwd").val(),
-			'admin' : ($("#admin1").is(':checked')) ? 1 : 0
-		};
-		return data;
 	},
 	'showInformation' : function() {
 		var information = arguments[0];
