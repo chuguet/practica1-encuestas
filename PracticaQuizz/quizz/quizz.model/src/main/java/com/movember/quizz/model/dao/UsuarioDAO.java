@@ -34,4 +34,8 @@ class UsuarioDAO extends AbstractDAO implements IUsuarioDAO {
 	public List<Usuario> selectByCriterios() throws SQLException {
 		return (List<Usuario>) this.getSqlMapClient().queryForList("usuario.selectAll");
 	}
+
+	public Usuario selectByUser(String usuarioNombre) throws SQLException {
+		return (Usuario) this.getSqlMapClient().queryForObject("usuario.selectByUser", usuarioNombre);
+	}
 }

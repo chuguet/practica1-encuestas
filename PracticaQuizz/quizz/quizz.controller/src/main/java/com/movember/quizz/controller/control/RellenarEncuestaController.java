@@ -16,11 +16,11 @@ import com.movember.quizz.model.bean.Encuesta;
 import com.movember.quizz.model.service.IEncuestaService;
 
 @Controller
-public class EncuestaController {
+public class RellenarEncuestaController {
 	@Inject
 	private IEncuestaService encuestaService;
 
-	private static final String recurso = "encuesta";
+	private static final String recurso = "rellenarEncuesta";
 
 	@RequestMapping(value = "/" + recurso + "/{id}", method = RequestMethod.GET)
 	public @ResponseBody
