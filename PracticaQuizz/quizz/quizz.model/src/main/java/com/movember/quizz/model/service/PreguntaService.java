@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.movember.quizz.model.bean.Pregunta;
 import com.movember.quizz.model.bean.Respuesta;
 import com.movember.quizz.model.dao.IPreguntaDAO;
+import com.movember.quizz.model.exception.AppException;
 
 @Service
 class PreguntaService implements IPreguntaService {
@@ -16,7 +17,7 @@ class PreguntaService implements IPreguntaService {
 	@Inject
 	private IRespuestaService respuestaService;
 
-	public void insert(Pregunta pregunta) {
+	public void insert(Pregunta pregunta) throws AppException {
 		try {
 			preguntaDAO.insert(pregunta);
 			if (pregunta.getRespuestas() != null && pregunta.getRespuestas().size() > 0) {
@@ -27,11 +28,11 @@ class PreguntaService implements IPreguntaService {
 			}
 		}
 		catch (SQLException e) {
-			e.printStackTrace();
+			throw new AppException("Se ha producido un error al insertar una pregunta");
 		}
 	}
 
-	public void update(Pregunta pregunta) {
+	public void update(Pregunta pregunta) throws AppException {
 		try {
 			preguntaDAO.update(pregunta);
 			if (pregunta.getRespuestas() != null && pregunta.getRespuestas().size() > 0) {
@@ -54,11 +55,11 @@ class PreguntaService implements IPreguntaService {
 			}
 		}
 		catch (SQLException e) {
-			e.printStackTrace();
+			throw new AppException("Se ha producido un error al actualizar una pregunta");
 		}
 	}
 
-	public void delete(Pregunta pregunta) {
+	public void delete(Pregunta pregunta) throws AppException {
 		try {
 			if (pregunta.getRespuestas() != null && pregunta.getRespuestas().size() > 0) {
 				for (Respuesta respuesta : pregunta.getRespuestas()) {
@@ -68,44 +69,38 @@ class PreguntaService implements IPreguntaService {
 			preguntaDAO.delete(pregunta.getId());
 		}
 		catch (SQLException e) {
-			e.printStackTrace();
+			throw new AppException("Se ha producido un error al borrar una pregunta");
 		}
 	}
 
-	public Pregunta retrieve(Integer id) {
-		Pregunta pregunta = null;
+	public Pregunta retrieve(Integer id) throws AppException {
 		try {
-			pregunta = preguntaDAO.retrieve(id);
+			return preguntaDAO.retrieve(id);
 		}
 		catch (SQLException e) {
-			e.printStackTrace();
+			throw new AppException("Se ha producido un error al recuperar una pregunta");
 		}
-		return pregunta;
 	}
 
-	public List<Pregunta> selectAll() {
-		List<Pregunta> preguntas = null;
+	public List<Pregunta> selectAll() throws AppException {
 		try {
-			preguntas = preguntaDAO.selectAll();
+			return preguntaDAO.selectAll();
 		}
 		catch (SQLException e) {
-			e.printStackTrace();
+			throw new AppException("Se ha producido un error al recuperar una pregunta");
 		}
-		return preguntas;
 	}
 
-	public List<Pregunta> recuperarDeEncuesta(Integer idEncuesta) {
-		List<Pregunta> preguntas = null;
+	public List<Pregunta> recuperarDeEncuesta(Integer idEncuesta) throws AppException {
 		try {
-			preguntas = this.preguntaDAO.recuperarDeEncuesta(idEncuesta);
+			List<Pregunta> preguntas = this.preguntaDAO.recuperarDeEncuesta(idEncuesta);
 			for (Pregunta pregunta : preguntas) {
 				pregunta.setRespuestas(this.respuestaService.recuperarDePregunta(pregunta.getId()));
 			}
+			return preguntas;
 		}
 		catch (SQLException e) {
-			e.printStackTrace();
+			throw new AppException("Se ha producido un error al recuperar las preguntas de una encuesta");
 		}
-		return preguntas;
 	}
-
 }

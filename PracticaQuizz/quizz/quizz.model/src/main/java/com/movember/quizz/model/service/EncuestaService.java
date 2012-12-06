@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.movember.quizz.model.bean.Encuesta;
 import com.movember.quizz.model.bean.Pregunta;
 import com.movember.quizz.model.dao.IEncuestaDAO;
+import com.movember.quizz.model.exception.AppException;
 
 @Service
 class EncuestaService implements IEncuestaService {
@@ -16,7 +17,7 @@ class EncuestaService implements IEncuestaService {
 	@Inject
 	private IPreguntaService preguntaService;
 
-	public void insert(Encuesta encuesta) {
+	public void insert(Encuesta encuesta) throws AppException {
 		try {
 			encuestaDAO.insert(encuesta);
 			if (encuesta.getPreguntas() != null && encuesta.getPreguntas().size() > 0) {
@@ -27,11 +28,11 @@ class EncuestaService implements IEncuestaService {
 			}
 		}
 		catch (SQLException e) {
-			e.printStackTrace();
+			throw new AppException("Se ha producido un error al insertar la encuesta");
 		}
 	}
 
-	public void update(Encuesta encuesta) {
+	public void update(Encuesta encuesta) throws AppException {
 		try {
 			encuestaDAO.update(encuesta);
 			if (encuesta.getPreguntas() != null && encuesta.getPreguntas().size() > 0) {
@@ -54,11 +55,11 @@ class EncuestaService implements IEncuestaService {
 			}
 		}
 		catch (SQLException e) {
-			e.printStackTrace();
+			throw new AppException("Se ha producido un error al actualizar la encuesta");
 		}
 	}
 
-	public void delete(Encuesta encuesta) {
+	public void delete(Encuesta encuesta) throws AppException {
 		try {
 			if (encuesta.getPreguntas() != null && encuesta.getPreguntas().size() > 0) {
 				for (Pregunta pregunta : encuesta.getPreguntas()) {
@@ -68,11 +69,11 @@ class EncuestaService implements IEncuestaService {
 			encuestaDAO.delete(encuesta.getId());
 		}
 		catch (SQLException e) {
-			e.printStackTrace();
+			throw new AppException("Se ha producido un error al eliminar la encuesta");
 		}
 	}
 
-	public Encuesta retrieve(Integer id) {
+	public Encuesta retrieve(Integer id) throws AppException {
 		Encuesta encuesta = null;
 		try {
 			encuesta = encuestaDAO.retrieve(id);
@@ -81,18 +82,18 @@ class EncuestaService implements IEncuestaService {
 			}
 		}
 		catch (SQLException e) {
-			e.printStackTrace();
+			throw new AppException("Se ha producido un error al recuperar la encuesta");
 		}
 		return encuesta;
 	}
 
-	public List<Encuesta> selectAll() {
+	public List<Encuesta> selectAll() throws AppException {
 		List<Encuesta> encuestas = null;
 		try {
 			encuestas = encuestaDAO.selectAll();
 		}
 		catch (SQLException e) {
-			e.printStackTrace();
+			throw new AppException("Se ha producido un error al recuperar todas las encuestas");
 		}
 		return encuestas;
 	}
