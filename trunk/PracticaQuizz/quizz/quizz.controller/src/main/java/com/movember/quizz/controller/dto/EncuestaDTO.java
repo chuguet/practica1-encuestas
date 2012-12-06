@@ -1,11 +1,12 @@
 package com.movember.quizz.controller.dto;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import com.movember.quizz.model.bean.Encuesta;
 import com.movember.quizz.model.bean.Pregunta;
+import com.movember.quizz.model.exception.AppException;
 
 public class EncuestaDTO extends AbstractDTO {
 	private String nombre;
@@ -50,7 +51,7 @@ public class EncuestaDTO extends AbstractDTO {
 	}
 
 	@Override
-	public void toRest(Object object) {
+	public void toRest(Object object) throws AppException {
 		Encuesta encuesta = (Encuesta) object;
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		this.setId(encuesta.getId());
@@ -68,12 +69,18 @@ public class EncuestaDTO extends AbstractDTO {
 	}
 
 	@Override
-	public void toBusiness(Object object) {
+	public void toBusiness(Object object) throws AppException {
+		SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
 		Encuesta encuesta = (Encuesta) object;
 		encuesta.setId(this.getId());
 		encuesta.setNombre(this.nombre);
-		encuesta.setFecha_fin(new Date());
-		encuesta.setFecha_inicio(new Date());
+		try {
+			encuesta.setFecha_inicio(formatoDelTexto.parse(this.fecha_inicio));
+			encuesta.setFecha_fin(formatoDelTexto.parse(this.fecha_fin));
+		}
+		catch (ParseException e) {
+			throw new AppException("Error en la conversión de fechas");
+		}
 
 		if (this.preguntasDTO != null && this.preguntasDTO.size() > 0) {
 			for (PreguntaDTO preguntaDTO : this.preguntasDTO) {

@@ -1,6 +1,7 @@
 package com.movember.quizz.controller.dto;
 
 import com.movember.quizz.model.bean.Respuesta;
+import com.movember.quizz.model.exception.AppException;
 
 public class RespuestaDTO extends AbstractDTO {
 	private String title;
@@ -32,7 +33,7 @@ public class RespuestaDTO extends AbstractDTO {
 	}
 
 	@Override
-	public void toRest(Object object) {
+	public void toRest(Object object) throws AppException {
 		Respuesta respuesta = (Respuesta) object;
 		if (respuesta.getId() != null) {
 			this.key = "r" + respuesta.getId().toString();
@@ -43,7 +44,7 @@ public class RespuestaDTO extends AbstractDTO {
 	}
 
 	@Override
-	public void toBusiness(Object object) {
+	public void toBusiness(Object object) throws AppException {
 		Respuesta respuesta = (Respuesta) object;
 		if (this.key.indexOf('r') != -1) {
 			respuesta.setId(Integer.parseInt(this.key.replace("r", "")));

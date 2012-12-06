@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.movember.quizz.controller.dto.MensajeDTO;
 import com.movember.quizz.controller.dto.UsuarioDTO;
 import com.movember.quizz.model.bean.Usuario;
+import com.movember.quizz.model.exception.AppException;
 import com.movember.quizz.model.service.IUsuarioService;
 
 @Controller
@@ -25,23 +26,33 @@ public class UsuarioController {
 	@RequestMapping(value = "/" + recurso + "/{id}", method = RequestMethod.GET)
 	public @ResponseBody
 	UsuarioDTO retrieve(@PathVariable("id") Integer id) {
-		Usuario usuario = this.usuarioService.retrieve(id);
-		// Comversion a DTO
 		UsuarioDTO usuarioDTO = new UsuarioDTO();
-		usuarioDTO.toRest(usuario);
+		try {
+			Usuario usuario = this.usuarioService.retrieve(id);
+			usuarioDTO.toRest(usuario);
+		}
+		catch (AppException e) {
+
+		}
 		return usuarioDTO;
 	}
 
 	@RequestMapping(value = "/" + recurso, method = RequestMethod.GET)
 	public @ResponseBody
 	List<UsuarioDTO> listAll() {
-		List<Usuario> usuarios = this.usuarioService.selectAll();
-		// Conversion a DTO
 		List<UsuarioDTO> usuariosDTO = new ArrayList<UsuarioDTO>();
-		for (Usuario usuario : usuarios) {
-			UsuarioDTO e = new UsuarioDTO();
-			e.toRest(usuario);
-			usuariosDTO.add(e);
+
+		try {
+			List<Usuario> usuarios = this.usuarioService.selectAll();
+
+			for (Usuario usuario : usuarios) {
+				UsuarioDTO e = new UsuarioDTO();
+				e.toRest(usuario);
+				usuariosDTO.add(e);
+			}
+		}
+		catch (AppException e) {
+
 		}
 		return usuariosDTO;
 	}
@@ -59,17 +70,21 @@ public class UsuarioController {
 	public @ResponseBody
 	MensajeDTO insert(@RequestBody UsuarioDTO usuarioDTO) {
 		MensajeDTO mensaje = new MensajeDTO();
-		if (usuarioDTO == null) {
-			mensaje.setMensaje("Un usuario es requerido");
-			mensaje.setCorrecto(false);
-			return mensaje;
+		try {
+			if (usuarioDTO == null) {
+				mensaje.setMensaje("Un usuario es requerido");
+				mensaje.setCorrecto(false);
+				return mensaje;
+			}
+
+			Usuario usuario = new Usuario();
+			usuarioDTO.toBusiness(usuario);
+			usuarioService.insert(usuario);
+			mensaje.setMensaje("Usuario creado correctamente");
 		}
-
-		Usuario usuario = new Usuario();
-		usuarioDTO.toBusiness(usuario);
-
-		usuarioService.insert(usuario);
-		mensaje.setMensaje("Usuario creado correctamente");
+		catch (AppException e) {
+			mensaje.setMensaje(e.getMessage());
+		}
 		return mensaje;
 	}
 
@@ -77,26 +92,36 @@ public class UsuarioController {
 	public @ResponseBody
 	MensajeDTO update(@RequestBody UsuarioDTO usuarioDTO) {
 		MensajeDTO mensaje = new MensajeDTO();
-		if (usuarioDTO == null) {
-			mensaje.setMensaje("Un usuario es requerido");
-			mensaje.setCorrecto(false);
-			return mensaje;
+		try {
+			if (usuarioDTO == null) {
+				mensaje.setMensaje("Un usuario es requerido");
+				mensaje.setCorrecto(false);
+				return mensaje;
+			}
+			Usuario usuario = new Usuario();
+			usuarioDTO.toBusiness(usuario);
+			usuarioService.update(usuario);
+			mensaje.setMensaje("Usuario modificado correctamente");
 		}
-		Usuario usuario = new Usuario();
-		usuarioDTO.toBusiness(usuario);
-		usuarioService.update(usuario);
-
-		mensaje.setMensaje("Usuario modificado correctamente");
+		catch (AppException e) {
+			mensaje.setMensaje(e.getMessage());
+		}
 		return mensaje;
 	}
 
 	@RequestMapping(value = "/usuario/{id}", method = RequestMethod.DELETE)
 	public MensajeDTO remove(@PathVariable Integer id, Model uiModel) {
-		Usuario usuario = new Usuario();
-		usuario.setId(id);
-		this.usuarioService.delete(usuario);
+
 		MensajeDTO mensaje = new MensajeDTO();
-		mensaje.setMensaje("Usuario eliminada correctamente");
+		try {
+			Usuario usuario = new Usuario();
+			usuario.setId(id);
+			this.usuarioService.delete(usuario);
+			mensaje.setMensaje("Usuario eliminado correctamente");
+		}
+		catch (AppException e) {
+			mensaje.setMensaje(e.getMessage());
+		}
 		return mensaje;
 	}
 }
