@@ -49,7 +49,7 @@ var generic = {
 		});
 		$.ajax({
 			type : $method,
-			url : this.uri + action,
+			url : action,
 			data : data,
 			dataType : 'json',
 			// contentType : content_type,
@@ -63,7 +63,7 @@ var generic = {
 					}
 				}
 				else {
-					jAlert(response.mensaje, 'Operación correcta');
+					jAlert(response.mensaje, 'Operaci&oacute;n correcta');
 					if (response.correcto) {
 						if (callback) {
 							var param = new Array();
@@ -74,7 +74,7 @@ var generic = {
 				}
 			},
 			error : function(e) {
-				jAlert('Se ha producido un error al procesar la acción', 'Error de operación');
+				jAlert('Se ha producido un error al procesar la acción', 'Error de operaci&oacute;n');
 			}
 		});
 	},
@@ -87,17 +87,23 @@ var generic = {
 		});
 		$.ajax({
 			type : $method,
-			url : this.uri + action,
+			url : action,
 			dataType : 'html',
 			success : function(response) {
-				$('#content').html(response);
-				if (callback) {
-					callback.apply(this, arguments);
+				if (response.indexOf('Pantalla de acceso al sistema') != -1) {
+					jAlert('Ha finalizado la sesi&oacute;n. Por favor, vuelva a acceder al sistema', 'Finalizaci&oacute;n de sesi&oacute;n', function() {
+						window.location.reload(true);
+					});
+				}
+				else {
+					$('#content').html(response);
+					if (callback) {
+						callback.apply(this, arguments);
+					}
 				}
 			},
 			error : function(e) {
-				alert(e);
-				jAlert('Se ha producido un error al acceder a la p&aacute;gina');
+				jAlert('Se ha producido un error al acceder a la p&aacute;gina', 'Error de acceso');
 			}
 		});
 	},
