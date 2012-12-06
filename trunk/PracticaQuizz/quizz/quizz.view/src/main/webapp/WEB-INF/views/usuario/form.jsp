@@ -12,7 +12,6 @@
 			$('input[id=apellidos]').val(usuario.apellidos);
 			$('input[id=email]').val(usuario.email);
 			$('input[id=usuario]').val(usuario.usuario);
-			$('input[id=pwd]').val(usuario.pwd);
 			if (usuario.admin == 1)
 			$('input[id=admin]').attr('checked', true);
 		};

@@ -81,10 +81,7 @@ var encuesta = {
 			if (tree.getActiveNode()) {
 				tree.getActiveNode().deactivate();
 			}
-			$("#nombrePregunta").val('');
-			$("#nombrePregunta").attr('key', '');
-			$("#respuesta").val('');
-			$('#respuestas').find('option').remove();
+
 			$('#btnDeleteResponse').button("disable");
 			$('#dialog-form').dialog('option', 'title', 'A&ntilde;adir Pregunta');
 			$(".ui-dialog-buttonpane button:contains('Modificar') span").text('Crear');
@@ -96,7 +93,7 @@ var encuesta = {
 			var selectedQuestion = tree.getActiveNode();
 			$("#nombrePregunta").val(selectedQuestion.data.title);
 			$("#nombrePregunta").attr('key', selectedQuestion.data.key);
-			$('#respuestas').find('option').remove();
+
 			$('#btnDeleteResponse').button("disable");
 			var responses = selectedQuestion.childList;
 			for( var i = 0; i < responses.length; i++) {
@@ -213,27 +210,49 @@ var encuesta = {
 				}
 			},
 			close : function() {
-				allFields.val("");
+				$("#nombrePregunta").val('');
+				$("#nombrePregunta").attr('key', '');
+				$("#respuesta").val('');
+				$('#respuestas').find('option').remove();
 			}
 		});
 	},
 	'getParams' : function() {
 		var id = ($("#id").val()) ? $("#id").val() : null;
-		var dInicio = $("#fecha_inicio").datepicker('getDate');
-		var fecha_inicio = dInicio.getFullYear() + '-' + (dInicio.getMonth() + 1) + '-' + dInicio.getDate();
-		var dFin = $("#fecha_fin").datepicker('getDate');
-		var fecha_fin = dFin.getFullYear() + '-' + (dFin.getMonth() + 1) + '-' + dFin.getDate();
-		var data = {
-			id : id,
-			nombre : $("#nombre").val(),
-			fecha_inicio : fecha_inicio,
-			fecha_fin : fecha_fin,
-			preguntasDTO : encuesta.getQuestions()
-		};
-		var entity = (id != null) ? 'encuesta/' + id : 'encuesta';
-		generic.post(entity, data, function() {
-			generic.getList('encuesta');
-		});
+		var nombre = $("#nombre").val();
+		var fecha_inicio = $("#fecha_inicio").val();
+		var fecha_fin = $("#fecha_fin").val();
+		var preguntas = encuesta.getQuestions();
+		var errores = '';
+		if (nombre == '') {
+			errores = "- El nombre es obligatorio<br />";
+		}
+		if (fecha_inicio == '') {
+			errores += "- La fecha de inicio es obligatoria<br />";
+		}
+		if (fecha_fin == '') {
+			errores += "- La fecha de finalizaci&oacute;n es obligatoria<br />";
+		}
+
+		if (preguntas.length == 0) {
+			errores += "- Debe introducir al menos una pregunta";
+		}
+		if (errores != '') {
+			jAlert(errores, "Validaci&oacute;n");
+		}
+		else {
+			var data = {
+				id : id,
+				nombre : nombre,
+				fecha_inicio : fecha_inicio,
+				fecha_fin : fecha_fin,
+				preguntasDTO : preguntas
+			};
+			var entity = (id != null) ? 'encuesta/' + id : 'encuesta';
+			generic.post(entity, data, function() {
+				generic.getList('encuesta');
+			});
+		}
 	},
 	'generateQuestionsTree' : function(selector) {
 		$(selector).dynatree({
@@ -245,9 +264,10 @@ var encuesta = {
 		});
 	},
 	'getQuestions' : function() {
-		if ($("#tree").dynatree("getTree").toDict().children) {
-			var preguntas = [];
-			var pregArray = $("#tree").dynatree("getTree").toDict().children;
+		var preguntas = [];
+		var pregArray = $("#tree").dynatree("getTree").toDict().children;
+		if (pregArray) {
+
 			for( var i = 0; i < pregArray.length; i++) {
 				var p = pregArray[i];
 				var respuestas = [];
@@ -271,18 +291,7 @@ var encuesta = {
 				};
 				preguntas.push(pregunta);
 			}
-			return preguntas;
 		}
-		else {
-			var preguntas = new Array();
-			preguntas.push({
-				id : null,
-				title : "Pregunta1",
-				key : "1",
-				isFolder : true,
-				children : null
-			});
-			return preguntas;
-		}
+		return preguntas;
 	}
 };

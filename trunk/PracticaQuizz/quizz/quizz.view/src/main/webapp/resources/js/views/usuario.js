@@ -6,7 +6,7 @@ var usuario = {
 				datatype : 'local',
 				data : [],
 				colNames : [
-						"Id", "Nombre", "Apellidos", "Email", "Usuario", "Contraseña", "Es admin"
+						"Id", "Nombre", "Apellidos", "Email", "Usuario", "Es admin"
 				],
 				colModel : [
 						{
@@ -38,13 +38,6 @@ var usuario = {
 						}, {
 							name : 'usuario',
 							index : 'usuario',
-							width : 20,
-							sorttype : 'string',
-							sortable : true,
-							align : 'left'
-						}, {
-							name : 'pwd',
-							index : 'pwd',
 							width : 20,
 							sorttype : 'string',
 							sortable : true,
@@ -170,18 +163,33 @@ var usuario = {
 	},
 	'getParams' : function() {
 		var id = ($("#id").val()) ? $("#id").val() : null;
-		var data = {
-			id : id,
-			nombre : $("input[id=nombre]").val(),
-			apellidos : $("input[id=apellidos]").val(),
-			email : $("input[id=email]").val(),
-			usuario : $("input[id=usuario]").val(),
-			pwd : $("input[id=pwd]").val(),
-			admin : $("input[id=admin]").is(':checked') ? 1 : 0
-		};
-		var entity = (id != null) ? 'usuario/' + id : 'usuario';
-		generic.post(entity, data, function() {
-			generic.getList('usuario');
-		});
+		var usuario = $("input[id=usuario]").val();
+		var pwd = $("input[id=pwd]").val();
+
+		var errores = '';
+		if (usuario == '') {
+			errores = '- Debe introducir un usuario<br />';
+		}
+		if (pwd == '') {
+			errores += '- Debe introducir una contrase&ntilde;a';
+		}
+		if (errores != '') {
+			jAlert(errores, "Validaci&oacute;n");
+		}
+		else {
+			var data = {
+				id : id,
+				nombre : $("input[id=nombre]").val(),
+				apellidos : $("input[id=apellidos]").val(),
+				email : $("input[id=email]").val(),
+				usuario : usuario,
+				pwd : pwd,
+				admin : $("input[id=admin]").is(':checked') ? 1 : 0
+			};
+			var entity = (id != null) ? 'usuario/' + id : 'usuario';
+			generic.post(entity, data, function() {
+				generic.getList('usuario');
+			});
+		}
 	}
 }
