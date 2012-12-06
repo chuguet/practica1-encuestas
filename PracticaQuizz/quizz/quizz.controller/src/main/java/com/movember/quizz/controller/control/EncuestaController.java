@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.movember.quizz.controller.dto.EncuestaDTO;
 import com.movember.quizz.controller.dto.MensajeDTO;
 import com.movember.quizz.model.bean.Encuesta;
+import com.movember.quizz.model.exception.AppException;
 import com.movember.quizz.model.service.IEncuestaService;
 
 @Controller
@@ -25,23 +26,34 @@ public class EncuestaController {
 	@RequestMapping(value = "/" + recurso + "/{id}", method = RequestMethod.GET)
 	public @ResponseBody
 	EncuestaDTO retrieve(@PathVariable("id") Integer id) {
-		Encuesta encuesta = this.encuestaService.retrieve(id);
-		// Comversion a DTO
 		EncuestaDTO encuestaDTO = new EncuestaDTO();
-		encuestaDTO.toRest(encuesta);
+		try {
+			Encuesta encuesta = this.encuestaService.retrieve(id);
+			// Comversion a DTO
+			encuestaDTO.toRest(encuesta);
+		}
+		catch (AppException e) {
+
+		}
 		return encuestaDTO;
 	}
 
 	@RequestMapping(value = "/" + recurso, method = RequestMethod.GET)
 	public @ResponseBody
 	List<EncuestaDTO> listAll() {
-		List<Encuesta> encuestas = this.encuestaService.selectAll();
-		// Conversion a DTO
 		List<EncuestaDTO> encuestasDTO = new ArrayList<EncuestaDTO>();
-		for (Encuesta encuesta : encuestas) {
-			EncuestaDTO e = new EncuestaDTO();
-			e.toRest(encuesta);
-			encuestasDTO.add(e);
+		try {
+			List<Encuesta> encuestas = this.encuestaService.selectAll();
+
+			for (Encuesta encuesta : encuestas) {
+				EncuestaDTO e = new EncuestaDTO();
+				e.toRest(encuesta);
+				encuestasDTO.add(e);
+			}
+
+		}
+		catch (AppException e) {
+
 		}
 		return encuestasDTO;
 	}
@@ -65,11 +77,15 @@ public class EncuestaController {
 			return mensaje;
 		}
 
-		Encuesta encuesta = new Encuesta();
-		encuestaDTO.toBusiness(encuesta);
-
-		encuestaService.insert(encuesta);
-		mensaje.setMensaje("Encuesta creada correctamente");
+		try {
+			Encuesta encuesta = new Encuesta();
+			encuestaDTO.toBusiness(encuesta);
+			encuestaService.insert(encuesta);
+			mensaje.setMensaje("Encuesta creada correctamente");
+		}
+		catch (AppException e) {
+			mensaje.setMensaje(e.getMessage());
+		}
 		return mensaje;
 	}
 
@@ -82,21 +98,32 @@ public class EncuestaController {
 			mensaje.setCorrecto(false);
 			return mensaje;
 		}
-		Encuesta encuesta = new Encuesta();
-		encuestaDTO.toBusiness(encuesta);
-		encuestaService.update(encuesta);
 
-		mensaje.setMensaje("Encuesta modificada correctamente");
+		try {
+			Encuesta encuesta = new Encuesta();
+			encuestaDTO.toBusiness(encuesta);
+			encuestaService.update(encuesta);
+			mensaje.setMensaje("Encuesta modificada correctamente");
+		}
+		catch (AppException e) {
+			mensaje.setMensaje(e.getMessage());
+		}
 		return mensaje;
 	}
 
 	@RequestMapping(value = "/" + recurso + "/{id}", method = RequestMethod.DELETE)
 	public MensajeDTO remove(@PathVariable Integer id, Model uiModel) {
-		Encuesta encuesta = new Encuesta();
-		encuesta.setId(id);
-		this.encuestaService.delete(encuesta);
 		MensajeDTO mensaje = new MensajeDTO();
-		mensaje.setMensaje("Encuesta eliminada correctamente");
+
+		try {
+			Encuesta encuesta = new Encuesta();
+			encuesta.setId(id);
+			this.encuestaService.delete(encuesta);
+			mensaje.setMensaje("Encuesta eliminada correctamente");
+		}
+		catch (AppException e) {
+			mensaje.setMensaje(e.getMessage());
+		}
 		return mensaje;
 	}
 }

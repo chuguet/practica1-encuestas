@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.movember.quizz.model.bean.Pregunta;
 import com.movember.quizz.model.bean.Respuesta;
+import com.movember.quizz.model.exception.AppException;
 
 public class PreguntaDTO extends AbstractDTO {
 	private String title;
@@ -44,7 +45,7 @@ public class PreguntaDTO extends AbstractDTO {
 	}
 
 	@Override
-	public void toRest(Object object) {
+	public void toRest(Object object) throws AppException {
 		Pregunta pregunta = (Pregunta) object;
 		if (pregunta.getId() != null) {
 			this.key = "p" + pregunta.getId().toString();
@@ -62,7 +63,7 @@ public class PreguntaDTO extends AbstractDTO {
 	}
 
 	@Override
-	public void toBusiness(Object object) {
+	public void toBusiness(Object object) throws AppException {
 		Pregunta pregunta = (Pregunta) object;
 		if (this.key.indexOf('p') != -1) {
 			pregunta.setId(Integer.parseInt(this.key.replace("p", "")));

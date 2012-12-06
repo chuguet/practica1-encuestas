@@ -1,6 +1,7 @@
 package com.movember.quizz.controller.dto;
 
 import com.movember.quizz.model.bean.Usuario;
+import com.movember.quizz.model.exception.AppException;
 
 public class UsuarioDTO extends AbstractDTO {
 	private String nombre;
@@ -59,7 +60,7 @@ public class UsuarioDTO extends AbstractDTO {
 	}
 
 	@Override
-	public void toRest(Object object) {
+	public void toRest(Object object) throws AppException {
 		Usuario usuario = (Usuario) object;
 		this.setId(usuario.getId());
 		this.nombre = usuario.getNombre();
@@ -71,7 +72,7 @@ public class UsuarioDTO extends AbstractDTO {
 	}
 
 	@Override
-	public void toBusiness(Object object) {
+	public void toBusiness(Object object) throws AppException {
 		Usuario usuario = (Usuario) object;
 		usuario.setId(this.getId());
 		usuario.setNombre(this.nombre);

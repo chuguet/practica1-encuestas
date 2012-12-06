@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class LoginController {
 
-	@RequestMapping(value = "/welcome", method = RequestMethod.GET)
+	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String printWelcome(ModelMap model, Principal principal) {
 
 		String name = principal.getName();
 		model.addAttribute("username", name);
 		model.addAttribute("message", "Spring Security Custom Form example");
-		return "hello";
+		return "home";
 
 	}
 

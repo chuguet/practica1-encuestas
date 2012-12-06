@@ -1,5 +1,7 @@
 package com.movember.quizz.controller.dto;
 
+import com.movember.quizz.model.exception.AppException;
+
 public abstract class AbstractDTO {
 	private Integer id;
 
@@ -11,7 +13,7 @@ public abstract class AbstractDTO {
 		this.id = id;
 	}
 
-	public abstract void toRest(Object object);
+	public abstract void toRest(Object object) throws AppException;
 
-	public abstract void toBusiness(Object object);
+	public abstract void toBusiness(Object object) throws AppException;
 }
