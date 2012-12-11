@@ -110,5 +110,17 @@ var generic = {
 	'showInformation' : function() {
 		var information = arguments[0];
 		showInformationIntoView(information);
+	},
+	'preloadNecessaryFiles' : function() {
+		if (!jQuery.browser.mobile) {
+			require([
+					"resources/js/mobile/jquery.mobile-1.2.0.min", "resources/js/mobile/jquery.mobile.jqGrid.min"
+			]);
+		}
+		else {
+			require([
+					"", "resources/js/jquery.jqGrid.min"
+			]);
+		}
 	}
 };

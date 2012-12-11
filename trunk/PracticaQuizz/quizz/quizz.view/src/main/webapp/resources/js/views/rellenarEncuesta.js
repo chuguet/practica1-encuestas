@@ -2,62 +2,162 @@ var encuesta = {
 	'rowID' : null,
 	'formatList' : function() {
 		$(function() {
-			$("#lista").jqGrid({
-				datatype : 'local',
-				data : [],
-				colNames : [
-						"Id", "Encuesta", "Fecha Inicio", "Fecha Fin"
-				],
-				colModel : [
+			jQuery('#grid').jqGrid({
+				"width" : "650",
+				"hoverrows" : false,
+				"viewrecords" : true,
+				"jsonReader" : {
+					"repeatitems" : false,
+					"subgrid" : {
+						"repeatitems" : false
+					}
+				},
+				"xmlReader" : {
+					"repeatitems" : false,
+					"subgrid" : {
+						"repeatitems" : false
+					}
+				},
+				"gridview" : true,
+				"url" : "php/virtualonepage.php",
+				"editurl" : "php/virtualonepage.php",
+				"cellurl" : "php/virtualonepage.php",
+				"scrollPaging" : true,
+				"autowidth" : true,
+				"rowNum" : 30,
+				"sortname" : "OrderID",
+				"height" : 300,
+				"datatype" : "json",
+				"colModel" : [
 						{
-							name : 'id',
-							index : 'idRest',
-							width : 0,
-							hidden : true
+							"name" : "OrderID",
+							"index" : "OrderID",
+							"sorttype" : "int",
+							"key" : true,
+							"width" : 80,
+							"editable" : true
 						}, {
-							name : 'nombre',
-							index : 'nombre',
-							width : 60,
-							sorttype : 'string',
-							sortable : true,
-							align : 'left'
+							"name" : "OrderDate",
+							"index" : "OrderDate",
+							"sorttype" : "datetime",
+							"formatter" : "date",
+							"formatoptions" : {
+								"srcformat" : "Y-m-d H:i:s",
+								"newformat" : "m/d/Y"
+							},
+							"editable" : true
 						}, {
-							name : 'fecha_inicio',
-							index : 'fecha_inicio',
-							width : 15,
-							sorttype : 'string',
-							sortable : true,
-							align : 'left'
+							"name" : "CustomerID",
+							"index" : "CustomerID",
+							"sorttype" : "string",
+							"editable" : true
 						}, {
-							name : 'fecha_fin',
-							index : 'fecha_fin',
-							width : 15,
-							sorttype : 'string',
-							sortable : true,
-							align : 'left'
+							"name" : "ShipName",
+							"index" : "ShipName",
+							"sorttype" : "string",
+							"editable" : true
+						}, {
+							"name" : "Freight",
+							"index" : "Freight",
+							"sorttype" : "numeric",
+							"editable" : true
 						}
 				],
-				autowidth : true,
-				shrinkToFit : true,
-				rowNum : 20,
-				rowList : [
-						10, 20, 30
-				],
-				pager : '#paginadorLista',
-				sortname : 'nombre',
-				sortorder : 'asc',
-				viewrecords : true,
-				rownumbers : false,
-				scroll : false,
-				onSelectRow : function(rowid, status) {
-					$("#btnEditar").attr('disabled', false);
-					$("#btnEliminar").attr('disabled', false);
-					encuesta.rowID = rowid;
-				}
+				"postData" : {
+					"oper" : "grid"
+				},
+				"prmNames" : {
+					"page" : "page",
+					"rows" : "rows",
+					"sort" : "sidx",
+					"order" : "sord",
+					"search" : "_search",
+					"nd" : "nd",
+					"id" : "id",
+					"filter" : "filters",
+					"searchField" : "searchField",
+					"searchOper" : "searchOper",
+					"searchString" : "searchString",
+					"oper" : "oper",
+					"query" : "grid",
+					"addoper" : "add",
+					"editoper" : "edit",
+					"deloper" : "del",
+					"excel" : "excel",
+					"subgrid" : "subgrid",
+					"totalrows" : "totalrows",
+					"autocomplete" : "autocmpl"
+				},
+				"loadError" : function(xhr, status, err) {
+					try {
+						jQuery.jgrid.info_dialog(jQuery.jgrid.errors.errcap, '<div class="ui-state-error">' + xhr.responseText + '</div>', jQuery.jgrid.edit.bClose, {
+							buttonalign : 'right'
+						});
+					}
+					catch (e) {
+						alert(xhr.responseText);
+					}
+				},
+				"pager" : "#pager"
 			});
-			$(window).bind('resizeEnd', function() {
-				$('#lista').setGridWidth($('#parent').width() - 30, true);
-			}).trigger('resize');
+
+			// ("#lista").jqGrid({
+			// datatype : 'local',
+			// data : [],
+			// colNames : [
+			// "Id", "Encuesta", "Fecha Inicio", "Fecha Fin"
+			// ],
+			// colModel : [
+			// {
+			// name : 'id',
+			// index : 'idRest',
+			// width : 0,
+			// hidden : true
+			// }, {
+			// name : 'nombre',
+			// index : 'nombre',
+			// width : 60,
+			// sorttype : 'string',
+			// sortable : true,
+			// align : 'left'
+			// }, {
+			// name : 'fecha_inicio',
+			// index : 'fecha_inicio',
+			// width : 15,
+			// sorttype : 'string',
+			// sortable : true,
+			// align : 'left'
+			// }, {
+			// name : 'fecha_fin',
+			// index : 'fecha_fin',
+			// width : 15,
+			// sorttype : 'string',
+			// sortable : true,
+			// align : 'left'
+			// }
+			// ],
+			// autowidth : true,
+			// shrinkToFit : true,
+			// rowNum : 20,
+			// rowList : [
+			// 10, 20, 30
+			// ],
+			// pager : '#paginadorLista',
+			// sortname : 'nombre',
+			// sortorder : 'asc',
+			// viewrecords : true,
+			// rownumbers : false,
+			// scroll : false,
+			// onSelectRow : function(rowid, status) {
+			// $("#btnEditar").attr('disabled', false);
+			// $("#btnEliminar").attr('disabled', false);
+			// encuesta.rowID = rowid;
+			// }
+			// });
+			// $(window).bind('resizeEnd', function() {
+			// $('#lista').setGridWidth($('#parent').width() - 30, true);
+			// }).trigger('resize');
+
 		});
 	},
 
