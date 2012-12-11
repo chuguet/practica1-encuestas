@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import com.movember.quizz.model.bean.Encuesta;
+import com.movember.quizz.model.bean.ParametrosEncuesta;
 import com.movember.quizz.model.bean.Pregunta;
 import com.movember.quizz.model.dao.IEncuestaDAO;
 import com.movember.quizz.model.exception.AppException;
@@ -94,6 +95,17 @@ class EncuestaService implements IEncuestaService {
 		}
 		catch (SQLException e) {
 			throw new AppException("Se ha producido un error al recuperar todas las encuestas");
+		}
+		return encuestas;
+	}
+
+	public List<Encuesta> find(ParametrosEncuesta parametrosEncuesta) throws AppException {
+		List<Encuesta> encuestas = null;
+		try {
+			encuestas = encuestaDAO.find(parametrosEncuesta);
+		}
+		catch (SQLException e) {
+			throw new AppException("Se ha producido un error al recuperar un listado de encuestas");
 		}
 		return encuestas;
 	}

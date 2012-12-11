@@ -20,6 +20,15 @@
 		FROM encuesta
 	</select>
 	
+	<select id="find" resultMap="encuestaResult" parameterClass="com.movember.quizz.model.bean.ParametrosEncuesta">
+		SELECT id, nombre, fecha_inicio, fecha_fin
+		FROM encuesta e
+		INNER JOIN encuesta_contestada ec ON ec.id_encuesta = e.id
+		WHERE fecha_inicio <![CDATA[ <= ]]> now() AND fecha_fin <![CDATA[ >= ]]> now()
+		<isNotNull property="id_usuario" prepend="AND">ec.id_usuario = #id_usuario:INTEGER#</isNotNull>
+		<isNotNull property="ip_usuario" prepend="AND">ec.ip_usuario = #ip_usuario:VARCHAR#</isNotNull>
+	</select>
+	
 	<insert id="insertReturnId" parameterClass="com.movember.quizz.model.bean.Encuesta"> 
 	 	INSERT INTO encuesta 
     	(nombre, fecha_inicio, fecha_fin)

@@ -17,8 +17,6 @@
 		<script src="resources/js/jquery.alerts.js" type="text/javascript"></script>
 	</head>
 	<body onload='document.f.j_username.focus();'>
-		
-		
 		<form name='f' action="<c:url value='j_spring_security_check' />" method='POST'>
 			<fieldset>
 				<legend>Acceso a Quizz</legend>
