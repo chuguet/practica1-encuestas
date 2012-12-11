@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.movember.quizz.controller.dto.EncuestaDTO;
 import com.movember.quizz.controller.dto.MensajeDTO;
+import com.movember.quizz.controller.dto.ParametrosEncuestaDTO;
 import com.movember.quizz.model.bean.Encuesta;
+import com.movember.quizz.model.bean.ParametrosEncuesta;
 import com.movember.quizz.model.exception.AppException;
 import com.movember.quizz.model.service.IEncuestaService;
 
@@ -44,6 +46,26 @@ public class RellenarEncuestaController {
 		List<EncuestaDTO> encuestasDTO = new ArrayList<EncuestaDTO>();
 		try {
 			List<Encuesta> encuestas = this.encuestaService.selectAll();
+			for (Encuesta encuesta : encuestas) {
+				EncuestaDTO e = new EncuestaDTO();
+				e.toRest(encuesta);
+				encuestasDTO.add(e);
+			}
+		}
+		catch (AppException e) {
+
+		}
+		return encuestasDTO;
+	}
+
+	@RequestMapping(value = "/" + recurso, method = RequestMethod.GET)
+	public @ResponseBody
+	List<EncuestaDTO> find(@RequestBody ParametrosEncuestaDTO parametrosEncuestaDTO) {
+		List<EncuestaDTO> encuestasDTO = new ArrayList<EncuestaDTO>();
+		try {
+			ParametrosEncuesta parametrosEncuesta = new ParametrosEncuesta();
+			parametrosEncuestaDTO.toBusiness(parametrosEncuesta);
+			List<Encuesta> encuestas = this.encuestaService.find(parametrosEncuesta);
 			for (Encuesta encuesta : encuestas) {
 				EncuestaDTO e = new EncuestaDTO();
 				e.toRest(encuesta);
