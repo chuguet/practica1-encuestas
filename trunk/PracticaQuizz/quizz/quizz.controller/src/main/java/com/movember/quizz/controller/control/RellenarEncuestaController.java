@@ -40,23 +40,23 @@ public class RellenarEncuestaController {
 		return encuestaDTO;
 	}
 
-	@RequestMapping(value = "/" + recurso, method = RequestMethod.GET)
-	public @ResponseBody
-	List<EncuestaDTO> listAll() {
-		List<EncuestaDTO> encuestasDTO = new ArrayList<EncuestaDTO>();
-		try {
-			List<Encuesta> encuestas = this.encuestaService.selectAll();
-			for (Encuesta encuesta : encuestas) {
-				EncuestaDTO e = new EncuestaDTO();
-				e.toRest(encuesta);
-				encuestasDTO.add(e);
-			}
-		}
-		catch (AppException e) {
-
-		}
-		return encuestasDTO;
-	}
+	// @RequestMapping(value = "/" + recurso, method = RequestMethod.GET)
+	// public @ResponseBody
+	// List<EncuestaDTO> listAll() {
+	// List<EncuestaDTO> encuestasDTO = new ArrayList<EncuestaDTO>();
+	// try {
+	// List<Encuesta> encuestas = this.encuestaService.selectAll();
+	// for (Encuesta encuesta : encuestas) {
+	// EncuestaDTO e = new EncuestaDTO();
+	// e.toRest(encuesta);
+	// encuestasDTO.add(e);
+	// }
+	// }
+	// catch (AppException e) {
+	//
+	// }
+	// return encuestasDTO;
+	// }
 
 	@RequestMapping(value = "/" + recurso, method = RequestMethod.GET)
 	public @ResponseBody
