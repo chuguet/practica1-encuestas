@@ -178,7 +178,7 @@ CREATE TABLE `usuario` (
   `apellidos` varchar(100) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
   `usuario` varchar(20) NOT NULL,
-  `pwd` varchar(20) NOT NULL,
+  `pwd` varchar(40) NOT NULL,
   `admin` tinyint(1) unsigned NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COMMENT='Almacena los usuarios del sistema';
