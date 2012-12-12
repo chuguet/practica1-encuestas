@@ -73,4 +73,16 @@ class RespuestaService implements IRespuestaService {
 		}
 		return respuestas;
 	}
+
+	public Integer recuperarVecesContestadas(Integer idRespuesta)
+			throws AppException {
+		Integer result = null;
+		try {
+			result = respuestaDAO.recuperarVecesContestadas(idRespuesta);
+		}
+		catch (SQLException e) {
+			throw new AppException("Se ha producido un error al recuperar una respuesta");
+		}
+		return result;
+	}
 }

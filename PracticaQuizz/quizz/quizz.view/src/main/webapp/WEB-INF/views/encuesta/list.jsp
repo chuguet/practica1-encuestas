@@ -7,6 +7,7 @@
 		<input type="button" id="btnAlta" value="Alta" onclick="javascript:generic.getForm('encuesta');" />
 		<input type="button" id="btnEditar" value="Editar" onclick="javascript:generic.getForm('encuesta', $('#lista').jqGrid('getRowData', encuesta.rowID).id);" disabled="true" />
 		<input type="button" id="btnEliminar" value="Eliminar" onclick="javascript:generic.delete('encuesta', $('#lista').jqGrid('getRowData', encuesta.rowID).id);" disabled="true" />
+		<input type="button" id="btnEstadistica" value="Ver estad&iacute;stica" onclick="javascript:generic.getForm('estadistica', $('#lista').jqGrid('getRowData', encuesta.rowID).id);" disabled="true" />
 	</div>
 	<table id="lista" ></table>
 	<div id=paginadorLista></div>

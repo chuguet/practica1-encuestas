@@ -32,6 +32,7 @@
 	
 	<script src="resources/js/views/encuesta.js" type="text/javascript"></script>
 	<script src="resources/js/views/usuario.js" type="text/javascript"></script>
+	<script src="resources/js/views/estadistica.js" type="text/javascript"></script>
 </head>
 <body id="quizz">
 	<div id="ppal_page">
