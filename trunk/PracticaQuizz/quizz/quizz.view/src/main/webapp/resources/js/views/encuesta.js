@@ -52,6 +52,7 @@ var encuesta = {
 				onSelectRow : function(rowid, status) {
 					$("#btnEditar").attr('disabled', false);
 					$("#btnEliminar").attr('disabled', false);
+					$("#btnEstadistica").attr('disabled', false);
 					encuesta.rowID = rowid;
 				}
 			});

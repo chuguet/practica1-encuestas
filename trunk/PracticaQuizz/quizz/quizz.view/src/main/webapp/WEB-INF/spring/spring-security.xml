@@ -17,6 +17,7 @@
 		<intercept-url pattern="/home" access="ROLE_USER" />
 		<intercept-url pattern="/usuario/**" access="ROLE_ADMIN" />
 		<intercept-url pattern="/encuesta/**" access="ROLE_ADMIN" />
+		<intercept-url pattern="/estadistica/**" access="ROLE_ADMIN" />
 		<form-login login-page="/login" default-target-url="/home"
 			authentication-failure-url="/loginfailed" />
 		<logout logout-success-url="/logout" />

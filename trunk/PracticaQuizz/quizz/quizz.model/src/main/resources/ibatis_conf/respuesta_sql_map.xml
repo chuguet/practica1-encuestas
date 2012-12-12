@@ -18,6 +18,12 @@
 		FROM respuesta
 	</select>
 	
+	<select id="recuperarVecesContestada" parameterClass="java.lang.Integer" resultClass="java.lang.Integer">
+		SELECT count(*)
+		FROM respuesta_contestada
+		WHERE id_respuesta = #idRespuesta:INTEGER#
+	</select>
+	
 	<insert id="insertReturnId" parameterClass="com.movember.quizz.model.bean.Respuesta"> 
 	 	INSERT INTO respuesta 
     	(respuesta, id_pregunta)

@@ -38,4 +38,9 @@ class RespuestaDAO extends AbstractDAO implements IRespuestaDAO {
 	public List<Respuesta> recuperarDePregunta(Integer idPregunta) throws SQLException {
 		return (List<Respuesta>) this.getSqlMapClient().queryForList("respuesta.recuperarDePregunta", idPregunta);
 	}
+
+	public Integer recuperarVecesContestadas(Integer idRespuesta)
+			throws SQLException {
+		return (Integer) this.getSqlMapClient().queryForObject("respuesta.recuperarVecesContestada", idRespuesta);
+	}
 }
