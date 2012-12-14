@@ -1,9 +1,9 @@
 var generic = {
 	"uri" : "http://localhost:8080/com.movember.quizz.view/",
-	"getList" : function(entity) {
+	"getList" : function(entity, parameters) {
 		var action = entity + '/form/list';
 		this.executeHtml('GET', action, function() {
-			generic.get(entity, null, generic.showInformation);
+			generic.get(entity, parameters, generic.showInformation);
 		});
 	},
 	"getForm" : function(entity, item) {
@@ -21,7 +21,20 @@ var generic = {
 	"get" : function(entity, item, callback) {
 		var action = entity;
 		if (item && item != null) {
-			action += '/' + item;
+			if (typeof item == "object") {
+				action += "?";
+				var count = 1;
+				for( var o in item) {
+					if (count > 1)
+						action += "&";
+					action += o + "=" + item[o];
+					count++;
+				}
+				params = item;
+			}
+			else {
+				action += '/' + item;
+			}
 		}
 		this.executeJSon('GET', action, null, callback);
 	},
