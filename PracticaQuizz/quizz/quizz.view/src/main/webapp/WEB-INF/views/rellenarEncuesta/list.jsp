@@ -3,20 +3,14 @@
 
 <fieldset id="parent">
 	<legend>Listado de Encuestas</legend>
-	<div class="botonera">
-		<input type="button" id="btnAlta" value="Alta" onclick="javascript:generic.getForm('encuesta');" />
-		<input type="button" id="btnEditar" value="Editar" onclick="javascript:generic.getForm('encuesta', $('#lista').jqGrid('getRowData', encuesta.rowID).id);" disabled="true" />
-		<input type="button" id="btnEliminar" value="Eliminar" onclick="javascript:generic.delete('encuesta', $('#lista').jqGrid('getRowData', encuesta.rowID).id);" disabled="true" />
-	</div>
-	<table id="lista" ></table>
-	<div id=paginadorLista></div>
+	<ol data-role="listview" id="listadoEncuestas" style="padding-top:10px;margin:15px;">
+		
+	</ol>
+
 </fieldset>
 
 <script type="text/javascript">
-rellenarEncuesta.formatList();
 function showInformationIntoView(information){
-	$("#lista").setGridParam({
-		data : information
-	}).trigger("reloadGrid");
+	rellenarEncuesta.createList(information);
 };
 </script>
