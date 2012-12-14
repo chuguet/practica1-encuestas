@@ -3,6 +3,7 @@ package com.movember.quizz.controller.control;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,9 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.movember.quizz.controller.dto.EncuestaDTO;
+import com.movember.quizz.controller.dto.EncuestaContestadaDTO;
 import com.movember.quizz.controller.dto.MensajeDTO;
 import com.movember.quizz.controller.dto.ParametrosEncuestaDTO;
 import com.movember.quizz.model.bean.Encuesta;
+import com.movember.quizz.model.bean.EncuestaContestada;
 import com.movember.quizz.model.bean.ParametrosEncuesta;
 import com.movember.quizz.model.exception.AppException;
 import com.movember.quizz.model.service.IEncuestaService;
@@ -40,31 +43,17 @@ public class RellenarEncuestaController {
 		return encuestaDTO;
 	}
 
-	// @RequestMapping(value = "/" + recurso, method = RequestMethod.GET)
-	// public @ResponseBody
-	// List<EncuestaDTO> listAll() {
-	// List<EncuestaDTO> encuestasDTO = new ArrayList<EncuestaDTO>();
-	// try {
-	// List<Encuesta> encuestas = this.encuestaService.selectAll();
-	// for (Encuesta encuesta : encuestas) {
-	// EncuestaDTO e = new EncuestaDTO();
-	// e.toRest(encuesta);
-	// encuestasDTO.add(e);
-	// }
-	// }
-	// catch (AppException e) {
-	//
-	// }
-	// return encuestasDTO;
-	// }
-
 	@RequestMapping(value = "/" + recurso, method = RequestMethod.GET)
 	public @ResponseBody
-	List<EncuestaDTO> find(@RequestBody ParametrosEncuestaDTO parametrosEncuestaDTO) {
+	List<EncuestaDTO> find(HttpServletRequest request) {
 		List<EncuestaDTO> encuestasDTO = new ArrayList<EncuestaDTO>();
 		try {
+			ParametrosEncuestaDTO pDTO = new ParametrosEncuestaDTO();
+			pDTO.setId_usuario(request.getParameter("id_usuario"));
+			pDTO.setIp_usuario(request.getParameter("ip_usuario"));
+
 			ParametrosEncuesta parametrosEncuesta = new ParametrosEncuesta();
-			parametrosEncuestaDTO.toBusiness(parametrosEncuesta);
+			pDTO.toBusiness(parametrosEncuesta);
 			List<Encuesta> encuestas = this.encuestaService.find(parametrosEncuesta);
 			for (Encuesta encuesta : encuestas) {
 				EncuestaDTO e = new EncuestaDTO();
@@ -89,18 +78,18 @@ public class RellenarEncuestaController {
 
 	@RequestMapping(value = "/" + recurso, method = RequestMethod.POST)
 	public @ResponseBody
-	MensajeDTO insert(@RequestBody EncuestaDTO encuestaDTO) {
+	MensajeDTO insert(@RequestBody EncuestaContestadaDTO encuestaRellenadaDTO) {
 		MensajeDTO mensaje = new MensajeDTO();
-		if (encuestaDTO == null) {
-			mensaje.setMensaje("Una encuesta es requerida");
+		if (encuestaRellenadaDTO == null) {
+			mensaje.setMensaje("Debe rellenar la encuesta");
 			mensaje.setCorrecto(false);
 			return mensaje;
 		}
 		try {
-			Encuesta encuesta = new Encuesta();
-			encuestaDTO.toBusiness(encuesta);
-			encuestaService.insert(encuesta);
-			mensaje.setMensaje("Encuesta creada correctamente");
+			EncuestaContestada encuestaRellenada = new EncuestaContestada();
+			encuestaRellenadaDTO.toBusiness(encuestaRellenada);
+			encuestaService.contestar(encuestaRellenada);
+			mensaje.setMensaje("Encuesta rellenada correctamente");
 		}
 		catch (AppException e) {
 			mensaje.setMensaje(e.getMessage());
