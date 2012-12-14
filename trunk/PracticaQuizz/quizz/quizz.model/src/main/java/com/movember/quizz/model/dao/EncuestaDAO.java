@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 import org.springframework.stereotype.Repository;
 import com.movember.quizz.model.bean.Encuesta;
+import com.movember.quizz.model.bean.EncuestaContestada;
 import com.movember.quizz.model.bean.ParametrosEncuesta;
 
 @Repository
@@ -37,6 +38,11 @@ class EncuestaDAO extends AbstractDAO implements IEncuestaDAO {
 	}
 
 	public List<Encuesta> find(ParametrosEncuesta parametrosEncuesta) throws SQLException {
-		return (List<Encuesta>) this.getSqlMapClient().queryForList("encuesta.find");
+		return (List<Encuesta>) this.getSqlMapClient().queryForList("encuesta.find", parametrosEncuesta);
+	}
+
+	public void contestar(EncuestaContestada encuestaRellenada) throws SQLException {
+		Integer id = (Integer) this.getSqlMapClient().insert("encuesta.contestar", encuestaRellenada);
+		encuestaRellenada.setId(id);
 	}
 }

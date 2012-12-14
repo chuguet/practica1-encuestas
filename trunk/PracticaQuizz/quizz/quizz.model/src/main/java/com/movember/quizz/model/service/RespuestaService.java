@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import com.movember.quizz.model.bean.Respuesta;
+import com.movember.quizz.model.bean.RespuestaContestada;
 import com.movember.quizz.model.dao.IRespuestaDAO;
 import com.movember.quizz.model.exception.AppException;
 
@@ -73,9 +74,8 @@ class RespuestaService implements IRespuestaService {
 		}
 		return respuestas;
 	}
-
-	public Integer recuperarVecesContestadas(Integer idRespuesta)
-			throws AppException {
+	
+	public Integer recuperarVecesContestadas(Integer idRespuesta) throws AppException {
 		Integer result = null;
 		try {
 			result = respuestaDAO.recuperarVecesContestadas(idRespuesta);
@@ -84,5 +84,18 @@ class RespuestaService implements IRespuestaService {
 			throw new AppException("Se ha producido un error al recuperar una respuesta");
 		}
 		return result;
+	}
+	
+
+	public void contestar(Integer idEncuestaContestada, Integer idRespuesta) throws AppException {
+		try {
+			RespuestaContestada respuestaContestada = new RespuestaContestada();
+			respuestaContestada.setId_encuesta_contestada(idEncuestaContestada);
+			respuestaContestada.setId_respuesta(idRespuesta);
+			respuestaDAO.contestar(respuestaContestada);
+		}
+		catch (SQLException e) {
+			throw new AppException("Se ha producido un error al contestar una respuesta");
+		}
 	}
 }

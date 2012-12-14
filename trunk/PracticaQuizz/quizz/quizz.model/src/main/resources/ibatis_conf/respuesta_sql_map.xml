@@ -34,6 +34,13 @@
 	 	</selectKey> 
 	</insert>
 	
+	<insert id="contestar" parameterClass="com.movember.quizz.model.bean.RespuestaContestada"> 
+	 	INSERT INTO respuesta_contestada
+    	(id_respuesta, id_encuesta_contestada)
+	 	VALUES  
+	 	(#id_respuesta:INTEGER#, #id_encuesta_contestada:INTEGER#)
+	</insert>
+	
 	<update id="updateByPrimaryKey" parameterClass="com.movember.quizz.model.bean.Respuesta"> 
   		UPDATE respuesta 
   		SET  

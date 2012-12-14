@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 import org.springframework.stereotype.Repository;
 import com.movember.quizz.model.bean.Respuesta;
+import com.movember.quizz.model.bean.RespuestaContestada;
 
 @Repository
 class RespuestaDAO extends AbstractDAO implements IRespuestaDAO {
@@ -39,8 +40,11 @@ class RespuestaDAO extends AbstractDAO implements IRespuestaDAO {
 		return (List<Respuesta>) this.getSqlMapClient().queryForList("respuesta.recuperarDePregunta", idPregunta);
 	}
 
-	public Integer recuperarVecesContestadas(Integer idRespuesta)
-			throws SQLException {
+	public Integer recuperarVecesContestadas(Integer idRespuesta) throws SQLException {
 		return (Integer) this.getSqlMapClient().queryForObject("respuesta.recuperarVecesContestada", idRespuesta);
+	}
+	
+	public void contestar(RespuestaContestada respuestaContestada) throws SQLException {
+		this.getSqlMapClient().insert("respuesta.contestar", respuestaContestada);
 	}
 }
