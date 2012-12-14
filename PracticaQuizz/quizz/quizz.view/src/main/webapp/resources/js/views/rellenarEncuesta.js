@@ -1,388 +1,73 @@
-var encuesta = {
+var rellenarEncuesta = {
 	'rowID' : null,
-	'formatList' : function() {
-		$(function() {
-			jQuery('#grid').jqGrid({
-				"width" : "650",
-				"hoverrows" : false,
-				"viewrecords" : true,
-				"jsonReader" : {
-					"repeatitems" : false,
-					"subgrid" : {
-						"repeatitems" : false
-					}
-				},
-				"xmlReader" : {
-					"repeatitems" : false,
-					"subgrid" : {
-						"repeatitems" : false
-					}
-				},
-				"gridview" : true,
-				"url" : "php/virtualonepage.php",
-				"editurl" : "php/virtualonepage.php",
-				"cellurl" : "php/virtualonepage.php",
-				"scrollPaging" : true,
-				"autowidth" : true,
-				"rowNum" : 30,
-				"sortname" : "OrderID",
-				"height" : 300,
-				"datatype" : "json",
-				"colModel" : [
-						{
-							"name" : "OrderID",
-							"index" : "OrderID",
-							"sorttype" : "int",
-							"key" : true,
-							"width" : 80,
-							"editable" : true
-						}, {
-							"name" : "OrderDate",
-							"index" : "OrderDate",
-							"sorttype" : "datetime",
-							"formatter" : "date",
-							"formatoptions" : {
-								"srcformat" : "Y-m-d H:i:s",
-								"newformat" : "m/d/Y"
-							},
-							"editable" : true
-						}, {
-							"name" : "CustomerID",
-							"index" : "CustomerID",
-							"sorttype" : "string",
-							"editable" : true
-						}, {
-							"name" : "ShipName",
-							"index" : "ShipName",
-							"sorttype" : "string",
-							"editable" : true
-						}, {
-							"name" : "Freight",
-							"index" : "Freight",
-							"sorttype" : "numeric",
-							"editable" : true
-						}
-				],
-				"postData" : {
-					"oper" : "grid"
-				},
-				"prmNames" : {
-					"page" : "page",
-					"rows" : "rows",
-					"sort" : "sidx",
-					"order" : "sord",
-					"search" : "_search",
-					"nd" : "nd",
-					"id" : "id",
-					"filter" : "filters",
-					"searchField" : "searchField",
-					"searchOper" : "searchOper",
-					"searchString" : "searchString",
-					"oper" : "oper",
-					"query" : "grid",
-					"addoper" : "add",
-					"editoper" : "edit",
-					"deloper" : "del",
-					"excel" : "excel",
-					"subgrid" : "subgrid",
-					"totalrows" : "totalrows",
-					"autocomplete" : "autocmpl"
-				},
-				"loadError" : function(xhr, status, err) {
-					try {
-						jQuery.jgrid.info_dialog(jQuery.jgrid.errors.errcap, '<div class="ui-state-error">' + xhr.responseText + '</div>', jQuery.jgrid.edit.bClose, {
-							buttonalign : 'right'
-						});
-					}
-					catch (e) {
-						alert(xhr.responseText);
-					}
-				},
-				"pager" : "#pager"
-			});
-
-			// ("#lista").jqGrid({
-			// datatype : 'local',
-			// data : [],
-			// colNames : [
-			// "Id", "Encuesta", "Fecha Inicio", "Fecha Fin"
-			// ],
-			// colModel : [
-			// {
-			// name : 'id',
-			// index : 'idRest',
-			// width : 0,
-			// hidden : true
-			// }, {
-			// name : 'nombre',
-			// index : 'nombre',
-			// width : 60,
-			// sorttype : 'string',
-			// sortable : true,
-			// align : 'left'
-			// }, {
-			// name : 'fecha_inicio',
-			// index : 'fecha_inicio',
-			// width : 15,
-			// sorttype : 'string',
-			// sortable : true,
-			// align : 'left'
-			// }, {
-			// name : 'fecha_fin',
-			// index : 'fecha_fin',
-			// width : 15,
-			// sorttype : 'string',
-			// sortable : true,
-			// align : 'left'
-			// }
-			// ],
-			// autowidth : true,
-			// shrinkToFit : true,
-			// rowNum : 20,
-			// rowList : [
-			// 10, 20, 30
-			// ],
-			// pager : '#paginadorLista',
-			// sortname : 'nombre',
-			// sortorder : 'asc',
-			// viewrecords : true,
-			// rownumbers : false,
-			// scroll : false,
-			// onSelectRow : function(rowid, status) {
-			// $("#btnEditar").attr('disabled', false);
-			// $("#btnEliminar").attr('disabled', false);
-			// encuesta.rowID = rowid;
-			// }
-			// });
-			// $(window).bind('resizeEnd', function() {
-			// $('#lista').setGridWidth($('#parent').width() - 30, true);
-			// }).trigger('resize');
-
-		});
-	},
-
-	'formatForm' : function() {
-		var datePickerParams = {
-			"dateFormat" : 'dd/mm/yy',
-			"dayNamesMin" : [
-					"D", "L", "M", "X", "J", "V", "S"
-			],
-			"firstDay" : 1,
-			"monthNames" : [
-					"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
-			]
+	'numberQuestions' : 0,
+	'getUser' : function() {
+		var user = {
+			id_usuario : $('#id_usuario').val(),
+			ip_usuario : $('#ip_usuario').val()
 		};
-		$("#fecha_inicio").datepicker(datePickerParams);
-		$("#fecha_fin").datepicker(datePickerParams);
-		encuesta.generateQuestionsTree("#tree");
+		return user;
+	},
+	'createList' : function(information) {
+		// $.mobile.changePage('#page');
+		jQuery.each(information, function() {
+			$("#listadoEncuestas").append("<li><a href='#' onclick='javascript:generic.getForm(\"rellenarEncuesta\", " + this.id + ");' title='Rellenar encuesta'>" + this.nombre + "</a></li>");
+		});
 
-		$("#btnAddQuestion").button().click(function() {
-			var tree = $("#tree").dynatree("getTree");
-			if (tree.getActiveNode()) {
-				tree.getActiveNode().deactivate();
+		$("#page").trigger("create");
+	},
+	'formatForm' : function(encuesta) {
+		$('#id_encuesta').val(encuesta.id);
+		$('#titulo').text(encuesta.nombre);
+		this.numberQuestions = encuesta.preguntasDTO.length;
+		for( var i = 0; i < encuesta.preguntasDTO.length; i++) {
+			var preguntaDTO = encuesta.preguntasDTO[i];
+			var fieldset = $('<fieldset>');
+			fieldset.attr('data-role', 'controlgroup');
+			fieldset.attr('data-mini', 'true');
+			var legend = $('<legend>').text(preguntaDTO.title);
+			fieldset.append(legend);
+			for( var j = 0; j < preguntaDTO.children.length; j++) {
+				var respuesta = preguntaDTO.children[j];
+				var radio = $('<input>');
+				radio.attr('type', 'radio');
+				radio.attr('name', 'radio-choice-' + i);
+				radio.attr('id', 'radio-choice-' + i + '-' + j);
+				radio.attr('value', respuesta.id);
+				fieldset.append(radio);
+
+				var label = $('<label>').text(respuesta.title);
+				label.attr('for', 'radio-choice-' + i + '-' + j);
+				fieldset.append(label);
 			}
-			$("#nombrePregunta").val('');
-			$("#nombrePregunta").attr('key', '');
-			$("#respuesta").val('');
-			$('#respuestas').find('option').remove();
-			$('#btnDeleteResponse').button("disable");
-			$('#dialog-form').dialog('option', 'title', 'A&ntilde;adir Pregunta');
-			$(".ui-dialog-buttonpane button:contains('Modificar') span").text('Crear');
-			$("#dialog-form").dialog("open");
-		});
-
-		$("#btnModifyQuestion").button().click(function() {
-			var tree = $("#tree").dynatree("getTree");
-			var selectedQuestion = tree.getActiveNode();
-			$("#nombrePregunta").val(selectedQuestion.data.title);
-			$("#nombrePregunta").attr('key', selectedQuestion.data.key);
-			$('#respuestas').find('option').remove();
-			$('#btnDeleteResponse').button("disable");
-			var responses = selectedQuestion.childList;
-			for( var i = 0; i < responses.length; i++) {
-				$('#respuestas').append('<option value="' + responses[i].data.title + '" key="' + responses[i].data.key + '">' + responses[i].data.title + '</option>');
-			}
-			$('#dialog-form').dialog('option', 'title', 'Modificar Pregunta');
-			$(".ui-dialog-buttonpane button:contains('Crear') span").text('Modificar');
-			$("#dialog-form").dialog("open");
-		});
-
-		$("#btnDeleteQuestion").button().click(function() {
-			var tree = $("#tree").dynatree("getTree");
-			var activeNode = tree.getActiveNode();
-			activeNode.removeChildren();
-			activeNode.remove();
-		});
-
-		$("#btnAddResponse").button().click(function() {
-			var respuesta = $("#respuesta").val();
-			if (respuesta.length == 0) {
-				jAlert('No puede insertar respuestas vac&iacute;as', 'Error');
-			}
-			else {
-				$('#respuestas').append('<option value="' + respuesta + '" key="">' + respuesta + '</option>');
-				$("#respuesta").val('');
-			}
-		});
-		$("#btnDeleteResponse").button().click(function() {
-			$('#respuestas option:selected').remove();
-		});
-
-		$("#btnCancel").button().click(function() {
-			generic.getList('encuesta');
-		});
-
-		$("#btnSaveQuizz").button().click(function() {
-			encuesta.getParams();
-		});
-
-		$('#respuestas').change(function() {
-			$('#btnDeleteResponse').button("enable");
-		});
-
-		$("#dialog-form").dialog({
-			autoOpen : false,
-			height : 400,
-			width : 550,
-			modal : true,
-			buttons : {
-				"Crear" : function() {
-					if ($('#nombrePregunta').val().length == 0) {
-						jAlert('No puede insertar preguntas vac&iacute;as', 'Error');
-						return;
-					}
-					if ($('#respuestas option').length < 2) {
-						jAlert('Debe a&ntildeadir al menos dos respuestas para la pregunta', 'Error');
-						return;
-					}
-					var respuestas = [];
-					$("#respuestas option").each(function() {
-						respuestas.push({
-							title : this.value,
-							key : this.getAttribute('key')
-						});
-					});
-
-					var pregunta = [
-						{
-							title : $('#nombrePregunta').val(),
-							isFolder : true,
-							children : respuestas,
-							key : $('#nombrePregunta').attr('key')
-						}
-					];
-					if ($("#tree").dynatree("getTree").getActiveNode() != null) {
-						$("#tree").dynatree("getRoot").addChild(pregunta, $("#tree").dynatree("getTree").getActiveNode());
-						var newQuestion = $("#tree").dynatree("getTree").getActiveNode().getPrevSibling();
-						if ($("#tree").dynatree("getTree").getActiveNode().isExpanded()) {
-							newQuestion.expand();
-						}
-						$("#tree").dynatree("getTree").getActiveNode().remove();
-						newQuestion.activate();
-					}
-					else {
-						$("#tree").dynatree("getRoot").addChild(pregunta);
-					}
-
-					$(this).dialog("close");
-					/*
-					 * var bValid = true; allFields.removeClass(
-					 * "ui-state-error" );
-					 * 
-					 * bValid = bValid && checkLength( name, "username", 3, 16 );
-					 * bValid = bValid && checkLength( email, "email", 6, 80 );
-					 * bValid = bValid && checkLength( password, "password", 5,
-					 * 16 );
-					 * 
-					 * bValid = bValid && checkRegexp( name,
-					 * /^[a-z]([0-9a-z_])+$/i, "Username may consist of a-z,
-					 * 0-9, underscores, begin with a letter." ); // From
-					 * jquery.validate.js (by joern), contributed by Scott
-					 * Gonzalez:
-					 * http://projects.scottsplayground.com/email_address_validation/
-					 * bValid = bValid && checkRegexp( email,
-					 * /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i,
-					 * "eg. ui@jquery.com" ); bValid = bValid && checkRegexp(
-					 * password, /^([0-9a-zA-Z])+$/, "Password field only allow :
-					 * a-z 0-9" );
-					 */
-
-				},
-				Cancel : function() {
-					$(this).dialog("close");
-				}
-			},
-			close : function() {
-				allFields.val("");
-			}
+			$('#preguntas').append(fieldset);
+		}
+		$("#page").trigger("create");
+		$("#btnEnviar").button().click(function() {
+			rellenarEncuesta.getParams();
 		});
 	},
+
 	'getParams' : function() {
-		var id = ($("#id").val()) ? $("#id").val() : null;
-		var dInicio = $("#fecha_inicio").datepicker('getDate');
-		var fecha_inicio = dInicio.getFullYear() + '-' + (dInicio.getMonth() + 1) + '-' + dInicio.getDate();
-		var dFin = $("#fecha_fin").datepicker('getDate');
-		var fecha_fin = dFin.getFullYear() + '-' + (dFin.getMonth() + 1) + '-' + dFin.getDate();
-		var data = {
-			id : id,
-			nombre : $("#nombre").val(),
-			fecha_inicio : fecha_inicio,
-			fecha_fin : fecha_fin,
-			preguntasDTO : encuesta.getQuestions()
-		};
-		var entity = (id != null) ? 'encuesta/' + id : 'encuesta';
-		generic.post(entity, data, function() {
-			generic.getList('encuesta');
-		});
-	},
-	'generateQuestionsTree' : function(selector) {
-		$(selector).dynatree({
-			selectMode : 1,
-			onActivate : function(question) {
-				$("#btnModifyQuestion").button("enable");
-				$("#btnDeleteQuestion").button("enable");
-			}
-		});
-	},
-	'getQuestions' : function() {
-		if ($("#tree").dynatree("getTree").toDict().children) {
-			var preguntas = [];
-			var pregArray = $("#tree").dynatree("getTree").toDict().children;
-			for( var i = 0; i < pregArray.length; i++) {
-				var p = pregArray[i];
-				var respuestas = [];
-				var respArray = p.children;
-				for( var j = 0; j < respArray.length; j++) {
-					var respuesta = {
-						'id' : null,
-						'title' : respArray[j].title,
-						'key' : respArray[j].key,
-						'isFolder' : false
-					};
-					respuestas.push(respuesta);
-				}
-
-				var pregunta = {
-					'id' : null,
-					'title' : p.title,
-					'key' : p.key,
-					'isFolder' : true,
-					'children' : respuestas
-				};
-				preguntas.push(pregunta);
-			}
-			return preguntas;
+		var radioButtons = $('form input[type=radio]:checked');
+		if (radioButtons.length < this.numberQuestions) {
+			jAlert("Debe contestar todas las preguntas", "Error");
 		}
 		else {
-			var preguntas = new Array();
-			preguntas.push({
-				id : null,
-				title : "Pregunta1",
-				key : "1",
-				isFolder : true,
-				children : null
+			var idRespuestasContestadas = new Array();
+			for( var i = 0; i < radioButtons.length; i++) {
+				idRespuestasContestadas.push(radioButtons[i].value);
+			}
+			var encuestaContestada = {
+				'id_encuesta' : $('#id_encuesta').val(),
+				'id_usuario' : $('#id_usuario').val(),
+				'ip_usuario' : $('#ip_usuario').val(),
+				'idRespuestasContestadas' : idRespuestasContestadas
+			}
+			var entity = "rellenarEncuesta";
+			generic.post(entity, encuestaContestada, function() {
+				generic.getList('rellenarEncuesta');
 			});
-			return preguntas;
 		}
 	}
 };
