@@ -68,7 +68,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		}
 		else {
 			logger.debug("Los detalles del usuario son correctos");
-			return new UsernamePasswordAuthenticationToken(auth.getName(), auth.getCredentials(), getAuthorities(usuario.getAdmin()));
+
+			return new UsernamePasswordAuthenticationToken(usuario, auth.getCredentials(), getAuthorities(usuario.getAdmin()));
 		}
 	}
 
