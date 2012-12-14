@@ -15,6 +15,7 @@
 	
 	</div>
 	<p style="text-align:center">
-	<a href="#" id="btnEnviar" data-role="button" data-inline="true" data-icon="check" data-mini="true">Enviar</a>
+		<a href="#" id="btnEnviar" data-role="button" data-inline="true" data-icon="check" data-mini="true">Enviar</a>
+		<a href="#" id="btnVolver" data-role="button" data-inline="true" data-icon="back" data-mini="true">Volver</a>
 	</p>
 </form>

@@ -46,6 +46,9 @@ var rellenarEncuesta = {
 		$("#btnEnviar").button().click(function() {
 			rellenarEncuesta.getParams();
 		});
+		$("#btnVolver").button().click(function() {
+			generic.getList('rellenarEncuesta', rellenarEncuesta.getUser());
+		});
 	},
 
 	'getParams' : function() {
@@ -66,7 +69,7 @@ var rellenarEncuesta = {
 			}
 			var entity = "rellenarEncuesta";
 			generic.post(entity, encuestaContestada, function() {
-				generic.getList('rellenarEncuesta');
+				generic.getList('rellenarEncuesta', rellenarEncuesta.getUser());
 			});
 		}
 	}
