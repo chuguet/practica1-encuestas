@@ -41,8 +41,8 @@ class EncuestaDAO extends AbstractDAO implements IEncuestaDAO {
 		return (List<Encuesta>) this.getSqlMapClient().queryForList("encuesta.find", parametrosEncuesta);
 	}
 
-	public void contestar(EncuestaContestada encuestaRellenada) throws SQLException {
-		Integer id = (Integer) this.getSqlMapClient().insert("encuesta.contestar", encuestaRellenada);
-		encuestaRellenada.setId(id);
+	public void contestar(EncuestaContestada encuestaContestada) throws SQLException {
+		Integer id = (Integer) this.getSqlMapClient().insert("encuesta.contestar", encuestaContestada);
+		encuestaContestada.setId(id);
 	}
 }
