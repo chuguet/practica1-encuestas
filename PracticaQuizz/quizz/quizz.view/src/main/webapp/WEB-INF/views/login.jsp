@@ -13,15 +13,16 @@
 		<meta name="description" content="Pantalla de acceso al sistema" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		
-		<link href="resources/css/jquery.alerts.css" rel="stylesheet" type="text/css">
-		<link rel="stylesheet" href="resources/js/mobile/jquery.mobile-1.2.0.min.css" />
+		<link rel="stylesheet" type="text/css" href="resources/css/jquery.alerts.css">
+		<link rel="stylesheet" type="text/css" href="resources/js/mobile/jquery.mobile-1.2.0.min.css" />
+		<link rel="stylesheet" type="text/css" href="resources/css/generic.css" />
 		
 		<script type="text/javascript" src="resources/js/jquery-1.8.2.min.js"></script>
 		<script type="text/javascript" src="resources/js/jquery.alerts.js"></script>
 		<script type="text/javascript" src="resources/js/generic.js"></script>
 		<script type="text/javascript" src="resources/js/mobile/jquery.mobile-1.2.0.min.js"></script>
 	</head> 
-	<body onload='document.f.j_username.focus();'>
+	<body onload='document.f.j_username.focus();' class="mobile">
 		<div data-role="page">
 		
 			<div data-role="header">
@@ -31,19 +32,21 @@
 			<div data-role="content">	
 				<form name='f' id='f' action="<c:url value='j_spring_security_check' />" method='POST' data-ajax="false">
 					<div data-role="fieldcontain">
-						<fieldset data-role="controlgroup">
-							<legend>Acceso a Quizz</legend>
+						<div class="login">
+							<!-- "<legend class="x">Acceso a Quizz</legend>-->
 							<p>
 								<span>Usuario:</span><input type='text' name='j_username' value='' class="text ui-widget-content ui-corner-all" data-mini="true" />
 							</p>
 							<p>
 								<span>Contrase&ntilde;a:</span><input type='password' name='j_password'  class="text ui-widget-content ui-corner-all" data-mini="true" />
 							</p>
-						</fieldset>
-						<p style="text-align:center">
-							<a href="#" onclick="javascript:$('form#f').submit();" data-role="button" data-inline="true" data-icon="check" data-mini="true">Aceptar</a>
-							<a href="#" onclick="javascript:$('form#f').reset();" data-role="button" data-inline="true" data-icon="delete" data-mini="true">Cancelar</a>
-						</p>
+							<p style="text-align:center">
+								<a href="#" onclick="javascript:$('form#f').submit();" data-role="button" data-inline="true" data-icon="check" data-mini="true" title="Aceptar">Aceptar</a>
+								<a href="#" onclick="javascript:$('form#f').reset();" data-role="button" data-inline="true" data-icon="delete" data-mini="true" title="Cancelar">Cancelar</a>
+								<a href="#" onclick="javascript:window.location.href='home';" data-role="button" data-inline="true" data-icon="info" data-mini="true" title="An&oacute;nimo">An&oacute;nimo</a>
+							</p>
+						</div>
+						
 					</div>
 				</form>
 					
@@ -84,19 +87,15 @@
 	    <script src="resources/js/jquery-ui-1.9.1.min.js" type="text/javascript"></script>
 		<script src="resources/js/jquery.alerts.js" type="text/javascript"></script>
 	</head>
-	<body onload='document.f.j_username.focus();'>
+	<body onload='document.f.j_username.focus();' class="web">
 		<form name='f' id='f' action="<c:url value='j_spring_security_check' />" method='POST'>
-			<fieldset>
+			<fieldset class="login">
 				<legend>Acceso a Quizz</legend>
-				<p>
-					<span>Usuario:</span><input type='text' name='j_username' value='' class="text ui-widget-content ui-corner-all" />
-				</p>
-				<p>
-					<span>Contrase&ntilde;a:</span><input type='password' name='j_password'  class="text ui-widget-content ui-corner-all" />
-				</p>
-				<p>
-					<input name="submit" type="submit" value="Aceptar" /><input name="reset" type="reset" value="Cancelar" />
-				</p>
+					<span>Usuario:</span>
+					<input type='text' name='j_username' value='' class="text ui-widget-content ui-corner-all" />
+					<span>Contrase&ntilde;a:</span>
+					<input type='password' name='j_password'  class="text ui-widget-content ui-corner-all" />
+					<input name="submit" type="submit" value="Aceptar" class="btn" /><input name="reset" type="reset" value="Cancelar" class="btn" />
 			</fieldset>
 		</form>
 	</body>
@@ -104,8 +103,13 @@
 		<c:if test="${not empty error}">
 		jAlert('${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}', 'Error');
 		</c:if>
+		<c:if test="${noAccess}">
+		jAlert('No tiene acceso a la administraci&oacute;n del sistema', 'Acceso prohibido');
+		</c:if>
 		$('input[type=submit]').button();
 		$('input[type=reset]').button();
+		
+		var height = $('body').height
 	</script>
 	<!-- WEB -->
 	</c:otherwise>

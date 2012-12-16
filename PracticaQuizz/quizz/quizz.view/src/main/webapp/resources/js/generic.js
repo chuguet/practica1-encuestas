@@ -135,5 +135,15 @@ var generic = {
 					"", "resources/js/jquery.jqGrid.min"
 			]);
 		}
+	},
+	'resizeEvent' : function() {
+		$(window).resize(function() {
+			generic.resizeContent();
+		});
+		this.resizeContent();
+	},
+	'resizeContent' : function() {
+		var bodyHeight = $('body').height();
+		$('#content').height(bodyHeight - 103);
 	}
 };

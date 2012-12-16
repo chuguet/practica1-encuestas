@@ -64,8 +64,8 @@ var usuario = {
 				rownumbers : false,
 				scroll : false,
 				onSelectRow : function(rowid, status) {
-					$("#btnEditar").attr('disabled', false);
-					$("#btnEliminar").attr('disabled', false);
+					$("#btnEditar").removeAttr("disabled");
+					$("#btnEliminar").removeAttr("disabled");
 					usuario.rowID = rowid;
 				}
 			});
@@ -73,6 +73,19 @@ var usuario = {
 				$('#lista').setGridWidth($('#parent').width() - 30, true);
 			}).trigger('resize');
 		});
+		
+		$("#btnAlta").button().click(function() {
+			generic.getForm('usuario');
+		});
+		$("#btnEditar").button().click(function() {
+			generic.getForm('usuario', $('#lista').jqGrid('getRowData', usuario.rowID).id);
+		});
+		$("#btnEditar").attr("disabled", "disabled");
+
+		$("#btnEliminar").button().click(function() {
+			generic.delete('usuario', $('#lista').jqGrid('getRowData', usuario.rowID).id);
+		});
+		$("#btnEliminar").attr("disabled", "disabled");
 	},
 
 	'formatForm' : function() {
