@@ -16,13 +16,30 @@ import com.movember.quizz.model.bean.Encuesta;
 import com.movember.quizz.model.exception.AppException;
 import com.movember.quizz.model.service.IEncuestaService;
 
+/**
+ * 
+ * Controlador de encuestas
+ * 
+ * **/
 @Controller
 public class EncuestaController {
+
+	/**
+	 * Servicio para manejos de encuestas en BBDD
+	 * */
 	@Inject
 	private IEncuestaService encuestaService;
 
+	/**
+	 * Recurso principal del controlador en la peticiones rest
+	 * **/
 	private static final String recurso = "encuesta";
 
+	/**
+	 * Petición REST que nos devuelve una sola encuesta por ID
+	 * @param id es el id de la encuesta
+	 * @return devuelve la encuesta con el id seleccionado
+	 * **/
 	@RequestMapping(value = "/" + recurso + "/{id}", method = RequestMethod.GET)
 	public @ResponseBody
 	EncuestaDTO retrieve(@PathVariable("id") Integer id) {
@@ -31,13 +48,16 @@ public class EncuestaController {
 			Encuesta encuesta = this.encuestaService.retrieve(id);
 			// Comversion a DTO
 			encuestaDTO.toRest(encuesta);
-		}
-		catch (AppException e) {
+		} catch (AppException e) {
 
 		}
 		return encuestaDTO;
 	}
 
+	/**
+	 * Petición REST que nos devuelve todas las encuestas de base de datos
+	 * @return devuelve la lista de encuestas
+	 * **/
 	@RequestMapping(value = "/" + recurso, method = RequestMethod.GET)
 	public @ResponseBody
 	List<EncuestaDTO> listAll() {
@@ -51,15 +71,22 @@ public class EncuestaController {
 				encuestasDTO.add(e);
 			}
 
-		}
-		catch (AppException e) {
+		} catch (AppException e) {
 
 		}
 		return encuestasDTO;
 	}
 
+	/**
+	 * Petición REST que nos devuelve en otra petición REST que operación vamos
+	 * a realizar
+	 * @param operacion campo que indica si va a ser para un listado o una alta o edicion
+	 * @param uiModel objeto que se le pasa a la vista con la información requerida
+	 * @return devuelve la dirección de la petición rest
+	 */
 	@RequestMapping(value = "/" + recurso + "/form/{operacion}", method = RequestMethod.GET, produces = "text/html")
-	public String createForm(@PathVariable("operacion") String operacion, final Model uiModel) {
+	public String createForm(@PathVariable("operacion") String operacion,
+			final Model uiModel) {
 		uiModel.addAttribute("operacion", operacion);
 		if (!operacion.equals("list")) {
 			operacion = "form";
@@ -67,6 +94,11 @@ public class EncuestaController {
 		return recurso + "/" + operacion;
 	}
 
+	/**
+	 * Petición REST para insertar una encuesta nueva en base de datos
+	 * @param encuestaDTO encuesta a insertar en BD
+	 * @return mensaje de confirmación o error de inserción
+	 * **/
 	@RequestMapping(value = "/" + recurso, method = RequestMethod.POST)
 	public @ResponseBody
 	MensajeDTO insert(@RequestBody EncuestaDTO encuestaDTO) {
@@ -82,13 +114,17 @@ public class EncuestaController {
 			encuestaDTO.toBusiness(encuesta);
 			encuestaService.insert(encuesta);
 			mensaje.setMensaje("Encuesta creada correctamente");
-		}
-		catch (AppException e) {
+		} catch (AppException e) {
 			mensaje.setMensaje(e.getMessage());
 		}
 		return mensaje;
 	}
 
+	/**
+	 * Petición REST para modificar una encuesta de base de datos
+	 * @param encuestaDTO encuesta a modificar en BD
+	 * @return mensaje de confirmación o error de inserción
+	 * **/
 	@RequestMapping(value = "/" + recurso + "/{id}", method = RequestMethod.POST)
 	public @ResponseBody
 	MensajeDTO update(@RequestBody EncuestaDTO encuestaDTO) {
@@ -104,13 +140,17 @@ public class EncuestaController {
 			encuestaDTO.toBusiness(encuesta);
 			encuestaService.update(encuesta);
 			mensaje.setMensaje("Encuesta modificada correctamente");
-		}
-		catch (AppException e) {
+		} catch (AppException e) {
 			mensaje.setMensaje(e.getMessage());
 		}
 		return mensaje;
 	}
-
+	
+	/**
+	 * Petición REST para eliminar una encuesta de base de datos
+	 * @param id id de encuesta a eliminar en BD
+	 * @return mensaje de confirmación o error de eliminación
+	 * **/
 	@RequestMapping(value = "/" + recurso + "/{id}", method = RequestMethod.DELETE)
 	public MensajeDTO remove(@PathVariable Integer id, Model uiModel) {
 		MensajeDTO mensaje = new MensajeDTO();
@@ -120,8 +160,7 @@ public class EncuestaController {
 			encuesta.setId(id);
 			this.encuestaService.delete(encuesta);
 			mensaje.setMensaje("Encuesta eliminada correctamente");
-		}
-		catch (AppException e) {
+		} catch (AppException e) {
 			mensaje.setMensaje(e.getMessage());
 		}
 		return mensaje;
