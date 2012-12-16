@@ -16,13 +16,32 @@ import com.movember.quizz.model.bean.Usuario;
 import com.movember.quizz.model.exception.AppException;
 import com.movember.quizz.model.service.IUsuarioService;
 
+
+/**
+ * The Class UsuarioController.
+ *
+ * @author Llamaradax
+ */
+/**
+ * @author Huguet
+ *
+ */
 @Controller
 public class UsuarioController {
+	
+	/** The usuario service. */
 	@Inject
 	private IUsuarioService usuarioService;
 
+	/** The Constant recurso. */
 	private static final String recurso = "usuario";
 
+	/**
+	 * Retrieve one User.
+	 *
+	 * @param id the id
+	 * @return the usuario dto
+	 */
 	@RequestMapping(value = "/" + recurso + "/{id}", method = RequestMethod.GET)
 	public @ResponseBody
 	UsuarioDTO retrieve(@PathVariable("id") Integer id) {
@@ -37,6 +56,11 @@ public class UsuarioController {
 		return usuarioDTO;
 	}
 
+	/**
+	 * List all users.
+	 *
+	 * @return the list
+	 */
 	@RequestMapping(value = "/" + recurso, method = RequestMethod.GET)
 	public @ResponseBody
 	List<UsuarioDTO> listAll() {
@@ -57,6 +81,13 @@ public class UsuarioController {
 		return usuariosDTO;
 	}
 
+	/**
+	 * Creates the form.
+	 *
+	 * @param operacion the operacion
+	 * @param uiModel the ui model
+	 * @return the string
+	 */
 	@RequestMapping(value = "/" + recurso + "/form/{operacion}", method = RequestMethod.GET, produces = "text/html")
 	public String createForm(@PathVariable("operacion") String operacion, final Model uiModel) {
 		uiModel.addAttribute("operacion", operacion);
@@ -66,6 +97,12 @@ public class UsuarioController {
 		return recurso + "/" + operacion;
 	}
 
+	/**
+	 * Insert the user.
+	 *
+	 * @param usuarioDTO the usuario dto
+	 * @return the mensaje dto
+	 */
 	@RequestMapping(value = "/" + recurso, method = RequestMethod.POST)
 	public @ResponseBody
 	MensajeDTO insert(@RequestBody UsuarioDTO usuarioDTO) {
@@ -88,6 +125,12 @@ public class UsuarioController {
 		return mensaje;
 	}
 
+	/**
+	 * Update the user.
+	 *
+	 * @param usuarioDTO the usuario dto
+	 * @return the mensaje dto
+	 */
 	@RequestMapping(value = "/" + recurso + "/{id}", method = RequestMethod.POST)
 	public @ResponseBody
 	MensajeDTO update(@RequestBody UsuarioDTO usuarioDTO) {
@@ -109,6 +152,13 @@ public class UsuarioController {
 		return mensaje;
 	}
 
+	/**
+	 * Removes the user by id.
+	 *
+	 * @param id the id
+	 * @param uiModel the ui model
+	 * @return the mensaje dto
+	 */
 	@RequestMapping(value = "/usuario/{id}", method = RequestMethod.DELETE)
 	public MensajeDTO remove(@PathVariable Integer id, Model uiModel) {
 

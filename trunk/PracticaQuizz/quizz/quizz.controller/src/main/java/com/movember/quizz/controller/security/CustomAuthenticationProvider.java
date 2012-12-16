@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 import com.movember.quizz.model.bean.Usuario;
 import com.movember.quizz.model.service.IUsuarioService;
 
+// TODO: Auto-generated Javadoc
 /**
  * A custom authentication manager that allows access if the user details exist
  * in the database and if the username and password are not the same. Otherwise,
@@ -25,15 +26,26 @@ import com.movember.quizz.model.service.IUsuarioService;
 @Component("customAuthenticationProvider")
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
+	/** The usuario service. */
 	@Inject
 	private IUsuarioService usuarioService;
+
+	/** The logger. */
 	protected static Logger logger = Logger.getLogger("service");
 
 	// We need an Md5 encoder since our passwords in the database are Md5
 	// encoded.
+	/** The password encoder. */
 	private Md5PasswordEncoder passwordEncoder = new Md5PasswordEncoder();
 
-	public Authentication authenticate(Authentication auth) throws AuthenticationException {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.springframework.security.authentication.AuthenticationProvider#
+	 * authenticate(org.springframework.security.core.Authentication)
+	 */
+	public Authentication authenticate(Authentication auth)
+			throws AuthenticationException {
 
 		logger.debug("Performing custom authentication");
 
@@ -43,8 +55,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		try {
 			// Retrieve user details from database
 			usuario = usuarioService.selectByUser(auth.getName());
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			// logger.error("User does not exists!");
 			throw new BadCredentialsException("El usuario no existe");
 		}
@@ -55,7 +66,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		}
 		// Compare passwords
 		// Make sure to encode the password first before comparing
-		if (passwordEncoder.isPasswordValid(usuario.getPwd(), (String) auth.getCredentials(), null) == false) {
+		if (passwordEncoder.isPasswordValid(usuario.getPwd(),
+				(String) auth.getCredentials(), null) == false) {
 			logger.error("Contraseña incorrecta!");
 			throw new BadCredentialsException("Contraseña incorrecta");
 		}
@@ -64,12 +76,13 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		// Username and password must be the same to authenticate
 		if (auth.getName().equals(auth.getCredentials()) == true) {
 			logger.debug("El usuario y la contraseña introducidos son los mismos!");
-			throw new BadCredentialsException("El usuario y la contraseña son iguales.");
-		}
-		else {
+			throw new BadCredentialsException(
+					"El usuario y la contraseña son iguales.");
+		} else {
 			logger.debug("Los detalles del usuario son correctos");
 
-			return new UsernamePasswordAuthenticationToken(usuario, auth.getCredentials(), getAuthorities(usuario.getAdmin()));
+			return new UsernamePasswordAuthenticationToken(usuario,
+					auth.getCredentials(), getAuthorities(usuario.getAdmin()));
 		}
 	}
 
@@ -103,7 +116,15 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		return authList;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.springframework.security.authentication.AuthenticationProvider#supports
+	 * (java.lang.Class)
+	 */
 	public boolean supports(Class<?> authentication) {
-		return (UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication));
+		return (UsernamePasswordAuthenticationToken.class
+				.isAssignableFrom(authentication));
 	}
 }

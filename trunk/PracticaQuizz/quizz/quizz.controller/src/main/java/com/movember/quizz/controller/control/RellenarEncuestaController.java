@@ -1,6 +1,7 @@
 package com.movember.quizz.controller.control;
 
 import java.util.ArrayList;
+
 import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -21,13 +22,28 @@ import com.movember.quizz.model.bean.ParametrosEncuesta;
 import com.movember.quizz.model.exception.AppException;
 import com.movember.quizz.model.service.IEncuestaService;
 
+
+/**
+ * Controlador de encuestas
+ * 
+ * *.
+ */
 @Controller
 public class RellenarEncuestaController {
+	
+	/** Servicio para manejos de encuestas en BBDD. */
 	@Inject
 	private IEncuestaService encuestaService;
 
+	/** Recurso principal del controlador en la peticiones rest *. */
 	private static final String recurso = "rellenarEncuesta";
 
+	/**
+	 * Retrieve the Encuesta.
+	 *
+	 * @param id the id
+	 * @return the encuesta dto
+	 */
 	@RequestMapping(value = "/" + recurso + "/{id}", method = RequestMethod.GET)
 	public @ResponseBody
 	EncuestaDTO retrieve(@PathVariable("id") Integer id) {
@@ -43,6 +59,12 @@ public class RellenarEncuestaController {
 		return encuestaDTO;
 	}
 
+	/**
+	 * Find the encuesta from user by Id.
+	 *
+	 * @param request the request
+	 * @return the list
+	 */
 	@RequestMapping(value = "/" + recurso, method = RequestMethod.GET)
 	public @ResponseBody
 	List<EncuestaDTO> find(HttpServletRequest request) {
@@ -67,6 +89,13 @@ public class RellenarEncuestaController {
 		return encuestasDTO;
 	}
 
+	/**
+	 * Creates the form.
+	 *
+	 * @param operacion the operacion
+	 * @param uiModel the ui model
+	 * @return the string
+	 */
 	@RequestMapping(value = "/" + recurso + "/form/{operacion}", method = RequestMethod.GET, produces = "text/html")
 	public String createForm(@PathVariable("operacion") String operacion, final Model uiModel) {
 		uiModel.addAttribute("operacion", operacion);
@@ -76,6 +105,12 @@ public class RellenarEncuestaController {
 		return recurso + "/" + operacion;
 	}
 
+	/**
+	 * Insert EncuestaContestada.
+	 *
+	 * @param encuestaRellenadaDTO the encuesta rellenada dto
+	 * @return the mensaje dto
+	 */
 	@RequestMapping(value = "/" + recurso, method = RequestMethod.POST)
 	public @ResponseBody
 	MensajeDTO insert(@RequestBody EncuestaContestadaDTO encuestaRellenadaDTO) {
@@ -97,6 +132,12 @@ public class RellenarEncuestaController {
 		return mensaje;
 	}
 
+	/**
+	 * Update the EncuestaDTO.
+	 *
+	 * @param encuestaDTO the encuesta dto
+	 * @return the mensaje dto
+	 */
 	@RequestMapping(value = "/" + recurso + "/{id}", method = RequestMethod.POST)
 	public @ResponseBody
 	MensajeDTO update(@RequestBody EncuestaDTO encuestaDTO) {
@@ -118,6 +159,13 @@ public class RellenarEncuestaController {
 		return mensaje;
 	}
 
+	/**
+	 * Removes the.
+	 *
+	 * @param id the id
+	 * @param uiModel the ui model
+	 * @return the mensaje dto
+	 */
 	@RequestMapping(value = "/" + recurso + "/{id}", method = RequestMethod.DELETE)
 	public MensajeDTO remove(@PathVariable Integer id, Model uiModel) {
 
