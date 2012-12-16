@@ -10,7 +10,7 @@
 </script>
 <form id="alta">
 	<input type="hidden" id="id_encuesta" />
-	<label id="titulo"></label>
+	<div class="titlePage"></div>
 	<div data-role="fieldcontain" id="preguntas">
 	
 	</div>

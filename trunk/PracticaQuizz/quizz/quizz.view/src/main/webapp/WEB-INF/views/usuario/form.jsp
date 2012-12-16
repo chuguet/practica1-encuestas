@@ -48,7 +48,7 @@
 		</p>
 		<p>
 			<label for="admin">Es administrador:</label>
-			<input id="admin" type="checkbox"  class="text ui-widget-content ui-corner-all" />
+			<input id="admin" type="checkbox"  class="ui-widget-content ui-corner-all" />
 		</p>
 		<div class="botonera">
 			<c:choose>
