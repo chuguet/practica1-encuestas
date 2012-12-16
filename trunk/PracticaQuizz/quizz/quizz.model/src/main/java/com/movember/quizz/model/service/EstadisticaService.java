@@ -15,15 +15,25 @@ import com.movember.quizz.model.bean.Respuesta;
 import com.movember.quizz.model.bean.RespuestaEstadistica;
 import com.movember.quizz.model.exception.AppException;
 
+
+/**
+ * The Class EstadisticaService.
+ */
 @Service
 class EstadisticaService implements IEstadisticaService {
 
+	/** The encuesta service. */
 	@Inject
 	private IEncuestaService encuestaService;
 
+	/** The respuesta service. */
 	@Inject
 	private IRespuestaService respuestaService;
 
+	
+	/* (non-Javadoc)
+	 * @see com.movember.quizz.model.service.IEstadisticaService#retrieve(java.lang.Integer)
+	 */
 	public Estadistica retrieve(Integer pId) throws AppException {
 		Estadistica estadistica = new Estadistica();
 
@@ -36,6 +46,13 @@ class EstadisticaService implements IEstadisticaService {
 		return estadistica;
 	}
 
+	/**
+	 * Gets the preguntas estadistica.
+	 *
+	 * @param preguntas the preguntas
+	 * @param idEncuesta the id encuesta
+	 * @return the preguntas estadistica
+	 */
 	private List<PreguntaEstadistica> getPreguntasEstadistica(
 			List<Pregunta> preguntas, Integer idEncuesta) {
 		List<PreguntaEstadistica> result = new ArrayList<PreguntaEstadistica>();
@@ -53,6 +70,13 @@ class EstadisticaService implements IEstadisticaService {
 		return result;
 	}
 
+	/**
+	 * Gets the respuestas estadistica.
+	 *
+	 * @param respuestas the respuestas
+	 * @param idPregunta the id pregunta
+	 * @return the respuestas estadistica
+	 */
 	private List<RespuestaEstadistica> getRespuestasEstadistica(
 			List<Respuesta> respuestas, Integer idPregunta) {
 		List<RespuestaEstadistica> result = null;

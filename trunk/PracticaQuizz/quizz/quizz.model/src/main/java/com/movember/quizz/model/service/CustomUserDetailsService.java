@@ -16,19 +16,34 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.movember.quizz.model.dao.IUsuarioDAO;
 
+
+/**
+ * The Class CustomUserDetailsService.
+ */
 @Service("userService")
 @Transactional(readOnly = true)
 public class CustomUserDetailsService implements UserDetailsService {
 
+	/** The logger. */
 	protected static Logger logger = Logger.getLogger("service");
 
+	/** The user dao. */
 	@Inject
 	private IUsuarioDAO userDAO;
 
 	/**
 	 * Retrieves a user record containing the user's credentials and access.
+	 * 
+	 * @param username
+	 *            the username
+	 * @return the user details
+	 * @throws UsernameNotFoundException
+	 *             the username not found exception
+	 * @throws DataAccessException
+	 *             the data access exception
 	 */
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
+	public UserDetails loadUserByUsername(String username)
+			throws UsernameNotFoundException, DataAccessException {
 
 		// Declare a null Spring User
 		UserDetails user = null;
@@ -47,10 +62,10 @@ public class CustomUserDetailsService implements UserDetailsService {
 			// getAuthorities() will translate the access level to the correct
 			// role type
 
-			user = new User("llamas", "1", true, true, true, true, getAuthorities(1));
+			user = new User("llamas", "1", true, true, true, true,
+					getAuthorities(1));
 
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			logger.error("Error in retrieving user");
 		}
 
