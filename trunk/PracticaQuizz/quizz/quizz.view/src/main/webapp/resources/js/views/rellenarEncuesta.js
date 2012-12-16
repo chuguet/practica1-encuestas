@@ -11,14 +11,14 @@ var rellenarEncuesta = {
 	'createList' : function(information) {
 		// $.mobile.changePage('#page');
 		jQuery.each(information, function() {
-			$("#listadoEncuestas").append("<li><a href='#' onclick='javascript:generic.getForm(\"rellenarEncuesta\", " + this.id + ");' title='Rellenar encuesta'>" + this.nombre + "</a></li>");
+			$("#listadoEncuestas").append("<li><a href='#' onclick='javascript:generic.getForm(\"rellenarEncuesta\", " + this.id + ");' title='" + this.nombre + "'>" + this.nombre + "</a></li>");
 		});
 
 		$("#page").trigger("create");
 	},
 	'formatForm' : function(encuesta) {
 		$('#id_encuesta').val(encuesta.id);
-		$('#titulo').text(encuesta.nombre);
+		$('.titlePage').text(encuesta.nombre);
 		this.numberQuestions = encuesta.preguntasDTO.length;
 		for( var i = 0; i < encuesta.preguntasDTO.length; i++) {
 			var preguntaDTO = encuesta.preguntasDTO[i];
@@ -69,7 +69,9 @@ var rellenarEncuesta = {
 			}
 			var entity = "rellenarEncuesta";
 			generic.post(entity, encuestaContestada, function() {
-				generic.getList('rellenarEncuesta', rellenarEncuesta.getUser());
+				// generic.getList('rellenarEncuesta',
+				// rellenarEncuesta.getUser());
+				generic.getForm('estadistica', $('#id_encuesta').val());
 			});
 		}
 	}

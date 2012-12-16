@@ -60,6 +60,24 @@ var encuesta = {
 				$('#lista').setGridWidth($('#parent').width() - 30, true);
 			}).trigger('resize');
 		});
+		
+		$("#btnAlta").button().click(function() {
+			generic.getForm('encuesta');
+		});
+		$("#btnEditar").button().click(function() {
+			generic.getForm('encuesta', $('#lista').jqGrid('getRowData', encuesta.rowID).id);
+		});
+		$("#btnEditar").attr("disabled", "disabled");
+
+		$("#btnEliminar").button().click(function() {
+			generic.delete('encuesta', $('#lista').jqGrid('getRowData', encuesta.rowID).id);
+		});
+		$("#btnEliminar").attr("disabled", "disabled");
+		
+		$("#btnEstadistica").button().click(function() {
+			generic.getForm('estadistica', $('#lista').jqGrid('getRowData', encuesta.rowID).id);
+		});
+		$("#btnEstadistica").attr("disabled", "disabled");
 	},
 
 	'formatForm' : function() {
