@@ -10,7 +10,6 @@
 </script>
 
 <fieldset id="estadistica">
-	<legend>Gr&aacute;fica de Encuesta</legend>
-	<span id="encuesta"></span>
+	<legend class="quizzText">Resultados de la encuesta </legend>
 	
 </fieldset>
