@@ -29,10 +29,10 @@ DROP TABLE IF EXISTS `encuesta`;
 CREATE TABLE `encuesta` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nombre` varchar(100) NOT NULL,
-  `fecha_inicio` date NOT NULL,
-  `fecha_fin` date NOT NULL,
+  `fecha_inicio` datetime NOT NULL,
+  `fecha_fin` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1 COMMENT='Almacena todas las encuestas del sistema';
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1 COMMENT='Almacena todas las encuestas del sistema';
 
 --
 -- Dumping data for table `encuesta`
@@ -40,45 +40,42 @@ CREATE TABLE `encuesta` (
 
 /*!40000 ALTER TABLE `encuesta` DISABLE KEYS */;
 INSERT INTO `encuesta` (`id`,`nombre`,`fecha_inicio`,`fecha_fin`) VALUES 
- (1,'sdfasdf','2012-11-29','2012-11-29'),
- (2,'asdf','2012-11-29','2012-11-29'),
- (3,'asdf','2012-11-29','2012-11-29'),
- (4,'sdafd','2012-11-29','2012-11-29'),
- (5,'asd','2012-11-29','2012-11-29'),
- (6,'cd','2012-11-29','2012-11-29'),
- (7,'a','2012-11-29','2012-11-29'),
- (8,'asdf','2012-11-29','2012-11-29'),
- (9,'fasdf','2012-11-29','2012-11-29'),
- (10,'asdf','2012-11-29','2012-11-29'),
- (11,'asdf','2012-11-29','2012-11-29'),
- (12,'dd','2012-11-29','2012-11-29'),
- (13,'sadf','2012-11-29','2012-11-29'),
- (14,'Â¿CÃºal es el coche que mÃ¡s te gusta?','2012-12-01','2012-12-01'),
- (15,'Prueba correcta','2012-12-01','2012-12-01');
+ (23,'Peliculas del siglo XX','2012-12-01 05:30:00','2013-01-20 06:30:00'),
+ (24,'Utilidad de la Thermo-Mix','2012-12-10 00:00:00','2013-01-31 00:00:00'),
+ (25,'Selección de coche','2012-12-18 00:00:00','2012-12-31 00:00:00');
 /*!40000 ALTER TABLE `encuesta` ENABLE KEYS */;
 
 
 --
--- Definition of table `encuesta_usuario`
+-- Definition of table `encuesta_contestada`
 --
 
-DROP TABLE IF EXISTS `encuesta_usuario`;
-CREATE TABLE `encuesta_usuario` (
+DROP TABLE IF EXISTS `encuesta_contestada`;
+CREATE TABLE `encuesta_contestada` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `id_encuesta` int(10) unsigned NOT NULL,
   `id_usuario` int(10) unsigned DEFAULT NULL,
-  `ip_dispositivo` varchar(20) DEFAULT NULL,
-  KEY `FK_encuesta_usuario_1` (`id_encuesta`),
-  KEY `FK_encuesta_usuario_2` (`id_usuario`),
-  CONSTRAINT `FK_encuesta_usuario_1` FOREIGN KEY (`id_encuesta`) REFERENCES `encuesta` (`id`),
-  CONSTRAINT `FK_encuesta_usuario_2` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `ip_usuario` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_encuesta_contestada_1` (`id_encuesta`),
+  CONSTRAINT `FK_encuesta_contestada_1` FOREIGN KEY (`id_encuesta`) REFERENCES `encuesta` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `encuesta_usuario`
+-- Dumping data for table `encuesta_contestada`
 --
 
-/*!40000 ALTER TABLE `encuesta_usuario` DISABLE KEYS */;
-/*!40000 ALTER TABLE `encuesta_usuario` ENABLE KEYS */;
+/*!40000 ALTER TABLE `encuesta_contestada` DISABLE KEYS */;
+INSERT INTO `encuesta_contestada` (`id`,`id_encuesta`,`id_usuario`,`ip_usuario`) VALUES 
+ (17,24,4,NULL),
+ (18,24,4,NULL),
+ (19,24,NULL,NULL),
+ (20,24,NULL,'da3e0446-66df-4364-bc7c-f987b92672ab'),
+ (21,24,NULL,'f0745def-26ef-415b-893d-1225a8619a1c'),
+ (22,24,NULL,'6f638e91-c790-4aae-ace8-85dcb7bf5f72'),
+ (23,24,NULL,'6f638e91-c790-4aae-ace8-85dcb7bf5f72'),
+ (24,24,NULL,'9f9ef15b-7622-4a90-8be2-b04e5a79e219');
+/*!40000 ALTER TABLE `encuesta_contestada` ENABLE KEYS */;
 
 
 --
@@ -93,7 +90,7 @@ CREATE TABLE `pregunta` (
   PRIMARY KEY (`id`),
   KEY `FK_pregunta_1` (`id_encuesta`),
   CONSTRAINT `FK_pregunta_1` FOREIGN KEY (`id_encuesta`) REFERENCES `encuesta` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1 COMMENT='Las distintas preguntas que conforman una encuesta';
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1 COMMENT='Las distintas preguntas que conforman una encuesta';
 
 --
 -- Dumping data for table `pregunta`
@@ -101,10 +98,15 @@ CREATE TABLE `pregunta` (
 
 /*!40000 ALTER TABLE `pregunta` DISABLE KEYS */;
 INSERT INTO `pregunta` (`id`,`pregunta`,`id_encuesta`) VALUES 
- (1,'Â¿QuÃ© es lo que valoras mÃ¡s en un coche?',14),
- (2,'Pregunta 1',15),
- (3,'Pregunta 2',15),
- (4,'Pregunta3',15);
+ (19,'¿Cúal es la mejor película del S.XX?',23),
+ (20,'¿Cuál es la mejor Banda sonora?',23),
+ (21,'¿Quien es el mejor actor?',23),
+ (22,'¿Cuánto utilizas la Thermo-Mix?',24),
+ (23,'¿Cuál es la receta que más te gusta?',24),
+ (24,'¿Se la aconsejarías a un amigo?',24),
+ (25,'¿Qué valoras en un coche?',25),
+ (26,'¿Cuál es la velocidad máxima a la que sueles conducir?',25),
+ (27,'¿Qué coche elegirías?',25);
 /*!40000 ALTER TABLE `pregunta` ENABLE KEYS */;
 
 
@@ -120,7 +122,7 @@ CREATE TABLE `respuesta` (
   PRIMARY KEY (`id`),
   KEY `FK_respuesta_1` (`id_pregunta`),
   CONSTRAINT `FK_respuesta_1` FOREIGN KEY (`id_pregunta`) REFERENCES `pregunta` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1 COMMENT='Las posibles respuestas asociadas a cada pregunta';
+) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=latin1 COMMENT='Las posibles respuestas asociadas a cada pregunta';
 
 --
 -- Dumping data for table `respuesta`
@@ -128,43 +130,90 @@ CREATE TABLE `respuesta` (
 
 /*!40000 ALTER TABLE `respuesta` DISABLE KEYS */;
 INSERT INTO `respuesta` (`id`,`respuesta`,`id_pregunta`) VALUES 
- (4,'Respuesta 11',2),
- (5,'Respuesta 12',2),
- (6,'Respuesta 13',2),
- (7,'Respuesta 21',3),
- (8,'Respuesta 22',3),
- (9,'asdfasdfa',4),
- (10,'Respuesta 2',4),
- (11,'Respuesta 14',2),
- (12,'Respuesta 23',3),
- (13,'Respuesta 24',3),
- (14,'La seguridad',1),
- (15,'El diseÃ±o',1),
- (16,'El precio',1),
- (17,'Las prestaciones',1);
+ (40,'Gladiator',19),
+ (41,'Lo que el viento se llevo',19),
+ (42,'Casablanca',19),
+ (43,'Titanic',19),
+ (44,'Alien',20),
+ (45,'Pulp Fiction',20),
+ (46,'El Señor de los Anillos',20),
+ (47,'Wodie Allen',21),
+ (48,'Santiago Segura',21),
+ (49,'Rafaela Carra',21),
+ (50,'A diario',22),
+ (51,'5 veces por semana',22),
+ (52,'3 veces por semana',22),
+ (53,'1 vez por semana',22),
+ (54,'1 vez al mes',22),
+ (55,'Arroz con bogavante',23),
+ (56,'Arroz con leche',23),
+ (57,'Pollo en pepitoria',23),
+ (58,'Cocido',23),
+ (59,'Siempre',24),
+ (60,'Casi seguro',24),
+ (61,'Probablemente',24),
+ (62,'Casi que no',24),
+ (63,'Nunca',24),
+ (64,'El diseño',25),
+ (65,'El acabado',25),
+ (66,'La fiabilidad',25),
+ (67,'Las prestaciones',25),
+ (68,'80 km/h',26),
+ (69,'90 km/h',26),
+ (70,'100 km/h',26),
+ (71,'130 km/h',26),
+ (72,'Ford Focus',27),
+ (73,'volkswagen Golf',27),
+ (74,'Seat Leon',27),
+ (75,'Renault Megane',27);
 /*!40000 ALTER TABLE `respuesta` ENABLE KEYS */;
 
 
 --
--- Definition of table `respuesta_usuario`
+-- Definition of table `respuesta_contestada`
 --
 
-DROP TABLE IF EXISTS `respuesta_usuario`;
-CREATE TABLE `respuesta_usuario` (
+DROP TABLE IF EXISTS `respuesta_contestada`;
+CREATE TABLE `respuesta_contestada` (
   `id_respuesta` int(10) unsigned NOT NULL,
-  `id_usuario` int(10) unsigned DEFAULT NULL,
+  `id_encuesta_contestada` int(10) unsigned NOT NULL,
   KEY `FK_respuesta_usuario_1` (`id_respuesta`),
-  KEY `FK_respuesta_usuario_2` (`id_usuario`),
-  CONSTRAINT `FK_respuesta_usuario_1` FOREIGN KEY (`id_respuesta`) REFERENCES `respuesta` (`id`),
-  CONSTRAINT `FK_respuesta_usuario_2` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`)
+  KEY `FK_respuesta_contestada_2` (`id_encuesta_contestada`),
+  CONSTRAINT `FK_respuesta_contestada_1` FOREIGN KEY (`id_respuesta`) REFERENCES `respuesta` (`id`),
+  CONSTRAINT `FK_respuesta_contestada_2` FOREIGN KEY (`id_encuesta_contestada`) REFERENCES `encuesta_contestada` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `respuesta_usuario`
+-- Dumping data for table `respuesta_contestada`
 --
 
-/*!40000 ALTER TABLE `respuesta_usuario` DISABLE KEYS */;
-/*!40000 ALTER TABLE `respuesta_usuario` ENABLE KEYS */;
+/*!40000 ALTER TABLE `respuesta_contestada` DISABLE KEYS */;
+INSERT INTO `respuesta_contestada` (`id_respuesta`,`id_encuesta_contestada`) VALUES 
+ (50,17),
+ (56,17),
+ (60,17),
+ (50,18),
+ (56,18),
+ (60,18),
+ (53,19),
+ (55,19),
+ (59,19),
+ (53,20),
+ (55,20),
+ (59,20),
+ (54,21),
+ (58,21),
+ (59,21),
+ (53,22),
+ (57,22),
+ (59,22),
+ (53,23),
+ (57,23),
+ (59,23),
+ (52,24),
+ (56,24),
+ (60,24);
+/*!40000 ALTER TABLE `respuesta_contestada` ENABLE KEYS */;
 
 
 --
@@ -181,7 +230,7 @@ CREATE TABLE `usuario` (
   `pwd` varchar(40) NOT NULL,
   `admin` tinyint(1) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COMMENT='Almacena los usuarios del sistema';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1 COMMENT='Almacena los usuarios del sistema';
 
 --
 -- Dumping data for table `usuario`
@@ -189,7 +238,10 @@ CREATE TABLE `usuario` (
 
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
 INSERT INTO `usuario` (`id`,`nombre`,`apellidos`,`email`,`usuario`,`pwd`,`admin`) VALUES 
- (1,'David','Llamazares JuÃ¡rez','dllamazares@atsistemas.com','admin','admin',1);
+ (1,'David','Llamazares Juárez','dllamazares@atsistemas.com','d','c4ca4238a0b923820dcc509a6f75849b',1),
+ (2,'Carlos','Huguet','huguet@gmail.com','c','c4ca4238a0b923820dcc509a6f75849b',1),
+ (3,'Sergio','Rios','sergio.rios@upsam.es','s','c4ca4238a0b923820dcc509a6f75849b',0),
+ (4,'Pedro','Alonso','palonso@gmail.com','p','c4ca4238a0b923820dcc509a6f75849b',0);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 
 
