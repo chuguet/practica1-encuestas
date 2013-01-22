@@ -20,12 +20,12 @@
 		<script type="text/javascript" src="resources/js/jquery.alerts.js"></script>
 		<script type="text/javascript" src="resources/js/views/rellenarEncuesta.js"></script>
 		<script type="text/javascript" src="resources/js/mobile/jquery.mobile.js"></script>
-		<script src="resources/js/views/estadistica.js" type="text/javascript"></script>
+		<script type="text/javascript" src="resources/js/views/estadistica.js"></script>
+		<script type="text/javascript" src="resources/js/cookie.js"></script>
 	</head> 
-	<body class="mobile"> 
+	<body class="mobile" onload="cookie.check('${GUID}');"> 
 		<div data-role="page" id="page">
 			<input type="hidden" id="id_usuario" value="${id_usuario}" />
-			<input type="hidden" id="ip_usuario" value="${ip_usuario}" />
 			<div data-role="header">
 				<div id="home-btn" class="header-btn-left-pos1">
 			        <a href="javascript:window.location.reload();" data-role="button" data-icon="home" data-rel="home" data-iconpos="notext" data-theme="c">Home</a>
@@ -85,6 +85,8 @@
 		<script src="resources/js/views/encuesta.js" type="text/javascript"></script>
 		<script src="resources/js/views/usuario.js" type="text/javascript"></script>
 		<script src="resources/js/views/estadistica.js" type="text/javascript"></script>
+		
+		<script src="resources/js/jquery-ui-timepicker-addon.js" type="text/javascript"></script>
 	</head>
 	<body id="quizz" class="web">
 		

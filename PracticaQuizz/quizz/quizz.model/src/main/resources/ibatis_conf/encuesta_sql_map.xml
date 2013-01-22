@@ -4,9 +4,8 @@
 	<resultMap id="encuestaResult" class="com.movember.quizz.model.bean.Encuesta">
 		<result column="id" property="id" jdbcType="INTEGER" />
 		<result column="nombre" property="nombre" jdbcType="VARCHAR" />
-		<result column="fecha_inicio" property="fecha_inicio" jdbcType="DATE" />		
-		<result column="fecha_fin" property="fecha_fin" jdbcType="DATE" />
-		
+		<result column="fecha_inicio" property="fecha_inicio" jdbcType="DATETIME" />		
+		<result column="fecha_fin" property="fecha_fin" jdbcType="DATETIME" />
 	</resultMap>
 	
 	<select id="selectById" parameterClass="java.lang.Integer" resultMap="encuestaResult">
@@ -42,7 +41,7 @@
 	 	INSERT INTO encuesta 
     	(nombre, fecha_inicio, fecha_fin)
 	 	VALUES  
-	 	(#nombre:VARCHAR#, #fecha_inicio:DATE#, #fecha_fin:DATE#)
+	 	(#nombre:VARCHAR#, #fecha_inicio:DATETIME#, #fecha_fin:DATETIME#)
 	 	<selectKey resultClass="int" keyProperty="id">
 			select LAST_INSERT_ID()
 	 	</selectKey> 
@@ -62,8 +61,8 @@
   		UPDATE encuesta 
   		SET  
   		nombre = #nombre:VARCHAR#,
-  		fecha_inicio = #fecha_inicio:DATE#,
-  		fecha_fin = #fecha_fin:DATE#
+  		fecha_inicio = #fecha_inicio:DATETIME#,
+  		fecha_fin = #fecha_fin:DATETIME#
 	 	WHERE id = #id:INTEGER#
   	</update>
 	

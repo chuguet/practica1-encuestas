@@ -110,21 +110,19 @@ public class EncuestaDTO extends AbstractDTO {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see
 	 * com.movember.quizz.controller.dto.AbstractDTO#toRest(java.lang.Object)
 	 */
 	@Override
 	public void toRest(Object object) throws AppException {
 		Encuesta encuesta = (Encuesta) object;
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		this.setId(encuesta.getId());
 		this.nombre = encuesta.getNombre();
 		this.fecha_inicio = sdf.format(encuesta.getFecha_inicio());
 		this.fecha_fin = sdf.format(encuesta.getFecha_fin());
 
-		if (encuesta.getPreguntas() != null
-				&& encuesta.getPreguntas().size() > 0) {
+		if (encuesta.getPreguntas() != null && encuesta.getPreguntas().size() > 0) {
 			for (Pregunta pregunta : encuesta.getPreguntas()) {
 				PreguntaDTO preguntaDTO = new PreguntaDTO();
 				preguntaDTO.toRest(pregunta);
@@ -135,21 +133,21 @@ public class EncuestaDTO extends AbstractDTO {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see
 	 * com.movember.quizz.controller.dto.AbstractDTO#toBusiness(java.lang.Object
 	 * )
 	 */
 	@Override
 	public void toBusiness(Object object) throws AppException {
-		SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		Encuesta encuesta = (Encuesta) object;
 		encuesta.setId(this.getId());
 		encuesta.setNombre(this.nombre);
 		try {
 			encuesta.setFecha_inicio(formatoDelTexto.parse(this.fecha_inicio));
 			encuesta.setFecha_fin(formatoDelTexto.parse(this.fecha_fin));
-		} catch (ParseException e) {
+		}
+		catch (ParseException e) {
 			throw new AppException("Error en la conversión de fechas");
 		}
 

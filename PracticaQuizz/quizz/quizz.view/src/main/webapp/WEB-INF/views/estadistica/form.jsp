@@ -11,5 +11,10 @@
 
 <fieldset id="estadistica">
 	<legend class="quizzText">Resultados de la encuesta </legend>
-	
+
 </fieldset>
+<c:if test="${mobile}">
+<p style="text-align:center">
+	<a href="#" id="btnVolver" data-role="button" data-inline="true" data-icon="check" data-mini="true" title="Ver encuestas disponibles">Volver al listado de encuestas</a>
+</p>
+</c:if>
