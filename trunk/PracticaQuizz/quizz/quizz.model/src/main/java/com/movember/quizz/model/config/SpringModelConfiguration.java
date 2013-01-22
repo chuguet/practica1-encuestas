@@ -1,5 +1,7 @@
 package com.movember.quizz.model.config;
 
+import net.sourceforge.wurfl.core.GeneralWURFLEngine;
+import net.sourceforge.wurfl.core.WURFLManager;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -49,6 +51,10 @@ public class SpringModelConfiguration {
 	@Value("${jdbc.password}")
 	private String password;
 
+	/** Path of wurfl file. */
+	@Value("${wurflPath}")
+	private String wurflPath;
+
 	/**
 	 * Gets the data source.
 	 * 
@@ -72,8 +78,7 @@ public class SpringModelConfiguration {
 	@Bean
 	public SqlMapClientFactoryBean sqlMapClient() {
 		SqlMapClientFactoryBean result = new SqlMapClientFactoryBean();
-		result.setConfigLocation(new ClassPathResource(
-				"ibatis_conf/sql_map_config.xml"));
+		result.setConfigLocation(new ClassPathResource("ibatis_conf/sql_map_config.xml"));
 		result.setDataSource(this.getDataSource());
 		return result;
 	}
@@ -88,5 +93,17 @@ public class SpringModelConfiguration {
 		DataSourceTransactionManager transactionManager = new DataSourceTransactionManager();
 		transactionManager.setDataSource(this.getDataSource());
 		return transactionManager;
+	}
+
+	/**
+	 * Bean que especifica los tipos de petición entre la vista y el
+	 * controlador.
+	 * 
+	 * @return the content negotiating view resolver
+	 */
+	@Bean
+	public WURFLManager wURFLManager() {
+		GeneralWURFLEngine generalWURFLEngine = new GeneralWURFLEngine(wurflPath);
+		return generalWURFLEngine.getWURFLManager();
 	}
 }

@@ -1,7 +1,10 @@
 package com.movember.quizz.controller.control;
 
 import java.security.Principal;
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import net.sourceforge.wurfl.core.Device;
+import net.sourceforge.wurfl.core.WURFLManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.stereotype.Controller;
@@ -9,7 +12,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import com.movember.quizz.model.bean.Usuario;
-
 
 /**
  * Controlador de login
@@ -20,13 +22,22 @@ import com.movember.quizz.model.bean.Usuario;
 public class LoginController {
 
 	/**
+	 * Elemento para conocer que tipo de dispositivo está accediendo a la
+	 * aplicación
+	 */
+	@Inject
+	private WURFLManager manager;
+
+	/**
 	 * Petición REST que recoge los datos del usuario y nos lleva a la pagina
-	 * principal
-	 * *.
-	 *
-	 * @param model the model
-	 * @param principal the principal
-	 * @param request the request
+	 * principal *.
+	 * 
+	 * @param model
+	 *            the model
+	 * @param principal
+	 *            the principal
+	 * @param request
+	 *            the request
 	 * @return the string
 	 */
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
@@ -43,8 +54,9 @@ public class LoginController {
 			model.addAttribute("apellidos", null);
 			model.addAttribute("id_usuario", null);
 		}
-		model.addAttribute("ip_usuario", request.getRemoteAddr());
-		if (request.getHeader("user-agent").toLowerCase().contains("mobile")) {
+
+		model.addAttribute("GUID", java.util.UUID.randomUUID());
+		if (this.isMobile(request)) {
 			model.addAttribute("mobile", true);
 			return "home";
 		}
@@ -66,43 +78,57 @@ public class LoginController {
 	/**
 	 * Petición REST para comprobar que el logueo se hace desde un dispositivo
 	 * movil.
-	 *
-	 * @param model the model
-	 * @param request the request
+	 * 
+	 * @param model
+	 *            the model
+	 * @param request
+	 *            the request
 	 * @return the string
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(ModelMap model, HttpServletRequest request) {
-		model.addAttribute("mobile", request.getHeader("user-agent").toLowerCase().contains("mobile"));
+		model.addAttribute("mobile", this.isMobile(request));
+		model.addAttribute("GUID", java.util.UUID.randomUUID());
 		return "login";
 	}
 
 	/**
 	 * Petición REST que tras realizar un logueo fallido nos lleva a la pantalla
 	 * de login de nuevo.
-	 *
-	 * @param model the model
-	 * @param request the request
+	 * 
+	 * @param model
+	 *            the model
+	 * @param request
+	 *            the request
 	 * @return the string
 	 */
 	@RequestMapping(value = "/loginfailed", method = RequestMethod.GET)
 	public String loginerror(ModelMap model, HttpServletRequest request) {
 		model.addAttribute("error", "true");
-		model.addAttribute("mobile", request.getHeader("user-agent").toLowerCase().contains("mobile"));
+		model.addAttribute("mobile", this.isMobile(request));
+		model.addAttribute("GUID", java.util.UUID.randomUUID());
 		return "login";
 	}
 
 	/**
 	 * Peticion REST que nos realiza el logout de la aplicación y nos lleva a la
 	 * pagina de login.
-	 *
-	 * @param model the model
-	 * @param request the request
+	 * 
+	 * @param model
+	 *            the model
+	 * @param request
+	 *            the request
 	 * @return the string
 	 */
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(ModelMap model, HttpServletRequest request) {
-		model.addAttribute("mobile", request.getHeader("user-agent").toLowerCase().contains("mobile"));
+		model.addAttribute("mobile", this.isMobile(request));
+		model.addAttribute("GUID", java.util.UUID.randomUUID());
 		return "login";
+	}
+
+	private boolean isMobile(HttpServletRequest request) {
+		Device device = manager.getDeviceForRequest(request);
+		return !device.isGeneric();
 	}
 }

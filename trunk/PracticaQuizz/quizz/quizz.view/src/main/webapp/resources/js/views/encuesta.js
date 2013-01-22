@@ -89,10 +89,11 @@ var encuesta = {
 			"firstDay" : 1,
 			"monthNames" : [
 					"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
-			]
+			],
+			"timeFormat": "HH:mm:ss"
 		};
-		$("#fecha_inicio").datepicker(datePickerParams);
-		$("#fecha_fin").datepicker(datePickerParams);
+		$("#fecha_inicio").datetimepicker(datePickerParams);
+		$("#fecha_fin").datetimepicker(datePickerParams);
 		encuesta.generateQuestionsTree("#tree");
 
 		$("#btnAddQuestion").button().click(function() {

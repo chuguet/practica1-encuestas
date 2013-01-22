@@ -24,6 +24,9 @@ var estadistica = {
 			});
 		}
 		this.visualizeGraph();
+		$("#btnVolver").button().click(function() {
+			generic.getList('rellenarEncuesta', rellenarEncuesta.getUser());
+		});
 	},
 	'visualizeGraph' : function() {
 		$('.chart li').each(function() {

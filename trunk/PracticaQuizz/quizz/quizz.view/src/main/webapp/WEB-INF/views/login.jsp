@@ -21,8 +21,9 @@
 		<script type="text/javascript" src="resources/js/jquery.alerts.js"></script>
 		<script type="text/javascript" src="resources/js/generic.js"></script>
 		<script type="text/javascript" src="resources/js/mobile/jquery.mobile-1.2.0.min.js"></script>
+		<script type="text/javascript" src="resources/js/cookie.js"></script>
 	</head> 
-	<body onload='document.f.j_username.focus();' class="mobile">
+	<body onload="cookie.check('${GUID}');document.f.j_username.focus();" class="mobile">
 		<div data-role="page">
 		
 			<div data-role="header">
