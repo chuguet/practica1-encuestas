@@ -22,6 +22,11 @@
 		<script type="text/javascript" src="resources/js/mobile/jquery.mobile.js"></script>
 		<script type="text/javascript" src="resources/js/views/estadistica.js"></script>
 		<script type="text/javascript" src="resources/js/cookie.js"></script>
+		<script type="text/javascript">
+			function logout(){
+				window.location.href = '<c:url value="/j_spring_security_logout" />';
+			}
+		</script>
 	</head> 
 	<body class="mobile" onload="cookie.check('${GUID}');"> 
 		<div data-role="page" id="page">
@@ -32,7 +37,7 @@
 			    </div>
 			
 			    <div id="back-btn" class="header-btn-left-pos2">
-			        <a href="<c:url value="/j_spring_security_logout" />" data-role="button" data-icon="delete" data-rel="delete" title="Salir" id="btnSalir" data-iconpos="notext" data-theme="c">Salir</a>
+			        <a href="javascript:void" onclick="javascript:logout();" data-role="button" data-icon="delete" data-rel="delete" title="Salir" id="btnSalir" data-iconpos="notext" data-theme="c">Salir</a>
 			    </div>
 			
 			    <div class="header-title" align="center">
@@ -87,6 +92,11 @@
 		<script src="resources/js/views/estadistica.js" type="text/javascript"></script>
 		
 		<script src="resources/js/jquery-ui-timepicker-addon.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			function logout(){
+				window.location.href = '<c:url value="/j_spring_security_logout" />';
+			}
+		</script>
 	</head>
 	<body id="quizz" class="web">
 		
@@ -99,7 +109,7 @@
 			<a href="javascript:void" onclick="javascript:generic.getList('encuesta');" title="Ver encuestas" class="itemMenu">Encuestas</a>
 			<div id="usuario">
 				<span>Usuario : ${nombre} ${apellidos}</span> 
-				<a href="<c:url value="/j_spring_security_logout" />" id="btnUnlogin" title="Salir"><span>Salir</span></a>
+				<a href="javascript:void" onclick="javascript:logout();" id="btnUnlogin" title="Salir"><span>Salir</span></a>
 			</div>
 		</div>
 		
