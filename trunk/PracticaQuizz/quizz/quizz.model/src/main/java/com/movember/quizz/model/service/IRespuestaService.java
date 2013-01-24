@@ -4,7 +4,6 @@ import java.util.List;
 import com.movember.quizz.model.bean.Respuesta;
 import com.movember.quizz.model.exception.AppException;
 
-
 /**
  * The Interface IRespuestaService.
  */
@@ -21,16 +20,9 @@ public interface IRespuestaService extends IService<Respuesta> {
 	 */
 	List<Respuesta> recuperarDePregunta(Integer id) throws AppException;
 
-	/**
-	 * Recuperar veces contestadas.
-	 * 
-	 * @param idRespuesta
-	 *            the id respuesta
-	 * @return the integer
-	 * @throws AppException
-	 *             the app exception
-	 */
-	Integer recuperarVecesContestadas(Integer idRespuesta) throws AppException;
+	Integer recuperarVecesContestadasPorIdentificado(Integer idRespuesta) throws AppException;
+
+	Integer recuperarVecesContestadasPorNoIdentificado(Integer idRespuesta) throws AppException;
 
 	/**
 	 * Contestar.
@@ -42,6 +34,5 @@ public interface IRespuestaService extends IService<Respuesta> {
 	 * @throws AppException
 	 *             the app exception
 	 */
-	void contestar(Integer idEncuestaContestada, Integer idRespuesta)
-			throws AppException;
+	void contestar(Integer idEncuestaContestada, Integer idRespuesta) throws AppException;
 }

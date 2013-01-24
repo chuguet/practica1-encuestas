@@ -3,7 +3,6 @@ package com.movember.quizz.controller.dto;
 import com.movember.quizz.model.bean.RespuestaEstadistica;
 import com.movember.quizz.model.exception.AppException;
 
-
 /**
  * The Class RespuestaEstadisticaDTO.
  */
@@ -13,7 +12,9 @@ public class RespuestaEstadisticaDTO extends AbstractDTO {
 	private String respuesta;
 
 	/** The veces contestada. */
-	private int vecesContestada;
+	private int vecesNoIdentificado;
+
+	private int vecesIdentificado;
 
 	/** The id pregunta. */
 	private Integer idPregunta;
@@ -37,13 +38,8 @@ public class RespuestaEstadisticaDTO extends AbstractDTO {
 		this.respuesta = respuesta;
 	}
 
-	/**
-	 * Gets the veces contestada.
-	 * 
-	 * @return the veces contestada
-	 */
-	public int getVecesContestada() {
-		return vecesContestada;
+	public int getVecesNoIdentificado() {
+		return vecesNoIdentificado;
 	}
 
 	/**
@@ -52,8 +48,16 @@ public class RespuestaEstadisticaDTO extends AbstractDTO {
 	 * @param vecesContestada
 	 *            the new veces contestada
 	 */
-	public void setVecesContestada(int vecesContestada) {
-		this.vecesContestada = vecesContestada;
+	public void setVecesNoIdentificado(int vecesNoIdentificado) {
+		this.vecesNoIdentificado = vecesNoIdentificado;
+	}
+
+	public void setVecesIdentificado(int vecesIdentificado) {
+		this.vecesIdentificado = vecesIdentificado;
+	}
+
+	public int getVecesIdentificado() {
+		return vecesIdentificado;
 	}
 
 	/**
@@ -77,7 +81,6 @@ public class RespuestaEstadisticaDTO extends AbstractDTO {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see
 	 * com.movember.quizz.controller.dto.AbstractDTO#toRest(java.lang.Object)
 	 */
@@ -86,12 +89,12 @@ public class RespuestaEstadisticaDTO extends AbstractDTO {
 		RespuestaEstadistica respuestaEstadistica = (RespuestaEstadistica) object;
 		this.setIdPregunta(respuestaEstadistica.getIdPregunta());
 		this.setRespuesta(respuestaEstadistica.getRespuesta());
-		this.setVecesContestada(respuestaEstadistica.getVecesContestada());
+		this.setVecesNoIdentificado(respuestaEstadistica.getVecesNoIdentificado());
+		this.setVecesIdentificado(respuestaEstadistica.getVecesIdentificado());
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see
 	 * com.movember.quizz.controller.dto.AbstractDTO#toBusiness(java.lang.Object
 	 * )

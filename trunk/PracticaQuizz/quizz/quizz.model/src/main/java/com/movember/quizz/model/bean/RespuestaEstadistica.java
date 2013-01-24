@@ -8,8 +8,9 @@ public class RespuestaEstadistica {
 	/** The respuesta. */
 	private String respuesta;
 
-	/** The veces contestada. */
-	private int vecesContestada;
+	private int vecesNoIdentificado;
+
+	private int vecesIdentificado;
 
 	/** The id pregunta. */
 	private Integer idPregunta;
@@ -33,23 +34,20 @@ public class RespuestaEstadistica {
 		this.respuesta = respuesta;
 	}
 
-	/**
-	 * Gets the veces contestada.
-	 * 
-	 * @return the veces contestada
-	 */
-	public int getVecesContestada() {
-		return vecesContestada;
+	public int getVecesNoIdentificado() {
+		return vecesNoIdentificado;
 	}
 
-	/**
-	 * Sets the veces contestada.
-	 * 
-	 * @param vecesContestada
-	 *            the new veces contestada
-	 */
-	public void setVecesContestada(int vecesContestada) {
-		this.vecesContestada = vecesContestada;
+	public void setVecesNoIdentificado(int vecesNoIdentificado) {
+		this.vecesNoIdentificado = vecesNoIdentificado;
+	}
+
+	public int getVecesIdentificado() {
+		return vecesIdentificado;
+	}
+
+	public void setVecesIdentificado(int vecesIdentificado) {
+		this.vecesIdentificado = vecesIdentificado;
 	}
 
 	/**

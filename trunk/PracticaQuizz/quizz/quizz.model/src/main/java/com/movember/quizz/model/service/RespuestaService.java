@@ -21,7 +21,6 @@ class RespuestaService implements IRespuestaService {
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see
 	 * com.movember.quizz.model.service.IService#insert(com.movember.quizz.model
 	 * .bean.AbstractBean)
@@ -29,15 +28,14 @@ class RespuestaService implements IRespuestaService {
 	public void insert(Respuesta respuesta) throws AppException {
 		try {
 			respuestaDAO.insert(respuesta);
-		} catch (SQLException e) {
-			throw new AppException(
-					"Se ha producido un error al insertar una respuesta");
+		}
+		catch (SQLException e) {
+			throw new AppException("Se ha producido un error al insertar una respuesta");
 		}
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see
 	 * com.movember.quizz.model.service.IService#update(com.movember.quizz.model
 	 * .bean.AbstractBean)
@@ -45,15 +43,14 @@ class RespuestaService implements IRespuestaService {
 	public void update(Respuesta respuesta) throws AppException {
 		try {
 			respuestaDAO.update(respuesta);
-		} catch (SQLException e) {
-			throw new AppException(
-					"Se ha producido un error al actualizar una respuesta");
+		}
+		catch (SQLException e) {
+			throw new AppException("Se ha producido un error al actualizar una respuesta");
 		}
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see
 	 * com.movember.quizz.model.service.IService#delete(com.movember.quizz.model
 	 * .bean.AbstractBean)
@@ -61,15 +58,14 @@ class RespuestaService implements IRespuestaService {
 	public void delete(Respuesta respuesta) throws AppException {
 		try {
 			respuestaDAO.delete(respuesta.getId());
-		} catch (SQLException e) {
-			throw new AppException(
-					"Se ha producido un error al eliminar una respuesta");
+		}
+		catch (SQLException e) {
+			throw new AppException("Se ha producido un error al eliminar una respuesta");
 		}
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see
 	 * com.movember.quizz.model.service.IService#retrieve(java.lang.Integer)
 	 */
@@ -77,84 +73,90 @@ class RespuestaService implements IRespuestaService {
 		Respuesta respuesta = null;
 		try {
 			respuesta = respuestaDAO.retrieve(id);
-		} catch (SQLException e) {
-			throw new AppException(
-					"Se ha producido un error al recuperar una respuesta");
+		}
+		catch (SQLException e) {
+			throw new AppException("Se ha producido un error al recuperar una respuesta");
 		}
 		return respuesta;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see com.movember.quizz.model.service.IService#selectAll()
 	 */
 	public List<Respuesta> selectAll() throws AppException {
 		List<Respuesta> respuestas = null;
 		try {
 			respuestas = respuestaDAO.selectAll();
-		} catch (SQLException e) {
-			throw new AppException(
-					"Se ha producido un error al recuperar todas las respuestas");
+		}
+		catch (SQLException e) {
+			throw new AppException("Se ha producido un error al recuperar todas las respuestas");
 		}
 		return respuestas;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see
 	 * com.movember.quizz.model.service.IRespuestaService#recuperarDePregunta
 	 * (java.lang.Integer)
 	 */
-	public List<Respuesta> recuperarDePregunta(Integer idPregunta)
-			throws AppException {
+	public List<Respuesta> recuperarDePregunta(Integer idPregunta) throws AppException {
 		List<Respuesta> respuestas = null;
 		try {
 			respuestas = this.respuestaDAO.recuperarDePregunta(idPregunta);
-		} catch (SQLException e) {
-			throw new AppException(
-					"Se ha producido un error al recuperar todas las respuestas de una pregunta");
+		}
+		catch (SQLException e) {
+			throw new AppException("Se ha producido un error al recuperar todas las respuestas de una pregunta");
 		}
 		return respuestas;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see
 	 * com.movember.quizz.model.service.IRespuestaService#recuperarVecesContestadas
 	 * (java.lang.Integer)
 	 */
-	public Integer recuperarVecesContestadas(Integer idRespuesta)
-			throws AppException {
-		Integer result = null;
+	public Integer recuperarVecesContestadasPorIdentificado(Integer idRespuesta) throws AppException {
 		try {
-			result = respuestaDAO.recuperarVecesContestadas(idRespuesta);
-		} catch (SQLException e) {
-			throw new AppException(
-					"Se ha producido un error al recuperar una respuesta");
+			return respuestaDAO.recuperarVecesContestadasPorIdentificado(idRespuesta);
 		}
-		return result;
+		catch (SQLException e) {
+			throw new AppException("Se ha producido un error al recuperar una respuesta");
+		}
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 * @see
+	 * com.movember.quizz.model.service.IRespuestaService#recuperarVecesContestadas
+	 * (java.lang.Integer)
+	 */
+	public Integer recuperarVecesContestadasPorNoIdentificado(Integer idRespuesta) throws AppException {
+		try {
+			return respuestaDAO.recuperarVecesContestadasPorNoIdentificado(idRespuesta);
+		}
+		catch (SQLException e) {
+			throw new AppException("Se ha producido un error al recuperar una respuesta");
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
 	 * @see
 	 * com.movember.quizz.model.service.IRespuestaService#contestar(java.lang
 	 * .Integer, java.lang.Integer)
 	 */
-	public void contestar(Integer idEncuestaContestada, Integer idRespuesta)
-			throws AppException {
+	public void contestar(Integer idEncuestaContestada, Integer idRespuesta) throws AppException {
 		try {
 			RespuestaContestada respuestaContestada = new RespuestaContestada();
 			respuestaContestada.setId_encuesta_contestada(idEncuestaContestada);
 			respuestaContestada.setId_respuesta(idRespuesta);
 			respuestaDAO.contestar(respuestaContestada);
-		} catch (SQLException e) {
-			throw new AppException(
-					"Se ha producido un error al contestar una respuesta");
+		}
+		catch (SQLException e) {
+			throw new AppException("Se ha producido un error al contestar una respuesta");
 		}
 	}
 }
