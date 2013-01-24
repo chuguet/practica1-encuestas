@@ -18,10 +18,18 @@
 		FROM respuesta
 	</select>
 	
-	<select id="recuperarVecesContestada" parameterClass="java.lang.Integer" resultClass="java.lang.Integer">
+	<select id="recuperarVecesContestadasPorIdentificado" parameterClass="java.lang.Integer" resultClass="java.lang.Integer">
 		SELECT count(*)
-		FROM respuesta_contestada
-		WHERE id_respuesta = #idRespuesta:INTEGER#
+		FROM respuesta_contestada rc
+		INNER JOIN encuesta_contestada ec ON ec.id = rc.id_encuesta_contestada
+		WHERE id_respuesta = #idRespuesta:INTEGER# AND ec.id_usuario IS NOT NULL
+	</select>
+	
+	<select id="recuperarVecesContestadasPorNoIdentificado" parameterClass="java.lang.Integer" resultClass="java.lang.Integer">
+		SELECT count(*)
+		FROM respuesta_contestada rc
+		INNER JOIN encuesta_contestada ec ON ec.id = rc.id_encuesta_contestada
+		WHERE id_respuesta = #idRespuesta:INTEGER# AND ec.id_usuario IS NULL
 	</select>
 	
 	<insert id="insertReturnId" parameterClass="com.movember.quizz.model.bean.Respuesta"> 

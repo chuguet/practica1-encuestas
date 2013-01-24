@@ -11,7 +11,10 @@
 
 <fieldset id="estadistica">
 	<legend class="quizzText">Resultados de la encuesta </legend>
-
+	<c:if test="${mobile != true}">
+	Para conocer el n&uacute;mero de usuarios identificados y no identificados que han votado cada pregunta, coloque el cursor encima de la pregunta, y se mostrar&aacute; dicha informaci&oacute;n. 
+	<p id="identificados"></p>
+</c:if>
 </fieldset>
 <c:if test="${mobile}">
 <p style="text-align:center">
