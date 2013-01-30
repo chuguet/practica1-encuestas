@@ -32,7 +32,7 @@
 		<javassist.version>3.12.1.GA</javassist.version>
 		<javax.servlet.jstl.version>1.2</javax.servlet.jstl.version>
 		<javax.servlet.api.version>2.5</javax.servlet.api.version>
-		<wurfl.version>v1.4.4</wurfl.version>
+		<wurfl.version>v1.4.3.1</wurfl.version>
 	</properties>
 	
 	<modules>
@@ -62,5 +62,19 @@
 			</roles>
 		</developer>
 	</developers>
-
+	
+	<build>
+		<!-- Configuracion de Nivel de Compilacion y encoding del codigo -->
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+					<encoding>ISO-8859-1</encoding>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
