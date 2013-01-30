@@ -1,2 +1,5 @@
 mvn install:install-file -Dfile=D:\Proyectos\workspace_tecnologias_moviles\Documentacion\core.jar -DgroupId=com.google.zxing -DartifactId=core -Dversion=2.1 -Dpackaging=jar
 mvn install:install-file -Dfile=D:\Proyectos\workspace_tecnologias_moviles\Documentacion\javase.jar -DgroupId=com.google.zxing -DartifactId=javase -Dversion=2.1 -Dpackaging=jar
+
+
+mvn install:install-file -Dfile=D:\Proyectos\workspace_tecnologias_moviles\Documentacion\wrufl\wurfl-1.4.3.jar -DgroupId=net.sourceforge.wurfl -DartifactId=wurfl -Dversion=1.4.3 -Dpackaging=jar
