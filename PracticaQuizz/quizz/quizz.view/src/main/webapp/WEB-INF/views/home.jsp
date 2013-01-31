@@ -21,14 +21,11 @@
 		<script type="text/javascript" src="resources/js/views/rellenarEncuesta.js"></script>
 		<script type="text/javascript" src="resources/js/mobile/jquery.mobile.js"></script>
 		<script type="text/javascript" src="resources/js/views/estadistica.js"></script>
-		<script type="text/javascript" src="resources/js/cookie.js"></script>
-		<script type="text/javascript">
-			function logout(){
-				window.location.href = '<c:url value="/j_spring_security_logout" />';
-			}
-		</script>
+		<script type="text/javascript" src="resources/js/views/home.js"></script>
+		<script type="text/javascript" src="resources/js/jquery.cookie.js"></script>
+
 	</head> 
-	<body class="mobile" onload="cookie.check('${GUID}');"> 
+	<body style="display:none;" class="mobile" onload="javascript:home.init('${GUID}', '${usuario}', '${pwd}');"> 
 		<div data-role="page" id="page">
 			<input type="hidden" id="id_usuario" value="${id_usuario}" />
 			<div data-role="header">
@@ -37,7 +34,7 @@
 			    </div>
 			
 			    <div id="back-btn" class="header-btn-left-pos2">
-			        <a href="javascript:void" onclick="javascript:logout();" data-role="button" data-icon="delete" data-rel="delete" title="Salir" id="btnSalir" data-iconpos="notext" data-theme="c">Salir</a>
+			        <a href="javascript:void" onclick="javascript:home.logout('<c:url value="/j_spring_security_logout" />');" data-role="button" data-icon="delete" data-rel="delete" title="Salir" id="btnSalir" data-iconpos="notext" data-theme="c">Salir</a>
 			    </div>
 			
 			    <div class="header-title" align="center">
@@ -90,15 +87,11 @@
 		<script src="resources/js/views/encuesta.js" type="text/javascript"></script>
 		<script src="resources/js/views/usuario.js" type="text/javascript"></script>
 		<script src="resources/js/views/estadistica.js" type="text/javascript"></script>
-		
+		<script src="resources/js/views/home.js" type="text/javascript"></script>
 		<script src="resources/js/jquery-ui-timepicker-addon.js" type="text/javascript"></script>
-		<script type="text/javascript">
-			function logout(){
-				window.location.href = '<c:url value="/j_spring_security_logout" />';
-			}
-		</script>
+		
 	</head>
-	<body id="quizz" class="web">
+	<body id="quizz" class="web" onload="javascript:home.init('${GUID}', '${usuario}', '${pwd}');"> 
 		
 		<div id="header">
 			<h1>Gestor de encuestas</h1>
@@ -109,7 +102,7 @@
 			<a href="javascript:void" onclick="javascript:generic.getList('encuesta');" title="Ver encuestas" class="itemMenu">Encuestas</a>
 			<div id="usuario">
 				<span>Usuario : ${nombre} ${apellidos}</span> 
-				<a href="javascript:void" onclick="javascript:logout();" id="btnUnlogin" title="Salir"><span>Salir</span></a>
+				<a href="javascript:void" onclick="javascript:home.logout('<c:url value="/j_spring_security_logout" />');" id="btnUnlogin" title="Salir"><span>Salir</span></a>
 			</div>
 		</div>
 		

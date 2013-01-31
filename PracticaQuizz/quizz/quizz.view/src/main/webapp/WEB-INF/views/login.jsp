@@ -21,9 +21,10 @@
 		<script type="text/javascript" src="resources/js/jquery.alerts.js"></script>
 		<script type="text/javascript" src="resources/js/generic.js"></script>
 		<script type="text/javascript" src="resources/js/mobile/jquery.mobile-1.2.0.min.js"></script>
-		<script type="text/javascript" src="resources/js/cookie.js"></script>
+		<script type="text/javascript" src="resources/js/jquery.cookie.js"></script>
+		<script type="text/javascript" src="resources/js/views/login.js"></script>
 	</head> 
-	<body onload="cookie.check('${GUID}');document.f.j_username.focus();" class="mobile">
+	<body style="display:none;" onload="login.init('${GUID}');" class="mobile">
 		<div data-role="page">
 		
 			<div data-role="header">
@@ -34,15 +35,15 @@
 				<form name='f' id='f' action="<c:url value='j_spring_security_check' />" method='POST' data-ajax="false">
 					<div data-role="fieldcontain">
 						<div class="login">
-							<!-- "<legend class="x">Acceso a Quizz</legend>-->
 							<p>
-								<span>Usuario:</span><input type='text' name='j_username' value='' class="text ui-widget-content ui-corner-all" data-mini="true" />
+								<span>Usuario:</span><input type='text' name='j_username' id='j_username' value='' class="text ui-widget-content ui-corner-all" data-mini="true" />
 							</p>
 							<p>
-								<span>Contrase&ntilde;a:</span><input type='password' name='j_password'  class="text ui-widget-content ui-corner-all" data-mini="true" />
+								<span>Contrase&ntilde;a:</span><input type='password' id='password' name='password' class="text ui-widget-content ui-corner-all" data-mini="true" />
+								<input type='hidden' id='j_password' name='j_password' />
 							</p>
 							<p style="text-align:center">
-								<a href="#" onclick="javascript:$('form#f').submit();" data-role="button" data-inline="true" data-icon="check" data-mini="true" title="Aceptar">Aceptar</a>
+								<a href="#" onclick="javascript:login.validate();" data-role="button" data-inline="true" data-icon="check" data-mini="true" title="Aceptar">Aceptar</a>
 								<a href="#" onclick="javascript:$('form#f').reset();" data-role="button" data-inline="true" data-icon="delete" data-mini="true" title="Cancelar">Cancelar</a>
 								<a href="#" onclick="javascript:window.location.href='home';" data-role="button" data-inline="true" data-icon="info" data-mini="true" title="An&oacute;nimo">An&oacute;nimo</a>
 							</p>
@@ -87,6 +88,7 @@
 		<link href="resources/css/jquery.alerts.css" rel="stylesheet" type="text/css">
 	    <script src="resources/js/jquery-ui-1.9.1.min.js" type="text/javascript"></script>
 		<script src="resources/js/jquery.alerts.js" type="text/javascript"></script>
+		<script src="resources/js/md5.js" type="text/javascript"></script>
 	</head>
 	<body onload='document.f.j_username.focus();' class="web">
 		<form name='f' id='f' action="<c:url value='j_spring_security_check' />" method='POST'>
@@ -95,7 +97,7 @@
 					<span>Usuario:</span>
 					<input type='text' name='j_username' value='' class="text ui-widget-content ui-corner-all" />
 					<span>Contrase&ntilde;a:</span>
-					<input type='password' name='j_password'  class="text ui-widget-content ui-corner-all" />
+					<input type='password' id='j_password' name='j_password'  class="text ui-widget-content ui-corner-all" />
 					<input name="submit" type="submit" value="Aceptar" class="btn" /><input name="reset" type="reset" value="Cancelar" class="btn" />
 			</fieldset>
 		</form>
