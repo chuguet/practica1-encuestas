@@ -48,11 +48,15 @@ public class LoginController {
 			model.addAttribute("nombre", usuario.getNombre());
 			model.addAttribute("apellidos", usuario.getApellidos());
 			model.addAttribute("id_usuario", usuario.getId());
+			model.addAttribute("usuario", usuario.getUsuario());
+			model.addAttribute("pwd", usuario.getPwd());
 		}
 		else {
 			model.addAttribute("nombre", "Usuario anónimo");
 			model.addAttribute("apellidos", null);
 			model.addAttribute("id_usuario", null);
+			model.addAttribute("usuario", null);
+			model.addAttribute("pwd", null);
 		}
 
 		model.addAttribute("GUID", java.util.UUID.randomUUID());

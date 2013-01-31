@@ -4,7 +4,7 @@ var rellenarEncuesta = {
 	'getUser' : function() {
 		var user = {
 			id_usuario : $('#id_usuario').val(),
-			ip_usuario : cookie.get("device")
+			ip_usuario : $.cookie("device")
 		};
 		return user;
 	},
@@ -64,7 +64,7 @@ var rellenarEncuesta = {
 			var encuestaContestada = {
 				'id_encuesta' : $('#id_encuesta').val(),
 				'id_usuario' : $('#id_usuario').val(),
-				'ip_usuario' : cookie.get("device"),
+				'ip_usuario' : $.cookie("device"),
 				'idRespuestasContestadas' : idRespuestasContestadas
 			}
 			var entity = "rellenarEncuesta";

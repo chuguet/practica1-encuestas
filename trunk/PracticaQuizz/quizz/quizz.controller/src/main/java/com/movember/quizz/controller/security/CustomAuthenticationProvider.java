@@ -65,7 +65,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		}
 		// Compare passwords
 		// Make sure to encode the password first before comparing
-		if (passwordEncoder.isPasswordValid(usuario.getPwd(), (String) auth.getCredentials(), null) == false) {
+		String pwd = auth.getCredentials().toString();
+		if (!usuario.getPwd().equals(pwd)) {
 			logger.error("Contraseña incorrecta!");
 			throw new BadCredentialsException("Contraseña incorrecta");
 		}
