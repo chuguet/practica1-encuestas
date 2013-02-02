@@ -30,7 +30,7 @@ body.web {overflow:hidden}
 body.web fieldset.login {border-radius: 10px; -webkit-border-radius: 10px; -moz-border-radius: 10px; width:280px; height:143px; padding: 10px 20px; position:absolute; left:50%; top:50%; margin-top:-100px; margin-left:-140px; background-color:#FFFFFF;}
 body.web fieldset.login span {display:block; width:100%}
 body.web fieldset.login input {width:100%;}
-body.web fieldset.login input.btn {width:138px;margin: 9px 0px 0px 2px;}
+body.web fieldset.login input.btn {width:135px;margin: 9px 0px 0px 2px;}
 body.web div#header { background-image:url(../imgs/degradado_cabecera.png); background-repeat:repeat-x; height: 59px; position:absolute; top:0px; width:100%; color:#FFFFFF; padding-left:20px;}
 body.web div#menu {background-color:#FFFFFF; position:absolute; top:60px; height:20px; width:100%; overflow:hidden;}
 body.web div#menu a.itemMenu{text-decoration:none; font-family:arial; font-size:0.9em; color:#213F75; margin:0px 20px; font-weight:bold}
