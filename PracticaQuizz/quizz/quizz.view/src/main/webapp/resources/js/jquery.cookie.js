@@ -1,10 +1,3 @@
-/*!
- * jQuery Cookie Plugin v1.3.1
- * https://github.com/carhartl/jquery-cookie
- *
- * Copyright 2013 Klaus Hartl
- * Released under the MIT license
- */
 (function(factory) {
 	if (typeof define === 'function' && define.amd && define.amd.jQuery) {
 		// AMD. Register as anonymous module.
@@ -55,14 +48,14 @@
 
 			return (document.cookie = [
 					encodeURIComponent(key), '=', config.raw ? value : encodeURIComponent(value), options.expires ? '; expires=' + options.expires.toUTCString() : '', // use
-																																										// expires
-																																										// attribute,
-																																										// max-age
-																																										// is
-																																										// not
-																																										// supported
-																																										// by
-																																										// IE
+					// expires
+					// attribute,
+					// max-age
+					// is
+					// not
+					// supported
+					// by
+					// IE
 					options.path ? '; path=' + options.path : '', options.domain ? '; domain=' + options.domain : '', options.secure ? '; secure' : ''
 			].join(''));
 		}

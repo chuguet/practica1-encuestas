@@ -16,13 +16,13 @@
 				
 		<script type="text/javascript" src="resources/js/generic.js"></script>
 		<script type="text/javascript" src="resources/js/jquery-1.8.2.min.js"></script>
+		<script type="text/javascript" src="resources/js/jquery.cookie.js"></script>
 		<script type="text/javascript" src="resources/js/mobile/jquery.mobile-1.2.0.min.js"></script>
 		<script type="text/javascript" src="resources/js/jquery.alerts.js"></script>
 		<script type="text/javascript" src="resources/js/views/rellenarEncuesta.js"></script>
 		<script type="text/javascript" src="resources/js/mobile/jquery.mobile.js"></script>
 		<script type="text/javascript" src="resources/js/views/estadistica.js"></script>
 		<script type="text/javascript" src="resources/js/views/home.js"></script>
-		<script type="text/javascript" src="resources/js/jquery.cookie.js"></script>
 
 	</head> 
 	<body style="display:none;" class="mobile" onload="javascript:home.init('${GUID}', '${usuario}', '${pwd}');"> 
@@ -78,6 +78,8 @@
 		<script src="resources/js/jquery-1.8.2.min.js" type="text/javascript"></script>
 		<script src="resources/js/jquery-ui-1.9.1.min.js" type="text/javascript"></script>
 		<script src="resources/js/generic.js" type="text/javascript"></script>
+		<script src="resources/js/jquery.cookie.js" type="text/javascript" ></script>
+		<script type="text/javascript" src="resources/js/views/home.js"></script>
 		
 	  	<script src="resources/js/jquery.dynatree.js" type="text/javascript"></script>
 		<script src="resources/js/jquery.alerts.js" type="text/javascript"></script>
@@ -87,12 +89,11 @@
 		<script src="resources/js/views/encuesta.js" type="text/javascript"></script>
 		<script src="resources/js/views/usuario.js" type="text/javascript"></script>
 		<script src="resources/js/views/estadistica.js" type="text/javascript"></script>
-		<script src="resources/js/views/home.js" type="text/javascript"></script>
 		<script src="resources/js/jquery-ui-timepicker-addon.js" type="text/javascript"></script>
 		
-	</head>
-	<body id="quizz" class="web" onload="javascript:home.init('${GUID}', '${usuario}', '${pwd}');"> 
 		
+	</head>
+	<body id="quizz" class="web"> 
 		<div id="header">
 			<h1>Gestor de encuestas</h1>
 		</div>

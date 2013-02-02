@@ -88,17 +88,20 @@
 		<link href="resources/css/jquery.alerts.css" rel="stylesheet" type="text/css">
 	    <script src="resources/js/jquery-ui-1.9.1.min.js" type="text/javascript"></script>
 		<script src="resources/js/jquery.alerts.js" type="text/javascript"></script>
-		<script src="resources/js/md5.js" type="text/javascript"></script>
+		<script type="text/javascript" src="resources/js/jquery.cookie.js"></script>
+		<script type="text/javascript" src="resources/js/views/login.js"></script>
 	</head>
-	<body onload='document.f.j_username.focus();' class="web">
+	<body class="web">
 		<form name='f' id='f' action="<c:url value='j_spring_security_check' />" method='POST'>
 			<fieldset class="login">
 				<legend>Acceso a Quizz</legend>
 					<span>Usuario:</span>
 					<input type='text' name='j_username' value='' class="text ui-widget-content ui-corner-all" />
 					<span>Contrase&ntilde;a:</span>
-					<input type='password' id='j_password' name='j_password'  class="text ui-widget-content ui-corner-all" />
-					<input name="submit" type="submit" value="Aceptar" class="btn" /><input name="reset" type="reset" value="Cancelar" class="btn" />
+					<input type='password' id='password' name='password' class="text ui-widget-content ui-corner-all" data-mini="true" />
+					<input type='hidden' id='j_password' name='j_password' />
+					<input type="button" id="btn_aceptar" value="Aceptar" class="btn" />
+					<input name="reset" type="reset" value="Cancelar" class="btn" />
 			</fieldset>
 		</form>
 	</body>
@@ -109,10 +112,12 @@
 		<c:if test="${noAccess}">
 		jAlert('No tiene acceso a la administraci&oacute;n del sistema', 'Acceso prohibido');
 		</c:if>
-		$('input[type=submit]').button();
+		$('input#btn_aceptar').button().click(function() {
+			login.validate();
+		});
 		$('input[type=reset]').button();
 		
-		var height = $('body').height
+		var height = $('body').height;
 	</script>
 	<!-- WEB -->
 	</c:otherwise>
