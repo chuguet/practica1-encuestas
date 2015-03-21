@@ -1,0 +1,1 @@
+Sirve para generar encuestas a traves de un entorno web y generarlo a traves de movil.
